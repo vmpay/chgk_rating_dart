@@ -39,8 +39,8 @@ import 'dart:convert';
 
 import 'package:chgk_rating/models/player.dart';
 
-class PlayerSearchResponse {
-  PlayerSearchResponse({
+class PlayerSearch {
+  PlayerSearch({
     this.items,
     this.totalItems,
     this.currentItems,
@@ -50,13 +50,12 @@ class PlayerSearchResponse {
   final String? totalItems;
   final String? currentItems;
 
-  factory PlayerSearchResponse.fromJson(String str) =>
-      PlayerSearchResponse.fromMap(json.decode(str));
+  factory PlayerSearch.fromJson(String str) =>
+      PlayerSearch.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory PlayerSearchResponse.fromMap(Map<String, dynamic> json) =>
-      PlayerSearchResponse(
+  factory PlayerSearch.fromMap(Map<String, dynamic> json) => PlayerSearch(
         items: json["items"] == null
             ? null
             : List<Player>.from(json["items"].map((x) => Player.fromMap(x))),

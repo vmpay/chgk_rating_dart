@@ -24,7 +24,7 @@ class TeamPlayers {
   final int? idteam;
   final int? idseason;
   final List<String>? players;
-  final bool? captain;
+  final String? captain;
 
   factory TeamPlayers.fromJson(String str) =>
       TeamPlayers.fromMap(json.decode(str));
@@ -37,7 +37,8 @@ class TeamPlayers {
         players: json["players"] == null
             ? null
             : List<String>.from(json["players"].map((x) => x)),
-        captain: json["captain"] == null ? null : json["captain"],
+        // TODO false means null
+        captain: json["captain"] == null ? null : json["captain"].toString(),
       );
 
   Map<String, dynamic> toMap() => {
