@@ -9,6 +9,8 @@ import 'package:chgk_rating/models/team_players.dart';
 import 'package:chgk_rating/models/team_rating.dart';
 import 'package:chgk_rating/models/team_search.dart';
 import 'package:chgk_rating/models/team_tournament.dart';
+import 'package:chgk_rating/models/tournament_appeal.dart';
+import 'package:chgk_rating/models/tournament_controversial.dart';
 import 'package:chgk_rating/models/tournament_details.dart';
 import 'package:chgk_rating/models/tournament_results.dart';
 import 'package:chgk_rating/models/tournament_search.dart';
@@ -161,6 +163,18 @@ void main() {
       final Iterable<TournamentResults> tournamentResults =
           await chgkRating.getTournamentResultsByTeam(tournamentId, teamId);
       print('TournamentTeam $tournamentResults');
+    });
+
+    test('getTournamentControversialQuestions', () async {
+      final Iterable<TournamentControversial> tournamentControversial =
+          await chgkRating.getTournamentControversialQuestions(tournamentId);
+      print('TournamentControversial $tournamentControversial');
+    });
+
+    test('getTournamentAppealQuestions', () async {
+      final Iterable<TournamentAppeal> tournamentAppeal =
+          await chgkRating.getTournamentAppealQuestions(tournamentId);
+      print('TournamentAppeal $tournamentAppeal');
     });
   });
 }
