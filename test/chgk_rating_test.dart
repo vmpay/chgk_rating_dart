@@ -10,6 +10,12 @@ void main() {
   const int playerId = 17579;
   final ChgkRating chgkRating = ChgkRating();
 
+  test('singletonCheck', () {
+    final ChgkRating chgkRating1 = ChgkRating();
+    final ChgkRating chgkRating2 = ChgkRating();
+    assert(identical(chgkRating1, chgkRating2));
+  });
+
   test('getPlayerById', () async {
     final Player? player = await chgkRating.getPlayerById(playerId);
     print('Player $player');
