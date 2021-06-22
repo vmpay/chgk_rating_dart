@@ -16,7 +16,7 @@ import 'package:chgk_rating/src/models/tournament_results.dart';
 import 'package:chgk_rating/src/models/tournament_search.dart';
 import 'package:chgk_rating/src/models/tournament_team_players.dart';
 import 'package:chgk_rating/src/models/tournament_team_results.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 void main() {
   const int playerId = 17579;
