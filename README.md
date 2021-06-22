@@ -1,7 +1,8 @@
 # chgk_rating
 
-<!--Add coverage and build buttons-->
+<!--Add coverage, pub, platform badges-->
 ![example workflow](https://github.com/vmpay/chgk_rating_dart/actions/workflows/main.yml/badge.svg)
+[![Pub](https://img.shields.io/pub/v/chgk_rating.svg)](https://pub.dartlang.org/packages/chgk_rating)
 
 Dart wrapper client for the competitive What? Where? When? rating [WebAPIRating](https://rating.chgk.info/api-doc)
 
