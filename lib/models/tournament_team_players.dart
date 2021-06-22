@@ -42,26 +42,26 @@
 /// }
 import 'dart:convert';
 
-class TournamentTeamPlayers {
-  TournamentTeamPlayers({
+class TournamentTeam {
+  TournamentTeam({
     this.idteam,
     this.recaps,
   });
 
   final String? idteam;
-  final List<Recap>? recaps;
+  final List<TournamentTeamPlayer>? recaps;
 
-  factory TournamentTeamPlayers.fromJson(String str) =>
-      TournamentTeamPlayers.fromMap(json.decode(str));
+  factory TournamentTeam.fromJson(String str) =>
+      TournamentTeam.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory TournamentTeamPlayers.fromMap(Map<String, dynamic> json) =>
-      TournamentTeamPlayers(
+  factory TournamentTeam.fromMap(Map<String, dynamic> json) => TournamentTeam(
         idteam: json["idteam"] == null ? null : json["idteam"],
         recaps: json["recaps"] == null
             ? null
-            : List<Recap>.from(json["recaps"].map((x) => Recap.fromMap(x))),
+            : List<TournamentTeamPlayer>.from(
+                json["recaps"].map((x) => TournamentTeamPlayer.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -75,8 +75,8 @@ class TournamentTeamPlayers {
   }
 }
 
-class Recap {
-  Recap({
+class TournamentTeamPlayer {
+  TournamentTeamPlayer({
     this.idplayer,
     this.isCaptain,
     this.isBase,
@@ -88,11 +88,13 @@ class Recap {
   final String? isBase;
   final String? isForeign;
 
-  factory Recap.fromJson(String str) => Recap.fromMap(json.decode(str));
+  factory TournamentTeamPlayer.fromJson(String str) =>
+      TournamentTeamPlayer.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory Recap.fromMap(Map<String, dynamic> json) => Recap(
+  factory TournamentTeamPlayer.fromMap(Map<String, dynamic> json) =>
+      TournamentTeamPlayer(
         idplayer: json["idplayer"] == null ? null : json["idplayer"],
         isCaptain: json["is_captain"] == null ? null : json["is_captain"],
         isBase: json["is_base"] == null ? null : json["is_base"],
@@ -108,6 +110,6 @@ class Recap {
 
   @override
   String toString() {
-    return 'Recap{idplayer: $idplayer, isCaptain: $isCaptain, isBase: $isBase, isForeign: $isForeign}';
+    return 'TournamentTeamPlayer{idplayer: $idplayer, isCaptain: $isCaptain, isBase: $isBase, isForeign: $isForeign}';
   }
 }

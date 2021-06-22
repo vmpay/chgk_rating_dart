@@ -12,6 +12,11 @@ import 'package:chgk_rating/models/team_players.dart';
 import 'package:chgk_rating/models/team_rating.dart';
 import 'package:chgk_rating/models/team_search.dart';
 import 'package:chgk_rating/models/team_tournament.dart';
+import 'package:chgk_rating/models/tournament_details.dart';
+import 'package:chgk_rating/models/tournament_results.dart';
+import 'package:chgk_rating/models/tournament_search.dart';
+import 'package:chgk_rating/models/tournament_team_players.dart';
+import 'package:chgk_rating/models/tournament_team_results.dart';
 import 'package:dio/dio.dart';
 
 // TODO paging
@@ -34,7 +39,8 @@ class ChgkRating {
     ..interceptors.add(LogInterceptor());
 
   Future<Player?> getPlayerById(int playerId) async {
-    final Response response = await _dio.get('/players.json/$playerId');
+    final Response response =
+        await _dio.get('/players.$extensionJson/$playerId');
     final Iterable<Player> playerList =
         (response.data as List<dynamic>).map((e) => Player.fromMap(e));
     return playerList.firstOrNull;
@@ -52,24 +58,27 @@ class ChgkRating {
     if (patronymic != null) {
       queryParameters.addAll(<String, dynamic>{'patronymic': patronymic});
     }
-    final Response response = await _dio.get('/players.json/search',
+    final Response response = await _dio.get('/players.$extensionJson/search',
         queryParameters: queryParameters);
     return PlayerSearch.fromMap(response.data);
   }
 
   Future<PlayerRating> getPlayerRatingLatest(int playerId) async =>
       PlayerRating.fromMap(
-          (await _dio.get('/players.json/$playerId/rating/last')).data);
+          (await _dio.get('/players.$extensionJson/$playerId/rating/last'))
+              .data);
 
   Future<Iterable<PlayerRating>> getPlayerRatingList(int playerId) async {
-    final Response response = await _dio.get('/players.json/$playerId/rating');
+    final Response response =
+        await _dio.get('/players.$extensionJson/$playerId/rating');
     final Iterable<PlayerRating> playerRatingList =
         (response.data as List<dynamic>).map((e) => PlayerRating.fromMap(e));
     return playerRatingList;
   }
 
   Future<Iterable<PlayerTeam>> getPlayerTeamList(int playerId) async {
-    final Response response = await _dio.get('/players.json/$playerId/teams');
+    final Response response =
+        await _dio.get('/players.$extensionJson/$playerId/teams');
     final Iterable<PlayerTeam> playerRatingList =
         (response.data as List<dynamic>).map((e) => PlayerTeam.fromMap(e));
     return playerRatingList;
@@ -77,7 +86,7 @@ class ChgkRating {
 
   Future<Iterable<PlayerTeam>> getPlayerTeamLastSeason(int playerId) async {
     final Response response =
-        await _dio.get('/players.json/$playerId/teams/last');
+        await _dio.get('/players.$extensionJson/$playerId/teams/last');
     final Iterable<PlayerTeam> playerRatingList =
         (response.data as List<dynamic>).map((e) => PlayerTeam.fromMap(e));
     return playerRatingList;
@@ -86,12 +95,13 @@ class ChgkRating {
   Future<PlayerTournamentResponse> getPlayerTournamentLastSeason(
           int playerId) async =>
       PlayerTournamentResponse.fromMap(
-          (await _dio.get('/players.json/$playerId/tournaments/last')).data);
+          (await _dio.get('/players.$extensionJson/$playerId/tournaments/last'))
+              .data);
 
   Future<Iterable<PlayerTournamentResponse>> getPlayerTournamentList(
       int playerId) async {
     final Response response =
-        await _dio.get('/players.json/$playerId/tournaments');
+        await _dio.get('/players.$extensionJson/$playerId/tournaments');
     final Iterable<PlayerTournamentResponse> playerTournamentList =
         (response.data as Map<String, dynamic>)
             .values
@@ -100,7 +110,7 @@ class ChgkRating {
   }
 
   Future<Team?> getTeamById(int teamId) async {
-    final Response response = await _dio.get('/teams.json/$teamId');
+    final Response response = await _dio.get('/teams.$extensionJson/$teamId');
     return (response.data as List<dynamic>)
         .map((e) => Team.fromMap(e))
         .firstOrNull;
@@ -125,8 +135,9 @@ class ChgkRating {
       queryParameters.addAll(<String, dynamic>{'country_name': countryName});
     }
     return TeamSearch.fromMap(
-        (await _dio.get('/teams.json/search', queryParameters: queryParameters))
-            .data);
+        (await _dio.get('/teams.$extensionJson/search',
+            queryParameters: queryParameters))
+        .data);
   }
 
   Future<TeamRating> getTeamRatingById(int teamId, int releaseId) async =>
@@ -154,4 +165,51 @@ class ChgkRating {
               as Map<String, dynamic>)
           .values
           .map((e) => TeamTournament.fromMap(e));
+
+  Future<TournamentDetails?> getTournamentDetails(int tournamentId) async =>
+      ((await _dio.get('/tournaments/$tournamentId')).data as List<dynamic>)
+          .map((e) => TournamentDetails.fromMap(e))
+          .firstOrNull;
+
+  Future<TournamentSearch> getTournamentBy(
+      {String? name, String? typeName, String? archive}) async {
+    final Map<String, dynamic> queryParameters = <String, dynamic>{};
+    if (name != null) {
+      queryParameters.addAll(<String, dynamic>{'name': name});
+    }
+    if (typeName != null) {
+      queryParameters.addAll(<String, dynamic>{'type_name': typeName});
+    }
+    if (archive != null) {
+      queryParameters.addAll(<String, dynamic>{'archive': archive});
+    }
+    return TournamentSearch.fromMap((await _dio.get(
+            '/tournaments.$extensionJson/search',
+            queryParameters: queryParameters))
+        .data);
+  }
+
+  Future<Iterable<TournamentTeamResults>> getTournamentResults(
+          int tournamentId) async =>
+      ((await _dio.get('/tournaments/$tournamentId/list')).data
+              as List<dynamic>)
+          .map((e) => TournamentTeamResults.fromMap(e));
+
+  Future<Iterable<TournamentTeamPlayer>> getTournamentTeamPlayersByTeam(
+          int tournamentId, int teamId) async =>
+      ((await _dio.get('/tournaments/$tournamentId/recaps/$teamId')).data
+              as List<dynamic>)
+          .map((e) => TournamentTeamPlayer.fromMap(e));
+
+  Future<Iterable<TournamentTeam>> getTournamentTeamPlayers(
+          int tournamentId) async =>
+      ((await _dio.get('/tournaments/$tournamentId/recaps')).data
+              as List<dynamic>)
+          .map((e) => TournamentTeam.fromMap(e));
+
+  Future<Iterable<TournamentResults>> getTournamentResultsByTeam(
+          int tournamentId, int teamId) async =>
+      ((await _dio.get('/tournaments/$tournamentId/results/$teamId')).data
+              as List<dynamic>)
+          .map((e) => TournamentResults.fromMap(e));
 }

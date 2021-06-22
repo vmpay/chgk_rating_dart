@@ -17,8 +17,8 @@
 /// }
 import 'dart:convert';
 
-class TournamentTeam {
-  TournamentTeam({
+class TournamentTeamResults {
+  TournamentTeamResults({
     this.idteam,
     this.currentName,
     this.baseName,
@@ -50,12 +50,13 @@ class TournamentTeam {
   final String? diffBonus;
   final int? includedInRating;
 
-  factory TournamentTeam.fromJson(String str) =>
-      TournamentTeam.fromMap(json.decode(str));
+  factory TournamentTeamResults.fromJson(String str) =>
+      TournamentTeamResults.fromMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
-  factory TournamentTeam.fromMap(Map<String, dynamic> json) => TournamentTeam(
+  factory TournamentTeamResults.fromMap(Map<String, dynamic> json) =>
+      TournamentTeamResults(
         idteam: json["idteam"] == null ? null : json["idteam"],
         currentName: json["current_name"] == null ? null : json["current_name"],
         baseName: json["base_name"] == null ? null : json["base_name"],
@@ -101,6 +102,6 @@ class TournamentTeam {
 
   @override
   String toString() {
-    return 'TournamentTeam{idteam: $idteam, currentName: $currentName, baseName: $baseName, position: $position, questionsTotal: $questionsTotal, mask: $mask, techRatingRt: $techRatingRt, techRatingRg: $techRatingRg, techRatingRb: $techRatingRb, ratingR: $ratingR, predictedPosition: $predictedPosition, bonusB: $bonusB, diffBonus: $diffBonus, includedInRating: $includedInRating}';
+    return 'TournamentTeamResults{idteam: $idteam, currentName: $currentName, baseName: $baseName, position: $position, questionsTotal: $questionsTotal, mask: $mask, techRatingRt: $techRatingRt, techRatingRg: $techRatingRg, techRatingRb: $techRatingRb, ratingR: $ratingR, predictedPosition: $predictedPosition, bonusB: $bonusB, diffBonus: $diffBonus, includedInRating: $includedInRating}';
   }
 }

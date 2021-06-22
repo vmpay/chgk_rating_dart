@@ -9,11 +9,17 @@ import 'package:chgk_rating/models/team_players.dart';
 import 'package:chgk_rating/models/team_rating.dart';
 import 'package:chgk_rating/models/team_search.dart';
 import 'package:chgk_rating/models/team_tournament.dart';
+import 'package:chgk_rating/models/tournament_details.dart';
+import 'package:chgk_rating/models/tournament_results.dart';
+import 'package:chgk_rating/models/tournament_search.dart';
+import 'package:chgk_rating/models/tournament_team_players.dart';
+import 'package:chgk_rating/models/tournament_team_results.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   const int playerId = 17579;
   const int teamId = 58380;
+  const int tournamentId = 5021;
   const int releaseId = 1330;
   final ChgkRating chgkRating = ChgkRating();
 
@@ -117,6 +123,44 @@ void main() {
       final Iterable<TeamTournament> teamTournament =
           await chgkRating.getTeamTournamentList(teamId);
       print('TeamTournament $teamTournament');
+    });
+  });
+
+  group('Tournament test group', () {
+    test('getTournamentDetails', () async {
+      final TournamentDetails? tournamentDetails =
+          await chgkRating.getTournamentDetails(tournamentId);
+      print('TournamentDetails $tournamentDetails');
+    });
+
+    test('getTournamentBy', () async {
+      final TournamentSearch tournamentSearch =
+          await chgkRating.getTournamentBy(name: 'Синхрон-lite. Выпуск XXII');
+      print('TournamentSearch $tournamentSearch');
+    });
+
+    test('getTournamentResults', () async {
+      final Iterable<TournamentTeamResults> tournamentResult =
+          await chgkRating.getTournamentResults(tournamentId);
+      print('tournamentResult ${tournamentResult.take(5)}');
+    });
+
+    test('getTournamentTeamPlayersByTeam', () async {
+      final Iterable<TournamentTeamPlayer> tournamentTeamPlayers =
+          await chgkRating.getTournamentTeamPlayersByTeam(tournamentId, teamId);
+      print('TournamentTeamPlayersList $tournamentTeamPlayers');
+    });
+
+    test('getTournamentTeamPlayers', () async {
+      final Iterable<TournamentTeam> tournamentTeam =
+          await chgkRating.getTournamentTeamPlayers(tournamentId);
+      print('TournamentTeam ${tournamentTeam.take(5)}');
+    });
+
+    test('getTournamentResultsByTeam', () async {
+      final Iterable<TournamentResults> tournamentResults =
+          await chgkRating.getTournamentResultsByTeam(tournamentId, teamId);
+      print('TournamentTeam $tournamentResults');
     });
   });
 }
