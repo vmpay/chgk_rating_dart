@@ -37,7 +37,7 @@
 /// }
 import 'dart:convert';
 
-import 'package:chgk_rating/models/player.dart';
+import 'player.dart';
 
 class PlayerSearch {
   PlayerSearch({

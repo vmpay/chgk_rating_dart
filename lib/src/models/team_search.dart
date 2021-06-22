@@ -16,7 +16,7 @@
 ///  }
 import 'dart:convert';
 
-import 'package:chgk_rating/models/team.dart';
+import 'team.dart';
 
 class TeamSearch {
   TeamSearch({

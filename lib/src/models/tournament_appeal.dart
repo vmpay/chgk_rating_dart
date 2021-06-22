@@ -103,7 +103,7 @@
 /// ]
 import 'dart:convert';
 
-import 'package:chgk_rating/models/tournament_controversial.dart';
+import 'tournament_controversial.dart';
 
 class TournamentAppeal {
   TournamentAppeal({

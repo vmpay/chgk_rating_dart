@@ -52,7 +52,7 @@
 /// }
 import 'dart:convert';
 
-import 'package:chgk_rating/models/tournament.dart';
+import 'tournament.dart';
 
 class TournamentSearch {
   TournamentSearch({
