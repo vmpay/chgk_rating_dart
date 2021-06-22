@@ -44,7 +44,7 @@ void main() {
     });
 
     test('getPlayerRatingLatest', () async {
-      final PlayerRating playerRating =
+      final PlayerRating? playerRating =
           await chgkRating.getPlayerRatingLatest(playerId);
       print('PlayerRating $playerRating');
     });
@@ -92,7 +92,7 @@ void main() {
     });
 
     test('getTeamRatingById', () async {
-      final TeamRating teamRating =
+      final TeamRating? teamRating =
           await chgkRating.getTeamRatingById(teamId, releaseId);
       print('TeamRating $teamRating');
     });
