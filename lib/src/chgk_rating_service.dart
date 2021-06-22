@@ -22,13 +22,13 @@ import 'models/tournament_team_results.dart';
 
 // TODO paging
 // TODO edge cases false/null/empty responses
-// TODO interface
 // TODO error classification
 // TODO cities, countries, regions impl
 class ChgkRatingService {
-  static final ChgkRatingService _chgkRating = ChgkRatingService._internal();
+  static final ChgkRatingService _chgkRatingService =
+      ChgkRatingService._internal();
 
-  factory ChgkRatingService() => _chgkRating;
+  factory ChgkRatingService() => _chgkRatingService;
 
   ChgkRatingService._internal();
 
@@ -38,7 +38,11 @@ class ChgkRatingService {
     sendTimeout: defaultTimeout,
     connectTimeout: defaultTimeout,
   ))
-    ..interceptors.add(LogInterceptor());
+    ..interceptors.add(LogInterceptor(
+        requestHeader: false,
+        responseHeader: true,
+        requestBody: false,
+        responseBody: true));
 
   Future<Player?> getPlayerById(int playerId) async {
     final Response response =

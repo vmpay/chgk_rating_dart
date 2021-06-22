@@ -1,3 +1,3 @@
 ## 0.0.1
 
-Initial api wrapper
+* Initial api wrapper release.
