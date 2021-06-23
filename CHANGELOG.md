@@ -1,6 +1,10 @@
+## 0.0.3
+
+* Code documentation added.
+ 
 ## 0.0.2
 
-* Pub dev description fixes 
+* Pub dev description fixes. 
 
 ## 0.0.1
 
