@@ -49,8 +49,7 @@ class PlayerTournamentResponse {
       );
 
   /// Encodes [PlayerTournamentResponse] object to json map
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'idplayer': idPlayer == null ? null : idPlayer,
         'idseason': idSeason == null ? null : idSeason,
         'tournaments': tournaments == null ? null : tournaments,
