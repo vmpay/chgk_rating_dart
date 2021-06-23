@@ -87,15 +87,15 @@ class TournamentResults {
 
   factory TournamentResults.fromMap(Map<String, dynamic> json) =>
       TournamentResults(
-        tour: json["tour"] == null ? null : json["tour"],
-        mask: json["mask"] == null
+        tour: json['tour'] == null ? null : json['tour'],
+        mask: json['mask'] == null
             ? null
-            : List<String>.from(json["mask"].map((x) => x)),
+            : List<String>.from(json['mask'].map((x) => x)),
       );
 
   Map<String, dynamic> toMap() => {
-        "tour": tour == null ? null : tour,
-        "mask": mask == null ? null : mask,
+        'tour': tour == null ? null : tour,
+        'mask': mask == null ? null : mask,
       };
 
   @override

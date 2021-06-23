@@ -160,6 +160,11 @@ class TournamentAppeal {
             resolvedAt == null ? null : resolvedAt?.toIso8601String(),
         'answer': answer == null ? null : answer,
       };
+
+  @override
+  String toString() {
+    return 'TournamentAppeal{type: $type, questionNumber: $questionNumber, issuedAt: $issuedAt, status: $status, appeal: $appeal, comment: $comment, resolvedAt: $resolvedAt, answer: $answer}';
+  }
 }
 
 enum Type { A, R }

@@ -56,18 +56,18 @@ class PlayerSearch {
   String toJson() => json.encode(toMap());
 
   factory PlayerSearch.fromMap(Map<String, dynamic> json) => PlayerSearch(
-        items: json["items"] == null
+        items: json['items'] == null
             ? null
-            : List<Player>.from(json["items"].map((x) => Player.fromMap(x))),
-        totalItems: json["total_items"] == null ? null : json["total_items"],
+            : List<Player>.from(json['items'].map((x) => Player.fromMap(x))),
+        totalItems: json['total_items'] == null ? null : json['total_items'],
         currentItems:
-            json["current_items"] == null ? null : json["current_items"],
+            json['current_items'] == null ? null : json['current_items'],
       );
 
   Map<String, dynamic> toMap() => {
-        "items": items == null ? null : items,
-        "total_items": totalItems == null ? null : totalItems,
-        "current_items": currentItems == null ? null : currentItems,
+        'items': items == null ? null : items,
+        'total_items': totalItems == null ? null : totalItems,
+        'current_items': currentItems == null ? null : currentItems,
       };
 
   @override

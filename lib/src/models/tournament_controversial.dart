@@ -255,6 +255,11 @@ class TournamentControversial {
         'appeal_jury_comment':
             appealJuryComment == null ? null : appealJuryComment,
       };
+
+  @override
+  String toString() {
+    return 'TournamentControversial{questionNumber: $questionNumber, answer: $answer, issuedAt: $issuedAt, status: $status, comment: $comment, resolvedAt: $resolvedAt, appealJuryComment: $appealJuryComment}';
+  }
 }
 
 enum QuestionStatus { A, D, N }

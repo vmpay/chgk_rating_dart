@@ -44,11 +44,11 @@ import 'dart:convert';
 
 class TournamentTeam {
   TournamentTeam({
-    this.idteam,
+    this.idTeam,
     this.recaps,
   });
 
-  final String? idteam;
+  final String? idTeam;
   final List<TournamentTeamPlayer>? recaps;
 
   factory TournamentTeam.fromJson(String str) =>
@@ -57,21 +57,21 @@ class TournamentTeam {
   String toJson() => json.encode(toMap());
 
   factory TournamentTeam.fromMap(Map<String, dynamic> json) => TournamentTeam(
-        idteam: json["idteam"] == null ? null : json["idteam"],
-        recaps: json["recaps"] == null
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        recaps: json['recaps'] == null
             ? null
             : List<TournamentTeamPlayer>.from(
-                json["recaps"].map((x) => TournamentTeamPlayer.fromMap(x))),
+                json['recaps'].map((x) => TournamentTeamPlayer.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
-        "idteam": idteam == null ? null : idteam,
-        "recaps": recaps == null ? null : recaps,
+        'idteam': idTeam == null ? null : idTeam,
+        'recaps': recaps == null ? null : recaps,
       };
 
   @override
   String toString() {
-    return 'TournamentTeamPlayers{idteam: $idteam, recaps: $recaps}';
+    return 'TournamentTeamPlayers{idTeam: $idTeam, recaps: $recaps}';
   }
 }
 
@@ -95,17 +95,17 @@ class TournamentTeamPlayer {
 
   factory TournamentTeamPlayer.fromMap(Map<String, dynamic> json) =>
       TournamentTeamPlayer(
-        idplayer: json["idplayer"] == null ? null : json["idplayer"],
-        isCaptain: json["is_captain"] == null ? null : json["is_captain"],
-        isBase: json["is_base"] == null ? null : json["is_base"],
-        isForeign: json["is_foreign"] == null ? null : json["is_foreign"],
+        idplayer: json['idplayer'] == null ? null : json['idplayer'],
+        isCaptain: json['is_captain'] == null ? null : json['is_captain'],
+        isBase: json['is_base'] == null ? null : json['is_base'],
+        isForeign: json['is_foreign'] == null ? null : json['is_foreign'],
       );
 
   Map<String, dynamic> toMap() => {
-        "idplayer": idplayer == null ? null : idplayer,
-        "is_captain": isCaptain == null ? null : isCaptain,
-        "is_base": isBase == null ? null : isBase,
-        "is_foreign": isForeign == null ? null : isForeign,
+        'idplayer': idplayer == null ? null : idplayer,
+        'is_captain': isCaptain == null ? null : isCaptain,
+        'is_base': isBase == null ? null : isBase,
+        'is_foreign': isForeign == null ? null : isForeign,
       };
 
   @override

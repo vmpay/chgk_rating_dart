@@ -63,7 +63,7 @@ class ChgkRating {
   /// Requires player identifier [playerId]. Returns player object [Player]
   /// in case of success or Null if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Player?> getPlayerById(int playerId) async {
+  Future<Player?> getPlayerById(String playerId) async {
     final Response response =
         await _dio.get('/players.$extensionJson/$playerId');
     final Iterable<Player> playerList =
@@ -99,7 +99,7 @@ class ChgkRating {
   /// Requires player identifier [playerId]. Returns player rating object
   /// [PlayerRating] in case of success or Null if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<PlayerRating?> getPlayerRatingLatest(int playerId) async =>
+  Future<PlayerRating?> getPlayerRatingLatest(String playerId) async =>
       PlayerRating.fromMap(
           (await _dio.get('/players.$extensionJson/$playerId/rating/last'))
               .data);
@@ -109,7 +109,7 @@ class ChgkRating {
   /// Requires player identifier [playerId]. Returns player rating objects
   /// [PlayerRating] list in case of success or empty list if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Iterable<PlayerRating>> getPlayerRatingList(int playerId) async {
+  Future<Iterable<PlayerRating>> getPlayerRatingList(String playerId) async {
     final Response response =
         await _dio.get('/players.$extensionJson/$playerId/rating');
     final Iterable<PlayerRating> playerRatingList =
@@ -122,7 +122,7 @@ class ChgkRating {
   /// Requires player identifier [playerId]. Returns player team objects
   /// [PlayerTeam] list in case of success or empty list if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Iterable<PlayerTeam>> getPlayerTeamList(int playerId) async {
+  Future<Iterable<PlayerTeam>> getPlayerTeamList(String playerId) async {
     final Response response =
         await _dio.get('/players.$extensionJson/$playerId/teams');
     final Iterable<PlayerTeam> playerRatingList =
@@ -135,7 +135,7 @@ class ChgkRating {
   /// Requires player identifier [playerId]. Returns player team objects
   /// [PlayerTeam] list in case of success or empty list if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Iterable<PlayerTeam>> getPlayerTeamLastSeason(int playerId) async {
+  Future<Iterable<PlayerTeam>> getPlayerTeamLastSeason(String playerId) async {
     final Response response =
         await _dio.get('/players.$extensionJson/$playerId/teams/last');
     final Iterable<PlayerTeam> playerRatingList =
@@ -151,7 +151,7 @@ class ChgkRating {
   /// if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<PlayerTournamentResponse> getPlayerTournamentLastSeason(
-          int playerId) async =>
+          String playerId) async =>
       PlayerTournamentResponse.fromMap(
           (await _dio.get('/players.$extensionJson/$playerId/tournaments/last'))
               .data);
@@ -163,7 +163,7 @@ class ChgkRating {
   /// if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<PlayerTournamentResponse>> getPlayerTournamentList(
-      int playerId) async {
+      String playerId) async {
     final Response response =
         await _dio.get('/players.$extensionJson/$playerId/tournaments');
     final Iterable<PlayerTournamentResponse> playerTournamentList =
@@ -178,7 +178,7 @@ class ChgkRating {
   /// Requires team identifier [teamId]. Returns team object [Team]
   /// in case of success or Null if team not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Team?> getTeamById(int teamId) async {
+  Future<Team?> getTeamById(String teamId) async {
     final Response response = await _dio.get('/teams.$extensionJson/$teamId');
     return (response.data as List<dynamic>)
         .map((e) => Team.fromMap(e))
@@ -220,7 +220,7 @@ class ChgkRating {
   /// Returns team rating object [TeamRating] in case of success or Null
   /// if team rating not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<TeamRating?> getTeamRatingById(int teamId, int releaseId) async =>
+  Future<TeamRating?> getTeamRatingById(String teamId, int releaseId) async =>
       TeamRating.fromMap(
           (await _dio.get('/teams/$teamId/rating/$releaseId')).data);
 
@@ -229,7 +229,7 @@ class ChgkRating {
   /// Requires team identifier [teamId]. Returns team rating objects
   /// [TeamRating] list in case of success or empty list if team rating not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Iterable<TeamRating>> getTeamRatingList(int teamId) async =>
+  Future<Iterable<TeamRating>> getTeamRatingList(String teamId) async =>
       ((await _dio.get('/teams/$teamId/rating')).data as List<dynamic>)
           .map((e) => TeamRating.fromMap(e));
 
@@ -238,7 +238,7 @@ class ChgkRating {
   /// Requires team identifier [teamId]. Returns team players object
   /// [TeamPlayers] in case of success or Null if team players not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<TeamPlayers?> getTeamPlayersLastSeason(int teamId) async =>
+  Future<TeamPlayers?> getTeamPlayersLastSeason(String teamId) async =>
       TeamPlayers.fromMap((await _dio.get('/teams/$teamId/recaps/last')).data);
 
   /// Requests team players [TeamPlayers] list from server.
@@ -247,7 +247,7 @@ class ChgkRating {
   /// [TeamPlayers] list in case of success or empty list
   /// if team players not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Iterable<TeamPlayers>> getTeamPlayersList(int teamId) async =>
+  Future<Iterable<TeamPlayers>> getTeamPlayersList(String teamId) async =>
       ((await _dio.get('/teams/$teamId/recaps')).data as Map<String, dynamic>)
           .values
           .map((e) => TeamPlayers.fromMap(e));
@@ -257,7 +257,7 @@ class ChgkRating {
   /// Requires team identifier [teamId]. Returns team tournament object
   /// [TeamTournament] in case of success or Null if team tournament not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<TeamTournament?> getTeamTournamentLast(int teamId) async =>
+  Future<TeamTournament?> getTeamTournamentLast(String teamId) async =>
       TeamTournament.fromMap(
           (await _dio.get('/teams/$teamId/tournaments/last')).data);
 
@@ -267,7 +267,7 @@ class ChgkRating {
   /// [TeamTournament] list in case of success or empty list
   /// if team tournament not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<Iterable<TeamTournament>> getTeamTournamentList(int teamId) async =>
+  Future<Iterable<TeamTournament>> getTeamTournamentList(String teamId) async =>
       ((await _dio.get('/teams/$teamId/tournaments')).data
               as Map<String, dynamic>)
           .values
@@ -279,7 +279,7 @@ class ChgkRating {
   /// object [TournamentDetails] in case of success or Null
   /// if team tournament not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<TournamentDetails?> getTournamentDetails(int tournamentId) async =>
+  Future<TournamentDetails?> getTournamentDetails(String tournamentId) async =>
       ((await _dio.get('/tournaments/$tournamentId')).data as List<dynamic>)
           .map((e) => TournamentDetails.fromMap(e))
           .firstOrNull;
@@ -315,7 +315,7 @@ class ChgkRating {
   /// empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentTeamResults>> getTournamentResults(
-          int tournamentId) async =>
+          String tournamentId) async =>
       ((await _dio.get('/tournaments.$extensionJson/$tournamentId/list')).data
               as List<dynamic>)
           .map((e) => TournamentTeamResults.fromMap(e));
@@ -327,7 +327,7 @@ class ChgkRating {
   /// in case of success or empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentTeamPlayer>> getTournamentTeamPlayersByTeam(
-          int tournamentId, int teamId) async =>
+          String tournamentId, String teamId) async =>
       ((await _dio.get(
                   '/tournaments.$extensionJson/$tournamentId/recaps/$teamId'))
               .data as List<dynamic>)
@@ -340,7 +340,7 @@ class ChgkRating {
   /// if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentTeam>> getTournamentTeamPlayers(
-          int tournamentId) async =>
+          String tournamentId) async =>
       ((await _dio.get('/tournaments.$extensionJson/$tournamentId/recaps')).data
               as List<dynamic>)
           .map((e) => TournamentTeam.fromMap(e));
@@ -352,7 +352,7 @@ class ChgkRating {
   /// in case of success or empty list if tournament team result not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentResults>> getTournamentResultsByTeam(
-          int tournamentId, int teamId) async =>
+          String tournamentId, String teamId) async =>
       ((await _dio.get(
                   '/tournaments.$extensionJson/$tournamentId/results/$teamId'))
               .data as List<dynamic>)
@@ -365,7 +365,7 @@ class ChgkRating {
   /// in case of success or empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentControversial>> getTournamentControversialQuestions(
-          int tournamentId) async =>
+          String tournamentId) async =>
       ((await _dio.get(
                   '/tournaments.$extensionJson/$tournamentId/controversials'))
               .data as List<dynamic>)
@@ -378,7 +378,7 @@ class ChgkRating {
   /// in case of success or empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentAppeal>> getTournamentAppealQuestions(
-          int tournamentId) async =>
+          String tournamentId) async =>
       ((await _dio.get('/tournaments.$extensionJson/$tournamentId/appeals'))
               .data as List<dynamic>)
           .map((e) => TournamentAppeal.fromMap(e));

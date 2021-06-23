@@ -13,7 +13,7 @@ import 'dart:convert';
 
 class Team {
   Team({
-    this.idteam,
+    required this.idTeam,
     this.name,
     this.town,
     this.regionName,
@@ -23,7 +23,7 @@ class Team {
     this.comment,
   });
 
-  final String? idteam;
+  final String idTeam;
   final String? name;
   final String? town;
   final String? regionName;
@@ -37,34 +37,34 @@ class Team {
   String toJson() => json.encode(toMap());
 
   factory Team.fromMap(Map<String, dynamic> json) => Team(
-        idteam: json["idteam"] == null ? null : json["idteam"],
-        name: json["name"] == null ? null : json["name"],
-        town: json["town"] == null ? null : json["town"],
-        regionName: json["region_name"] == null ? null : json["region_name"],
-        countryName: json["country_name"] == null ? null : json["country_name"],
-        tournamentsThisSeason: json["tournaments_this_season"] == null
+        idTeam: json['idteam'] == null ? 'null' : json['idteam'],
+        name: json['name'] == null ? null : json['name'],
+        town: json['town'] == null ? null : json['town'],
+        regionName: json['region_name'] == null ? null : json['region_name'],
+        countryName: json['country_name'] == null ? null : json['country_name'],
+        tournamentsThisSeason: json['tournaments_this_season'] == null
             ? null
-            : json["tournaments_this_season"],
-        tournamentsTotal: json["tournaments_total"] == null
+            : json['tournaments_this_season'],
+        tournamentsTotal: json['tournaments_total'] == null
             ? null
-            : json["tournaments_total"],
-        comment: json["comment"] == null ? null : json["comment"],
+            : json['tournaments_total'],
+        comment: json['comment'] == null ? null : json['comment'],
       );
 
   Map<String, dynamic> toMap() => {
-        "idteam": idteam == null ? null : idteam,
-        "name": name == null ? null : name,
-        "town": town == null ? null : town,
-        "region_name": regionName == null ? null : regionName,
-        "country_name": countryName == null ? null : countryName,
-        "tournaments_this_season":
+        'idteam': idTeam == null ? 'null' : idTeam,
+        'name': name == null ? null : name,
+        'town': town == null ? null : town,
+        'region_name': regionName == null ? null : regionName,
+        'country_name': countryName == null ? null : countryName,
+        'tournaments_this_season':
             tournamentsThisSeason == null ? null : tournamentsThisSeason,
-        "tournaments_total": tournamentsTotal == null ? null : tournamentsTotal,
-        "comment": comment == null ? null : comment,
+        'tournaments_total': tournamentsTotal == null ? null : tournamentsTotal,
+        'comment': comment == null ? null : comment,
       };
 
   @override
   String toString() {
-    return 'Team{idteam: $idteam, name: $name, town: $town, regionName: $regionName, countryName: $countryName, tournamentsThisSeason: $tournamentsThisSeason, tournamentsTotal: $tournamentsTotal, comment: $comment}';
+    return 'Team{idTeam: $idTeam, name: $name, town: $town, regionName: $regionName, countryName: $countryName, tournamentsThisSeason: $tournamentsThisSeason, tournamentsTotal: $tournamentsTotal, comment: $comment}';
   }
 }

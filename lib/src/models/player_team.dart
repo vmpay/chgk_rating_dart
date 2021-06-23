@@ -11,16 +11,16 @@ import 'dart:convert';
 
 class PlayerTeam {
   PlayerTeam({
-    this.idplayer,
-    this.idteam,
-    this.idseason,
+    required this.idPlayer,
+    required this.idTeam,
+    this.idSeason,
     this.isCaptain,
     this.addedSince,
   });
 
-  final String? idplayer;
-  final String? idteam;
-  final String? idseason;
+  final String idPlayer;
+  final String idTeam;
+  final String? idSeason;
   final String? isCaptain;
   final DateTime? addedSince;
 
@@ -30,27 +30,27 @@ class PlayerTeam {
   String toJson() => json.encode(toMap());
 
   factory PlayerTeam.fromMap(Map<String, dynamic> json) => PlayerTeam(
-        idplayer: json["idplayer"] == null ? null : json["idplayer"],
-        idteam: json["idteam"] == null ? null : json["idteam"],
-        idseason: json["idseason"] == null ? null : json["idseason"],
-        isCaptain: json["is_captain"] == null ? null : json["is_captain"],
-        addedSince: json["added_since"] == null
+        idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
+        idTeam: json['idteam'] == null ? 'null' : json['idteam'],
+        idSeason: json['idseason'] == null ? null : json['idseason'],
+        isCaptain: json['is_captain'] == null ? null : json['is_captain'],
+        addedSince: json['added_since'] == null
             ? null
-            : DateTime.parse(json["added_since"]),
+            : DateTime.parse(json['added_since']),
       );
 
   Map<String, dynamic> toMap() => {
-        "idplayer": idplayer == null ? null : idplayer,
-        "idteam": idteam == null ? null : idteam,
-        "idseason": idseason == null ? null : idseason,
-        "is_captain": isCaptain == null ? null : isCaptain,
-        "added_since": addedSince == null
+        'idplayer': idPlayer == null ? 'null' : idPlayer,
+        'idteam': idTeam == null ? 'null' : idTeam,
+        'idseason': idSeason == null ? null : idSeason,
+        'is_captain': isCaptain == null ? null : isCaptain,
+        'added_since': addedSince == null
             ? null
             : "${addedSince?.year.toString().padLeft(4, '0')}-${addedSince?.month.toString().padLeft(2, '0')}-${addedSince?.day.toString().padLeft(2, '0')}",
       };
 
   @override
   String toString() {
-    return 'PlayerTeam{idplayer: $idplayer, idteam: $idteam, idseason: $idseason, isCaptain: $isCaptain, addedSince: $addedSince}';
+    return 'PlayerTeam{idPlayer: $idPlayer, idTeam: $idTeam, idSeason: $idSeason, isCaptain: $isCaptain, addedSince: $addedSince}';
   }
 }

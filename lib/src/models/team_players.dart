@@ -15,14 +15,14 @@ import 'dart:convert';
 
 class TeamPlayers {
   TeamPlayers({
-    this.idteam,
-    this.idseason,
+    this.idTeam,
+    this.idSeason,
     this.players,
     this.captain,
   });
 
-  final int? idteam;
-  final int? idseason;
+  final int? idTeam;
+  final int? idSeason;
   final List<String>? players;
   final String? captain;
 
@@ -32,24 +32,24 @@ class TeamPlayers {
   String toJson() => json.encode(toMap());
 
   factory TeamPlayers.fromMap(Map<String, dynamic> json) => TeamPlayers(
-        idteam: json["idteam"] == null ? null : json["idteam"],
-        idseason: json["idseason"] == null ? null : json["idseason"],
-        players: json["players"] == null
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        idSeason: json['idseason'] == null ? null : json['idseason'],
+        players: json['players'] == null
             ? null
-            : List<String>.from(json["players"].map((x) => x)),
+            : List<String>.from(json['players'].map((x) => x)),
         // TODO false means null
-        captain: json["captain"] == null ? null : json["captain"].toString(),
+        captain: json['captain'] == null ? null : json['captain'].toString(),
       );
 
   Map<String, dynamic> toMap() => {
-        "idteam": idteam == null ? null : idteam,
-        "idseason": idseason == null ? null : idseason,
-        "players": players == null ? null : players,
-        "captain": captain == null ? null : captain,
+        'idteam': idTeam == null ? null : idTeam,
+        'idseason': idSeason == null ? null : idSeason,
+        'players': players == null ? null : players,
+        'captain': captain == null ? null : captain,
       };
 
   @override
   String toString() {
-    return 'TeamPlayers{idteam: $idteam, idseason: $idseason, players: $players, captain: $captain}';
+    return 'TeamPlayers{idTeam: $idTeam, idSeason: $idSeason, players: $players, captain: $captain}';
   }
 }

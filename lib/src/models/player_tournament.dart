@@ -39,13 +39,13 @@ import 'dart:convert';
 
 class PlayerTournamentResponse {
   PlayerTournamentResponse({
-    this.idplayer,
-    this.idseason,
+    this.idPlayer,
+    this.idSeason,
     this.tournaments,
   });
 
-  final int? idplayer;
-  final String? idseason;
+  final int? idPlayer;
+  final String? idSeason;
   final List<PlayerTournament>? tournaments;
 
   factory PlayerTournamentResponse.fromJson(String str) =>
@@ -55,35 +55,35 @@ class PlayerTournamentResponse {
 
   factory PlayerTournamentResponse.fromMap(Map<String, dynamic> json) =>
       PlayerTournamentResponse(
-        idplayer: json["idplayer"] == null ? null : json["idplayer"],
-        idseason: json["idseason"] == null ? null : json["idseason"].toString(),
-        tournaments: json["tournaments"] == null
+        idPlayer: json['idplayer'] == null ? null : json['idplayer'],
+        idSeason: json['idseason'] == null ? null : json['idseason'].toString(),
+        tournaments: json['tournaments'] == null
             ? null
             : List<PlayerTournament>.from(
-                json["tournaments"].map((x) => PlayerTournament.fromMap(x))),
+                json['tournaments'].map((x) => PlayerTournament.fromMap(x))),
       );
 
   Map<String, dynamic> toMap() => {
-        "idplayer": idplayer == null ? null : idplayer,
-        "idseason": idseason == null ? null : idseason,
-        "tournaments": tournaments == null ? null : tournaments,
+        'idplayer': idPlayer == null ? null : idPlayer,
+        'idseason': idSeason == null ? null : idSeason,
+        'tournaments': tournaments == null ? null : tournaments,
       };
 
   @override
   String toString() {
-    return 'PlayerTournamentResponse{idplayer: $idplayer, idseason: $idseason, tournaments: $tournaments}';
+    return 'PlayerTournamentResponse{idPlayer: $idPlayer, idSeason: $idSeason, tournaments: $tournaments}';
   }
 }
 
 class PlayerTournament {
   PlayerTournament({
-    this.idtournament,
-    this.idteam,
+    required this.idTournament,
+    this.idTeam,
     this.inBaseTeam,
   });
 
-  final String? idtournament;
-  final String? idteam;
+  final String idTournament;
+  final String? idTeam;
   final String? inBaseTeam;
 
   factory PlayerTournament.fromJson(String str) =>
@@ -93,20 +93,20 @@ class PlayerTournament {
 
   factory PlayerTournament.fromMap(Map<String, dynamic> json) =>
       PlayerTournament(
-        idtournament:
-            json["idtournament"] == null ? null : json["idtournament"],
-        idteam: json["idteam"] == null ? null : json["idteam"],
-        inBaseTeam: json["in_base_team"] == null ? null : json["in_base_team"],
+        idTournament:
+            json['idtournament'] == null ? 'null' : json['idtournament'],
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        inBaseTeam: json['in_base_team'] == null ? null : json['in_base_team'],
       );
 
   Map<String, dynamic> toMap() => {
-        "idtournament": idtournament == null ? null : idtournament,
-        "idteam": idteam == null ? null : idteam,
-        "in_base_team": inBaseTeam == null ? null : inBaseTeam,
+        'idtournament': idTournament == null ? 'null' : idTournament,
+        'idteam': idTeam == null ? null : idTeam,
+        'in_base_team': inBaseTeam == null ? null : inBaseTeam,
       };
 
   @override
   String toString() {
-    return 'PlayerTournament{idtournament: $idtournament, idteam: $idteam, inBaseTeam: $inBaseTeam}';
+    return 'PlayerTournament{idTournament: $idTournament, idTeam: $idTeam, inBaseTeam: $inBaseTeam}';
   }
 }

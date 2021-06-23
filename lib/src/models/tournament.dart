@@ -12,7 +12,7 @@ import 'dart:convert';
 
 class Tournament {
   Tournament({
-    this.idtournament,
+    this.idTournament,
     this.name,
     this.dateStart,
     this.dateEnd,
@@ -21,7 +21,7 @@ class Tournament {
     this.dateArchivedAt,
   });
 
-  final String? idtournament;
+  final String? idTournament;
   final String? name;
   final DateTime? dateStart;
   final DateTime? dateEnd;
@@ -35,34 +35,34 @@ class Tournament {
   String toJson() => json.encode(toMap());
 
   factory Tournament.fromMap(Map<String, dynamic> json) => Tournament(
-        idtournament:
-            json["idtournament"] == null ? null : json["idtournament"],
-        name: json["name"] == null ? null : json["name"],
-        dateStart: json["date_start"] == null
+        idTournament:
+            json['idtournament'] == null ? null : json['idtournament'],
+        name: json['name'] == null ? null : json['name'],
+        dateStart: json['date_start'] == null
             ? null
-            : DateTime.parse(json["date_start"]),
+            : DateTime.parse(json['date_start']),
         dateEnd:
-            json["date_end"] == null ? null : DateTime.parse(json["date_end"]),
-        typeName: json["type_name"] == null ? null : json["type_name"],
-        archive: json["archive"] == null ? null : json["archive"],
-        dateArchivedAt: json["date_archived_at"] == null
+            json['date_end'] == null ? null : DateTime.parse(json['date_end']),
+        typeName: json['type_name'] == null ? null : json['type_name'],
+        archive: json['archive'] == null ? null : json['archive'],
+        dateArchivedAt: json['date_archived_at'] == null
             ? null
-            : DateTime.parse(json["date_archived_at"]),
+            : DateTime.parse(json['date_archived_at']),
       );
 
   Map<String, dynamic> toMap() => {
-        "idtournament": idtournament == null ? null : idtournament,
-        "name": name == null ? null : name,
-        "date_start": dateStart == null ? null : dateStart?.toIso8601String(),
-        "date_end": dateEnd == null ? null : dateEnd?.toIso8601String(),
-        "type_name": typeName == null ? null : typeName,
-        "archive": archive == null ? null : archive,
-        "date_archived_at":
+        'idtournament': idTournament == null ? null : idTournament,
+        'name': name == null ? null : name,
+        'date_start': dateStart == null ? null : dateStart?.toIso8601String(),
+        'date_end': dateEnd == null ? null : dateEnd?.toIso8601String(),
+        'type_name': typeName == null ? null : typeName,
+        'archive': archive == null ? null : archive,
+        'date_archived_at':
             dateArchivedAt == null ? null : dateArchivedAt?.toIso8601String(),
       };
 
   @override
   String toString() {
-    return 'Tournament{idtournament: $idtournament, name: $name, dateStart: $dateStart, dateEnd: $dateEnd, typeName: $typeName, archive: $archive, dateArchivedAt: $dateArchivedAt}';
+    return 'Tournament{idTournament: $idTournament, name: $name, dateStart: $dateStart, dateEnd: $dateEnd, typeName: $typeName, archive: $archive, dateArchivedAt: $dateArchivedAt}';
   }
 }

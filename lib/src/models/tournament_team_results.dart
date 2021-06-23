@@ -19,7 +19,7 @@ import 'dart:convert';
 
 class TournamentTeamResults {
   TournamentTeamResults({
-    this.idteam,
+    this.idTeam,
     this.currentName,
     this.baseName,
     this.position,
@@ -35,7 +35,7 @@ class TournamentTeamResults {
     this.includedInRating,
   });
 
-  final String? idteam;
+  final String? idTeam;
   final String? currentName;
   final String? baseName;
   final String? position;
@@ -57,51 +57,51 @@ class TournamentTeamResults {
 
   factory TournamentTeamResults.fromMap(Map<String, dynamic> json) =>
       TournamentTeamResults(
-        idteam: json["idteam"] == null ? null : json["idteam"],
-        currentName: json["current_name"] == null ? null : json["current_name"],
-        baseName: json["base_name"] == null ? null : json["base_name"],
-        position: json["position"] == null ? null : json["position"],
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        currentName: json['current_name'] == null ? null : json['current_name'],
+        baseName: json['base_name'] == null ? null : json['base_name'],
+        position: json['position'] == null ? null : json['position'],
         questionsTotal:
-            json["questions_total"] == null ? null : json["questions_total"],
-        mask: json["mask"] == null ? null : json["mask"],
+            json['questions_total'] == null ? null : json['questions_total'],
+        mask: json['mask'] == null ? null : json['mask'],
         techRatingRt:
-            json["tech_rating_rt"] == null ? null : json["tech_rating_rt"],
+            json['tech_rating_rt'] == null ? null : json['tech_rating_rt'],
         techRatingRg:
-            json["tech_rating_rg"] == null ? null : json["tech_rating_rg"],
+            json['tech_rating_rg'] == null ? null : json['tech_rating_rg'],
         techRatingRb:
-            json["tech_rating_rb"] == null ? null : json["tech_rating_rb"],
-        ratingR: json["rating_r"] == null ? null : json["rating_r"],
-        predictedPosition: json["predicted_position"] == null
+            json['tech_rating_rb'] == null ? null : json['tech_rating_rb'],
+        ratingR: json['rating_r'] == null ? null : json['rating_r'],
+        predictedPosition: json['predicted_position'] == null
             ? null
-            : json["predicted_position"],
-        bonusB: json["bonus_b"] == null ? null : json["bonus_b"],
-        diffBonus: json["diff_bonus"] == null ? null : json["diff_bonus"],
-        includedInRating: json["included_in_rating"] == null
+            : json['predicted_position'],
+        bonusB: json['bonus_b'] == null ? null : json['bonus_b'],
+        diffBonus: json['diff_bonus'] == null ? null : json['diff_bonus'],
+        includedInRating: json['included_in_rating'] == null
             ? null
-            : json["included_in_rating"],
+            : json['included_in_rating'],
       );
 
   Map<String, dynamic> toMap() => {
-        "idteam": idteam == null ? null : idteam,
-        "current_name": currentName == null ? null : currentName,
-        "base_name": baseName == null ? null : baseName,
-        "position": position == null ? null : position,
-        "questions_total": questionsTotal == null ? null : questionsTotal,
-        "mask": mask == null ? null : mask,
-        "tech_rating_rt": techRatingRt == null ? null : techRatingRt,
-        "tech_rating_rg": techRatingRg == null ? null : techRatingRg,
-        "tech_rating_rb": techRatingRb == null ? null : techRatingRb,
-        "rating_r": ratingR == null ? null : ratingR,
-        "predicted_position":
+        'idteam': idTeam == null ? null : idTeam,
+        'current_name': currentName == null ? null : currentName,
+        'base_name': baseName == null ? null : baseName,
+        'position': position == null ? null : position,
+        'questions_total': questionsTotal == null ? null : questionsTotal,
+        'mask': mask == null ? null : mask,
+        'tech_rating_rt': techRatingRt == null ? null : techRatingRt,
+        'tech_rating_rg': techRatingRg == null ? null : techRatingRg,
+        'tech_rating_rb': techRatingRb == null ? null : techRatingRb,
+        'rating_r': ratingR == null ? null : ratingR,
+        'predicted_position':
             predictedPosition == null ? null : predictedPosition,
-        "bonus_b": bonusB == null ? null : bonusB,
-        "diff_bonus": diffBonus == null ? null : diffBonus,
-        "included_in_rating":
+        'bonus_b': bonusB == null ? null : bonusB,
+        'diff_bonus': diffBonus == null ? null : diffBonus,
+        'included_in_rating':
             includedInRating == null ? null : includedInRating,
       };
 
   @override
   String toString() {
-    return 'TournamentTeamResults{idteam: $idteam, currentName: $currentName, baseName: $baseName, position: $position, questionsTotal: $questionsTotal, mask: $mask, techRatingRt: $techRatingRt, techRatingRg: $techRatingRg, techRatingRb: $techRatingRb, ratingR: $ratingR, predictedPosition: $predictedPosition, bonusB: $bonusB, diffBonus: $diffBonus, includedInRating: $includedInRating}';
+    return 'TournamentTeamResults{idTeam: $idTeam, currentName: $currentName, baseName: $baseName, position: $position, questionsTotal: $questionsTotal, mask: $mask, techRatingRt: $techRatingRt, techRatingRg: $techRatingRg, techRatingRb: $techRatingRb, ratingR: $ratingR, predictedPosition: $predictedPosition, bonusB: $bonusB, diffBonus: $diffBonus, includedInRating: $includedInRating}';
   }
 }
