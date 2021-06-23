@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 /// Response example:
+/// ```json
 /// [
 /// {
 ///     "question_number": "6",
@@ -7,169 +10,7 @@
 ///     "status": "A",
 ///     "comment": null,
 ///     "resolved_at": "2017-07-25 09:52:04",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "12",
-///     "answer": "Альбрехт Альбрунер",
-///     "issued_at": "2017-07-19 17:28:11",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:10",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "14",
-///     "answer": "картофель",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "D",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:16",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "14",
-///     "answer": "картофель",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "D",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:16",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "14",
-///     "answer": "картофель",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "D",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:16",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "14",
-///     "answer": "картофель",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "D",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:16",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "14",
-///     "answer": "картофель",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "D",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:16",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "14",
-///     "answer": "картошка",
-///     "issued_at": "2017-07-19 17:28:11",
-///     "status": "D",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:52:20",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "15",
-///     "answer": "Осанна",
-///     "issued_at": "2017-07-19 08:19:43",
-///     "status": "D",
-///     "comment": "",
-///     "resolved_at": "2017-07-25 09:56:53",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "17",
-///     "answer": "конденсат",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:57:22",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "17",
-///     "answer": "конденсат",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:57:22",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "17",
-///     "answer": "конденсат",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:57:22",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "17",
-///     "answer": "конденсат",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:57:22",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "17",
-///     "answer": "водяной пар",
-///     "issued_at": "2017-07-19 17:28:11",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:57:14",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "22",
-///     "answer": "Нотр-Дам",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 14:23:18",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "22",
-///     "answer": "Собор Парижской Богоматери",
-///     "issued_at": "2017-07-19 08:15:05",
-///     "status": "A",
-///     "comment": "",
-///     "resolved_at": "2017-07-25 14:23:14",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "25",
-///     "answer": "копьё власти",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:53:02",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "30",
-///     "answer": "германские гетто",
-///     "issued_at": "2017-07-18 22:33:57",
-///     "status": "D",
-///     "comment": "",
-///     "resolved_at": "2017-07-25 14:23:23",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "30",
-///     "answer": "городские гетто",
-///     "issued_at": "2017-07-20 12:17:45",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 13:19:16",
-///     "appeal_jury_comment": null
+///     "appeal_jury_comment": "Комментарий"
 /// },
 /// {
 ///     "question_number": "33",
@@ -178,29 +19,10 @@
 ///     "status": "D",
 ///     "comment": null,
 ///     "resolved_at": "2017-07-25 09:57:30",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "34",
-///     "answer": "пчих",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 14:23:09",
-///     "appeal_jury_comment": null
-/// },
-/// {
-///     "question_number": "34",
-///     "answer": "факультет Пчхи",
-///     "issued_at": "2017-07-15 12:01:14",
-///     "status": "A",
-///     "comment": null,
-///     "resolved_at": "2017-07-25 09:53:12",
-///     "appeal_jury_comment": null
+///     "appeal_jury_comment": "Комментарий"
 /// }
 /// ]
-import 'dart:convert';
-
+/// ```
 class TournamentControversial {
   TournamentControversial({
     this.questionNumber,
@@ -220,11 +42,14 @@ class TournamentControversial {
   final DateTime? resolvedAt;
   final String? appealJuryComment;
 
+  /// Decodes [TournamentControversial] object from json string
   factory TournamentControversial.fromJson(String str) =>
       TournamentControversial.fromMap(json.decode(str));
 
+  /// Encodes [TournamentControversial] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [TournamentControversial] object from json map
   factory TournamentControversial.fromMap(Map<String, dynamic> json) =>
       TournamentControversial(
         questionNumber:
@@ -244,6 +69,7 @@ class TournamentControversial {
             : json['appeal_jury_comment'],
       );
 
+  /// Encodes [TournamentControversial] object to json map
   Map<String, dynamic> toMap() => {
         'question_number': questionNumber == null ? null : questionNumber,
         'answer': answer == null ? null : answer,
@@ -262,8 +88,10 @@ class TournamentControversial {
   }
 }
 
+/// [A] - approved, [D] - declined, [N] - new
 enum QuestionStatus { A, D, N }
 
+/// [QuestionStatus.A] - approved, [QuestionStatus.D] - declined, [QuestionStatus.N] - new
 final EnumValues<QuestionStatus> statusValues = EnumValues<QuestionStatus>(
     {'A': QuestionStatus.A, 'D': QuestionStatus.D, 'N': QuestionStatus.N});
 

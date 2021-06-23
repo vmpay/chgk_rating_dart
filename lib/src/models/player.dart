@@ -1,14 +1,16 @@
+import 'dart:convert';
+
 /// Response example:
+/// ```json
 /// {
 /// "idplayer": "27822",
 /// "surname": "Савченков",
 /// "name": "Михаил",
 /// "patronymic": "Владимирович",
-/// "comment": null,
+/// "comment": "Комментарий",
 /// "db_chgk_info_tag": "msavchenkov"
 /// }
-import 'dart:convert';
-
+/// ```
 class Player {
   Player({
     required this.idPlayer,
@@ -26,10 +28,13 @@ class Player {
   final String? comment;
   final String? dbChgkInfoTag;
 
+  /// Decodes [Player] object from json string
   factory Player.fromJson(String str) => Player.fromMap(json.decode(str));
 
+  /// Encodes [Player] object to json String
   String toJson() => json.encode(toMap());
 
+  /// Decodes [Player] object from json map
   factory Player.fromMap(Map<String, dynamic> json) => Player(
         idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
         surname: json['surname'] == null ? null : json['surname'],
@@ -40,6 +45,7 @@ class Player {
             json['db_chgk_info_tag'] == null ? null : json['db_chgk_info_tag'],
       );
 
+  /// Encodes [Player] object to json map
   Map<String, dynamic> toMap() => {
         'idplayer': idPlayer == null ? 'null' : idPlayer,
         'surname': surname == null ? null : surname,

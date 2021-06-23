@@ -1,16 +1,18 @@
+import 'dart:convert';
+
 /// Response example:
+/// ```json
 /// {
 /// "idteam": "58380",
 /// "name": "Олег с мышами",
 /// "town": "Варшава",
-/// "region_name": "null",
+/// "region_name": "Мазовецкое воеводство",
 /// "country_name": "Польша",
 /// "tournaments_this_season": "0",
 /// "tournaments_total": "125",
-/// "comment": "null"
+/// "comment": "Комментарий"
 /// }
-import 'dart:convert';
-
+/// ```
 class Team {
   Team({
     required this.idTeam,
@@ -32,10 +34,13 @@ class Team {
   final String? tournamentsTotal;
   final String? comment;
 
+  /// Decodes [Team] object from json string
   factory Team.fromJson(String str) => Team.fromMap(json.decode(str));
 
+  /// Encodes [Team] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [Team] object from json map
   factory Team.fromMap(Map<String, dynamic> json) => Team(
         idTeam: json['idteam'] == null ? 'null' : json['idteam'],
         name: json['name'] == null ? null : json['name'],
@@ -51,6 +56,7 @@ class Team {
         comment: json['comment'] == null ? null : json['comment'],
       );
 
+  /// Encodes [Team] object to json map
   Map<String, dynamic> toMap() => {
         'idteam': idTeam == null ? 'null' : idTeam,
         'name': name == null ? null : name,

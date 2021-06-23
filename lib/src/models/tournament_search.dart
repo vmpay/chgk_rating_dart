@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'tournament.dart';
+
 /// Response example:
+/// ```json
 /// {
 /// "items": [
 ///     {
@@ -7,8 +12,8 @@
 ///         "date_start": "2021-06-04 22:00:00",
 ///         "date_end": "0000-00-00 00:00:00",
 ///         "type_name": "Обычный",
-///         "archive": null,
-///         "date_archived_at": null
+///         "archive": "2021-06-04 22:00:00",
+///         "date_archived_at": "2021-06-04 22:00:00"
 ///     },
 ///     {
 ///         "idtournament": "6621",
@@ -16,44 +21,14 @@
 ///         "date_start": "2021-06-08 22:00:00",
 ///         "date_end": "0000-00-00 00:00:00",
 ///         "type_name": "Обычный",
-///         "archive": null,
-///         "date_archived_at": null
-///     },
-///     {
-///         "idtournament": "7004",
-///         "name": "Онлайн: 22:00 MSK / KYIV Лига Старта 26 - май",
-///         "date_start": "2021-05-08 22:00:00",
-///         "date_end": "0000-00-00 00:00:00",
-///         "type_name": "Обычный",
-///         "archive": null,
-///         "date_archived_at": null
-///     },
-///     {
-///         "idtournament": "7178",
-///         "name": "Молодежный чемпионат ПФО. Первый этап",
-///         "date_start": "2021-05-24 12:00:00",
-///         "date_end": "0000-00-00 00:00:00",
-///         "type_name": "Асинхрон",
-///         "archive": "1",
-///         "date_archived_at": "2021-05-22 00:00:00"
-///     },
-///     {
-///         "idtournament": "1999",
-///         "name": "Тульский фестиваль",
-///         "date_start": "1992-09-08 00:00:00",
-///         "date_end": "1992-09-10 00:00:00",
-///         "type_name": "Обычный",
-///         "archive": null,
-///         "date_archived_at": null
+///         "archive": "2021-06-04 22:00:00",
+///         "date_archived_at": "2021-06-04 22:00:00"
 ///     }
 /// ],
 /// "total_items": "6122",
 /// "current_items": "1-5"
 /// }
-import 'dart:convert';
-
-import 'tournament.dart';
-
+/// ```
 class TournamentSearch {
   TournamentSearch({
     this.items,
@@ -65,11 +40,14 @@ class TournamentSearch {
   final String? totalItems;
   final String? currentItems;
 
+  /// Decodes [TournamentSearch] object from json string
   factory TournamentSearch.fromJson(String str) =>
       TournamentSearch.fromMap(json.decode(str));
 
+  /// Encodes [TournamentSearch] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [TournamentSearch] object from json map
   factory TournamentSearch.fromMap(Map<String, dynamic> json) =>
       TournamentSearch(
         items: json['items'] == null
@@ -81,6 +59,7 @@ class TournamentSearch {
             json['current_items'] == null ? null : json['current_items'],
       );
 
+  /// Encodes [TournamentSearch] object to json map
   Map<String, dynamic> toMap() => {
         'items': items == null ? null : items,
         'total_items': totalItems == null ? null : totalItems,

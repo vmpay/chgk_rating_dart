@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 /// Response example:
+/// ```json
 /// {
 /// "idteam": "58380",
 /// "idrelease": "1283",
@@ -8,8 +11,7 @@
 /// "tech_rating": "840",
 /// "formula": "b"
 /// }
-import 'dart:convert';
-
+/// ```
 class TeamRating {
   TeamRating({
     this.idTeam,
@@ -29,11 +31,14 @@ class TeamRating {
   final String? techRating;
   final String? formula;
 
+  /// Decodes [TeamRating] object from json string
   factory TeamRating.fromJson(String str) =>
       TeamRating.fromMap(json.decode(str));
 
+  /// Encodes [TeamRating] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [TeamRating] object from json map
   factory TeamRating.fromMap(Map<String, dynamic> json) => TeamRating(
         idTeam: json['idteam'] == null ? null : json['idteam'],
         idRelease: json['idrelease'] == null ? null : json['idrelease'],
@@ -45,6 +50,7 @@ class TeamRating {
         formula: json['formula'] == null ? null : json['formula'],
       );
 
+  /// Encodes [TeamRating] object to json map
   Map<String, dynamic> toMap() => {
         'idteam': idTeam == null ? null : idTeam,
         'idrelease': idRelease == null ? null : idRelease,

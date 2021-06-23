@@ -1,11 +1,16 @@
+import 'dart:convert';
+
+import 'team.dart';
+
 /// Response example:
+/// ```json
 /// {
 /// "items": [
 ///     {
 ///         "idteam": "58380",
 ///         "name": "Олег с мышами",
 ///         "town": "Варшава",
-///         "region_name": null,
+///         "region_name": "Мазовецкое воеводство",
 ///         "country_name": "Польша",
 ///         "tournaments_this_season": "0",
 ///         "tournaments_total": "125"
@@ -14,10 +19,7 @@
 /// "total_items": "1",
 /// "current_items": "1-100"
 ///  }
-import 'dart:convert';
-
-import 'team.dart';
-
+///  ```
 class TeamSearch {
   TeamSearch({
     this.items,
@@ -29,11 +31,14 @@ class TeamSearch {
   final String? totalItems;
   final String? currentItems;
 
+  /// Decodes [TeamSearch] object from json string
   factory TeamSearch.fromJson(String str) =>
       TeamSearch.fromMap(json.decode(str));
 
+  /// Encodes [TeamSearch] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [TeamSearch] object from json map
   factory TeamSearch.fromMap(Map<String, dynamic> json) => TeamSearch(
         items: json['items'] == null
             ? null
@@ -43,6 +48,7 @@ class TeamSearch {
             json['current_items'] == null ? null : json['current_items'],
       );
 
+  /// Encodes [TeamSearch] object to json map
   Map<String, dynamic> toMap() => {
         'items': items == null ? null : items,
         'total_items': totalItems == null ? null : totalItems,

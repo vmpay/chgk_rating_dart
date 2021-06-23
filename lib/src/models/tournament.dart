@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 /// Response example:
+/// ```json
 /// {
 /// "idtournament": "6431",
 /// "name": "Онлайн: 22:00 MSK / KYIV  \"Триптих. Лето\" (NEW!)",
@@ -8,8 +11,7 @@
 /// "archive": "2021-06-04 22:00:00",
 /// "date_archived_at": "2021-06-04 22:00:00"
 /// }
-import 'dart:convert';
-
+/// ```
 class Tournament {
   Tournament({
     this.idTournament,
@@ -29,11 +31,14 @@ class Tournament {
   final String? archive;
   final DateTime? dateArchivedAt;
 
+  /// Decodes [Tournament] object from json string
   factory Tournament.fromJson(String str) =>
       Tournament.fromMap(json.decode(str));
 
+  /// Encodes [Tournament] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [Tournament] object from json map
   factory Tournament.fromMap(Map<String, dynamic> json) => Tournament(
         idTournament:
             json['idtournament'] == null ? null : json['idtournament'],
@@ -50,6 +55,7 @@ class Tournament {
             : DateTime.parse(json['date_archived_at']),
       );
 
+  /// Encodes [Tournament] object to json map
   Map<String, dynamic> toMap() => {
         'idtournament': idTournament == null ? null : idTournament,
         'name': name == null ? null : name,

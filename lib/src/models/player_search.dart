@@ -1,4 +1,9 @@
+import 'dart:convert';
+
+import 'player.dart';
+
 /// Response example:
+/// ```json
 /// {
 /// "items": [
 ///     {
@@ -12,33 +17,12 @@
 ///         "surname": "Бондарь",
 ///         "name": "Андрей",
 ///         "patronymic": "Юрьевич"
-///     },
-///     {
-///         "idplayer": "5076",
-///         "surname": "Васильев",
-///         "name": "Андрей",
-///         "patronymic": "Юрьевич"
-///     },
-///     {
-///         "idplayer": "6977",
-///         "surname": "Гетманенко",
-///         "name": "Андрей",
-///         "patronymic": "Юрьевич"
-///     },
-///     {
-///         "idplayer": "10110",
-///         "surname": "Евдокимов",
-///         "name": "Андрей",
-///         "patronymic": "Юрьевич"
 ///     }
 /// ],
 /// "total_items": "169",
-/// "current_items": "1-5"
+/// "current_items": "1-1000"
 /// }
-import 'dart:convert';
-
-import 'player.dart';
-
+/// ```
 class PlayerSearch {
   PlayerSearch({
     this.items,
@@ -50,11 +34,14 @@ class PlayerSearch {
   final String? totalItems;
   final String? currentItems;
 
+  /// Decodes [PlayerSearch] object from json string
   factory PlayerSearch.fromJson(String str) =>
       PlayerSearch.fromMap(json.decode(str));
 
+  /// Encodes [PlayerSearch] object to json string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [PlayerSearch] object from json map
   factory PlayerSearch.fromMap(Map<String, dynamic> json) => PlayerSearch(
         items: json['items'] == null
             ? null
@@ -64,6 +51,7 @@ class PlayerSearch {
             json['current_items'] == null ? null : json['current_items'],
       );
 
+  /// Encodes [PlayerSearch] object to json map
   Map<String, dynamic> toMap() => {
         'items': items == null ? null : items,
         'total_items': totalItems == null ? null : totalItems,

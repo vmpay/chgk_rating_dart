@@ -1,14 +1,17 @@
+import 'dart:convert';
+
 /// Response example:
+/// ```json
 /// {
 /// "idtournament": "5021",
 /// "name": "Синхрон-lite. Выпуск XXII",
-/// "town": "null",
+/// "town": "Варшава",
 /// "long_name": "Синхрон-lite. Выпуск XXII",
 /// "date_start": "2019-02-08 18:55:00",
 /// "date_end": "2019-02-12 18:55:00",
 /// "tour_count": "3",
 /// "tour_questions": "12",
-/// "tour_ques_per_tour": "null",
+/// "tour_ques_per_tour": "12",
 /// "questions_total": "36",
 /// "type_name": "Синхрон",
 /// "main_payment_value": "4",
@@ -18,14 +21,13 @@
 /// "discounted_payment_reason": "Школьные и молодёжные команды.",
 /// "tournament_in_rating": "1",
 /// "date_requests_allowed_to": "2019-02-11 23:59:59",
-/// "comment": "null",
+/// "comment": "Комментарий",
 /// "site_url": "https://chgk-is.livejournal.com/",
 /// "archive": "1",
 /// "date_archived_at": "2019-03-01 23:59:59",
-/// "db_tags": ["null"]
+/// "db_tags": ["tag"]
 /// }
-import 'dart:convert';
-
+/// ```
 class TournamentDetails {
   TournamentDetails({
     this.idTournament,
@@ -77,11 +79,14 @@ class TournamentDetails {
   final DateTime? dateArchivedAt;
   final List<String>? dbTags;
 
+  /// Decodes [TournamentDetails] object from json string
   factory TournamentDetails.fromJson(String str) =>
       TournamentDetails.fromMap(json.decode(str));
 
+  /// Encodes [TournamentDetails] object from to string
   String toJson() => json.encode(toMap());
 
+  /// Decodes [TournamentDetails] object from json map
   factory TournamentDetails.fromMap(Map<String, dynamic> json) =>
       TournamentDetails(
         idTournament:
@@ -135,6 +140,7 @@ class TournamentDetails {
             : List<String>.from(json['db_tags'].map((x) => x)),
       );
 
+  /// Encodes [TournamentDetails] object to json map
   Map<String, dynamic> toMap() => {
         'idtournament': idTournament == null ? null : idTournament,
         'name': name == null ? null : name,
