@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 
 import 'constants.dart';
 import 'ext.dart';
@@ -40,35 +41,42 @@ import 'models/tournament_team_results.dart';
 /// ```
 
 class ChgkRating {
-  static final ChgkRating _chgkRatingService = ChgkRating._internal();
-
-  factory ChgkRating() => _chgkRatingService;
-
-  ChgkRating._internal();
-
-  final Dio _dio = Dio(BaseOptions(
+  static final ChgkRating _chgkRatingService = ChgkRating._internal(
+      Dio(BaseOptions(
     baseUrl: baseUrl,
     receiveTimeout: defaultTimeout,
     sendTimeout: defaultTimeout,
     connectTimeout: defaultTimeout,
   ))
-    ..interceptors.add(LogInterceptor(
-        requestHeader: false,
-        responseHeader: true,
-        requestBody: false,
-        responseBody: true));
+        ..interceptors.add(LogInterceptor(
+            requestHeader: false,
+            responseHeader: true,
+            requestBody: false,
+            responseBody: true)));
+
+  factory ChgkRating() => _chgkRatingService;
+
+  ChgkRating._internal(this._dio);
+
+  @visibleForTesting
+  ChgkRating.init(this._dio);
+
+  final Dio _dio;
 
   /// Requests [Player] object from server.
   ///
   /// Requires player identifier [playerId]. Returns player object [Player]
   /// in case of success or Null if player not found.
-  /// Throws [DioError] in case of network connection problems.
+  /// Throws [FormatException] in case invalid input parameter [playerId] or
+  /// [DioError] in case of network connection problems.
   Future<Player?> getPlayerById(String playerId) async {
-    final Response response =
-        await _dio.get('/players.$extensionJson/$playerId');
-    final Iterable<Player> playerList =
-        (response.data as List<dynamic>).map((e) => Player.fromMap(e));
-    return playerList.firstOrNull;
+    final int? id = int.tryParse(playerId);
+    if (id == null) {
+      throw FormatException('Invalid input parameter playerId \'$playerId\'');
+    }
+    final Response<List<dynamic>> response =
+        await _dio.get('/players.$extensionJson/$id');
+    return response.data?.map((dynamic e) => Player.fromMap(e)).firstOrNull;
   }
 
   /// Searches for players [Player] on server.

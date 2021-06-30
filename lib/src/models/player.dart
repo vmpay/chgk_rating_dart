@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// {
@@ -11,8 +13,9 @@ import 'dart:convert';
 /// "db_chgk_info_tag": "msavchenkov"
 /// }
 /// ```
+@immutable
 class Player {
-  Player({
+  const Player({
     required this.idPlayer,
     this.surname,
     this.name,
@@ -46,7 +49,8 @@ class Player {
       );
 
   /// Encodes [Player] object to json map
-  Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() =>
+      {
         'idplayer': idPlayer == null ? 'null' : idPlayer,
         'surname': surname == null ? null : surname,
         'name': name == null ? null : name,
@@ -59,4 +63,25 @@ class Player {
   String toString() {
     return 'Player{idPlayer: $idPlayer, surname: $surname, name: $name, patronymic: $patronymic, comment: $comment, dbChgkInfoTag: $dbChgkInfoTag}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Player &&
+          runtimeType == other.runtimeType &&
+          idPlayer == other.idPlayer &&
+          surname == other.surname &&
+          name == other.name &&
+          patronymic == other.patronymic &&
+          comment == other.comment &&
+          dbChgkInfoTag == other.dbChgkInfoTag;
+
+  @override
+  int get hashCode =>
+      idPlayer.hashCode ^
+      surname.hashCode ^
+      name.hashCode ^
+      patronymic.hashCode ^
+      comment.hashCode ^
+      dbChgkInfoTag.hashCode;
 }
