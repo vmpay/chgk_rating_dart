@@ -187,13 +187,16 @@ class ChgkRating {
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<PlayerTournamentResponse>> getPlayerTournamentList(
       String playerId) async {
+    final int id = playerId.parseIdOrThrow;
     final Response<dynamic> response =
-        await _dio.get('/players.$extensionJson/$playerId/tournaments');
-    final Iterable<PlayerTournamentResponse> playerTournamentList =
-        (response.data as Map<String, dynamic>)
-            .values
-            .map((dynamic e) => PlayerTournamentResponse.fromMap(e));
-    return playerTournamentList;
+        await _dio.get('/players.$extensionJson/$id/tournaments');
+    if (response.data is Iterable) {
+      return <PlayerTournamentResponse>[];
+    } else {
+      return (response.data as Map<String, dynamic>)
+          .values
+          .map((dynamic e) => PlayerTournamentResponse.fromMap(e));
+    }
   }
 
   /// Requests [Team] object from server.
