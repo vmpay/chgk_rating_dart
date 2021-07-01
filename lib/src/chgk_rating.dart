@@ -71,10 +71,6 @@ class ChgkRating {
   /// [DioError] in case of network connection problems.
   Future<Player?> getPlayerById(String playerId) async {
     final int id = playerId.parseIdOrThrow;
-    // int.tryParse(playerId);
-    // if (id == null) {
-    //   throw FormatException('Invalid input parameter playerId \'$playerId\'');
-    // }
     final Response<List<dynamic>> response =
         await _dio.get('/players.$extensionJson/$id');
     return response.data?.map((dynamic e) => Player.fromMap(e)).firstOrNull;
@@ -130,7 +126,8 @@ class ChgkRating {
     final Response<dynamic> response =
         await _dio.get('/players.$extensionJson/$id/rating');
     final Iterable<PlayerRating> playerRatingList =
-        (response.data as List<dynamic>).map((e) => PlayerRating.fromMap(e));
+        (response.data as List<dynamic>)
+            .map((dynamic e) => PlayerRating.fromMap(e));
     return playerRatingList;
   }
 
@@ -144,7 +141,8 @@ class ChgkRating {
     final Response<dynamic> response =
         await _dio.get('/players.$extensionJson/$id/teams');
     final Iterable<PlayerTeam> playerRatingList =
-        (response.data as List<dynamic>).map((e) => PlayerTeam.fromMap(e));
+        (response.data as List<dynamic>)
+            .map((dynamic e) => PlayerTeam.fromMap(e));
     return playerRatingList;
   }
 
@@ -154,10 +152,12 @@ class ChgkRating {
   /// [PlayerTeam] list in case of success or empty list if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<PlayerTeam>> getPlayerTeamLastSeason(String playerId) async {
-    final Response response =
-        await _dio.get('/players.$extensionJson/$playerId/teams/last');
+    final int id = playerId.parseIdOrThrow;
+    final Response<dynamic> response =
+        await _dio.get('/players.$extensionJson/$id/teams/last');
     final Iterable<PlayerTeam> playerRatingList =
-        (response.data as List<dynamic>).map((e) => PlayerTeam.fromMap(e));
+        (response.data as List<dynamic>)
+            .map((dynamic e) => PlayerTeam.fromMap(e));
     return playerRatingList;
   }
 
@@ -182,12 +182,12 @@ class ChgkRating {
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<PlayerTournamentResponse>> getPlayerTournamentList(
       String playerId) async {
-    final Response response =
+    final Response<dynamic> response =
         await _dio.get('/players.$extensionJson/$playerId/tournaments');
     final Iterable<PlayerTournamentResponse> playerTournamentList =
         (response.data as Map<String, dynamic>)
             .values
-            .map((e) => PlayerTournamentResponse.fromMap(e));
+            .map((dynamic e) => PlayerTournamentResponse.fromMap(e));
     return playerTournamentList;
   }
 
@@ -197,9 +197,10 @@ class ChgkRating {
   /// in case of success or Null if team not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Team?> getTeamById(String teamId) async {
-    final Response response = await _dio.get('/teams.$extensionJson/$teamId');
+    final Response<dynamic> response =
+        await _dio.get('/teams.$extensionJson/$teamId');
     return (response.data as List<dynamic>)
-        .map((e) => Team.fromMap(e))
+        .map((dynamic e) => Team.fromMap(e))
         .firstOrNull;
   }
 
@@ -249,7 +250,7 @@ class ChgkRating {
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TeamRating>> getTeamRatingList(String teamId) async =>
       ((await _dio.get('/teams/$teamId/rating')).data as List<dynamic>)
-          .map((e) => TeamRating.fromMap(e));
+          .map((dynamic e) => TeamRating.fromMap(e));
 
   /// Requests team players [TeamPlayers] for the latest season from server.
   ///
@@ -268,7 +269,7 @@ class ChgkRating {
   Future<Iterable<TeamPlayers>> getTeamPlayersList(String teamId) async =>
       ((await _dio.get('/teams/$teamId/recaps')).data as Map<String, dynamic>)
           .values
-          .map((e) => TeamPlayers.fromMap(e));
+          .map((dynamic e) => TeamPlayers.fromMap(e));
 
   /// Requests the latest team tournament [TeamTournament] from server.
   ///
@@ -289,7 +290,7 @@ class ChgkRating {
       ((await _dio.get('/teams/$teamId/tournaments')).data
               as Map<String, dynamic>)
           .values
-          .map((e) => TeamTournament.fromMap(e));
+          .map((dynamic e) => TeamTournament.fromMap(e));
 
   /// Requests tournament details [TournamentDetails] from server.
   ///
@@ -299,7 +300,7 @@ class ChgkRating {
   /// Throws [DioError] in case of network connection problems.
   Future<TournamentDetails?> getTournamentDetails(String tournamentId) async =>
       ((await _dio.get('/tournaments/$tournamentId')).data as List<dynamic>)
-          .map((e) => TournamentDetails.fromMap(e))
+          .map((dynamic e) => TournamentDetails.fromMap(e))
           .firstOrNull;
 
   /// Searches for tournament [Tournament] on server.
@@ -336,7 +337,7 @@ class ChgkRating {
           String tournamentId) async =>
       ((await _dio.get('/tournaments.$extensionJson/$tournamentId/list')).data
               as List<dynamic>)
-          .map((e) => TournamentTeamResults.fromMap(e));
+          .map((dynamic e) => TournamentTeamResults.fromMap(e));
 
   /// Requests tournament team players [TournamentTeamPlayer] from server.
   ///
@@ -349,7 +350,7 @@ class ChgkRating {
       ((await _dio.get(
                   '/tournaments.$extensionJson/$tournamentId/recaps/$teamId'))
               .data as List<dynamic>)
-          .map((e) => TournamentTeamPlayer.fromMap(e));
+          .map((dynamic e) => TournamentTeamPlayer.fromMap(e));
 
   /// Requests tournament teams [TournamentTeam] from server.
   ///
@@ -361,7 +362,7 @@ class ChgkRating {
           String tournamentId) async =>
       ((await _dio.get('/tournaments.$extensionJson/$tournamentId/recaps')).data
               as List<dynamic>)
-          .map((e) => TournamentTeam.fromMap(e));
+          .map((dynamic e) => TournamentTeam.fromMap(e));
 
   /// Requests tournament team result [TournamentResults] from server.
   ///
@@ -374,7 +375,7 @@ class ChgkRating {
       ((await _dio.get(
                   '/tournaments.$extensionJson/$tournamentId/results/$teamId'))
               .data as List<dynamic>)
-          .map((e) => TournamentResults.fromMap(e));
+          .map((dynamic e) => TournamentResults.fromMap(e));
 
   /// Requests tournament controversial questions [TournamentControversial] from server.
   ///
@@ -387,7 +388,7 @@ class ChgkRating {
       ((await _dio.get(
                   '/tournaments.$extensionJson/$tournamentId/controversials'))
               .data as List<dynamic>)
-          .map((e) => TournamentControversial.fromMap(e));
+          .map((dynamic e) => TournamentControversial.fromMap(e));
 
   /// Requests tournament appeal questions [TournamentAppeal] from server.
   ///
@@ -399,5 +400,5 @@ class ChgkRating {
           String tournamentId) async =>
       ((await _dio.get('/tournaments.$extensionJson/$tournamentId/appeals'))
               .data as List<dynamic>)
-          .map((e) => TournamentAppeal.fromMap(e));
+          .map((dynamic e) => TournamentAppeal.fromMap(e));
 }

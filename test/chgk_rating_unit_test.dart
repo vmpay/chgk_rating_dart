@@ -158,5 +158,37 @@ void main() {
           await chgkRating.getPlayerTeamList(mockPlayer.idPlayer);
       expect(playerRatingList, <PlayerTeam>[mockPlayerTeam]);
     });
+
+    test('getPlayerTeamLastSeason fail', () async {
+      try {
+        await chgkRating.getPlayerTeamLastSeason(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getPlayerTeamLastSeason empty', () async {
+      when(mockDio
+              .get('/players.$extensionJson/${mockPlayer.idPlayer}/teams/last'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<PlayerTeam> playerRatingList =
+          await chgkRating.getPlayerTeamLastSeason(mockPlayer.idPlayer);
+      expect(playerRatingList, <PlayerTeam>[]);
+    });
+
+    test('getPlayerTeamLastSeason success', () async {
+      final PlayerTeam mockPlayerTeam =
+          PlayerTeam(idPlayer: mockPlayer.idPlayer, idTeam: '$teamId');
+      when(mockDio
+              .get('/players.$extensionJson/${mockPlayer.idPlayer}/teams/last'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockPlayerTeam.toMap()],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<PlayerTeam> playerRatingList =
+          await chgkRating.getPlayerTeamLastSeason(mockPlayer.idPlayer);
+      expect(playerRatingList, <PlayerTeam>[mockPlayerTeam]);
+    });
   });
 }
