@@ -98,5 +98,33 @@ void main() {
           await chgkRating.getPlayerRatingLatest(mockPlayer.idPlayer);
       expect(playerRating, mockPlayerRating);
     });
+
+    test('getPlayerRatingList fail', () async {
+      try {
+        await chgkRating.getPlayerRatingList(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getPlayerRatingList empty', () async {
+      when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/rating'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: [], requestOptions: RequestOptions(path: '')));
+      final Iterable<PlayerRating> playerRatingList =
+          await chgkRating.getPlayerRatingList(mockPlayer.idPlayer);
+      expect(playerRatingList, []);
+    });
+
+    test('getPlayerRatingList success', () async {
+      const PlayerRating mockPlayerRating = PlayerRating();
+      when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/rating'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: [mockPlayerRating.toMap()],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<PlayerRating> playerRatingList =
+          await chgkRating.getPlayerRatingList(mockPlayer.idPlayer);
+      expect(playerRatingList, [mockPlayerRating]);
+    });
   });
 }

@@ -126,8 +126,9 @@ class ChgkRating {
   /// [PlayerRating] list in case of success or empty list if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<PlayerRating>> getPlayerRatingList(String playerId) async {
-    final Response response =
-        await _dio.get('/players.$extensionJson/$playerId/rating');
+    final int id = playerId.parseIdOrThrow;
+    final Response<dynamic> response =
+        await _dio.get('/players.$extensionJson/$id/rating');
     final Iterable<PlayerRating> playerRatingList =
         (response.data as List<dynamic>).map((e) => PlayerRating.fromMap(e));
     return playerRatingList;
