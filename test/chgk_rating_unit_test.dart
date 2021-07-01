@@ -68,5 +68,35 @@ void main() {
           await chgkRating.getPlayerBy(surname: mockPlayer.surname);
       expect(playerSearch, mockPlayerSearch);
     });
+
+    test('getPlayerRatingLatest fail', () async {
+      try {
+        await chgkRating.getPlayerRatingLatest(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getPlayerRatingLatest empty', () async {
+      when(mockDio.get(
+              '/players.$extensionJson/${mockPlayer.idPlayer}/rating/last'))
+          .thenAnswer((_) async => Response<bool>(
+              data: false, requestOptions: RequestOptions(path: '')));
+      final PlayerRating? playerRating =
+          await chgkRating.getPlayerRatingLatest(mockPlayer.idPlayer);
+      expect(playerRating, null);
+    });
+
+    test('getPlayerRatingLatest success', () async {
+      const PlayerRating mockPlayerRating = PlayerRating();
+      when(mockDio.get(
+              '/players.$extensionJson/${mockPlayer.idPlayer}/rating/last'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: mockPlayerRating.toMap(),
+              requestOptions: RequestOptions(path: '')));
+      final PlayerRating? playerRating =
+          await chgkRating.getPlayerRatingLatest(mockPlayer.idPlayer);
+      expect(playerRating, mockPlayerRating);
+    });
   });
 }

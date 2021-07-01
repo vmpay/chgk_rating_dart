@@ -70,10 +70,11 @@ class ChgkRating {
   /// Throws [FormatException] in case invalid input parameter [playerId] or
   /// [DioError] in case of network connection problems.
   Future<Player?> getPlayerById(String playerId) async {
-    final int? id = int.tryParse(playerId);
-    if (id == null) {
-      throw FormatException('Invalid input parameter playerId \'$playerId\'');
-    }
+    final int id = playerId.parseIdOrThrow;
+    // int.tryParse(playerId);
+    // if (id == null) {
+    //   throw FormatException('Invalid input parameter playerId \'$playerId\'');
+    // }
     final Response<List<dynamic>> response =
         await _dio.get('/players.$extensionJson/$id');
     return response.data?.map((dynamic e) => Player.fromMap(e)).firstOrNull;
@@ -108,10 +109,16 @@ class ChgkRating {
   /// Requires player identifier [playerId]. Returns player rating object
   /// [PlayerRating] in case of success or Null if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<PlayerRating?> getPlayerRatingLatest(String playerId) async =>
-      PlayerRating.fromMap(
-          (await _dio.get('/players.$extensionJson/$playerId/rating/last'))
-              .data);
+  Future<PlayerRating?> getPlayerRatingLatest(String playerId) async {
+    final int id = playerId.parseIdOrThrow;
+    final Response<dynamic> response =
+        await _dio.get('/players.$extensionJson/$id/rating/last');
+    if (response.data is bool) {
+      return null;
+    } else {
+      return PlayerRating.fromMap(response.data);
+    }
+  }
 
   /// Requests historical player rating [PlayerRating] from server.
   ///
