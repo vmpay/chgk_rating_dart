@@ -142,9 +142,9 @@ void main() {
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[],
               requestOptions: RequestOptions(path: '')));
-      final Iterable<PlayerTeam> playerRatingList =
+      final Iterable<PlayerTeam> playerTeamList =
           await chgkRating.getPlayerTeamList(mockPlayer.idPlayer);
-      expect(playerRatingList, <PlayerTeam>[]);
+      expect(playerTeamList, <PlayerTeam>[]);
     });
 
     test('getPlayerTeamList success', () async {
@@ -154,9 +154,9 @@ void main() {
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[mockPlayerTeam.toMap()],
               requestOptions: RequestOptions(path: '')));
-      final Iterable<PlayerTeam> playerRatingList =
+      final Iterable<PlayerTeam> playerTeamList =
           await chgkRating.getPlayerTeamList(mockPlayer.idPlayer);
-      expect(playerRatingList, <PlayerTeam>[mockPlayerTeam]);
+      expect(playerTeamList, <PlayerTeam>[mockPlayerTeam]);
     });
 
     test('getPlayerTeamLastSeason fail', () async {
@@ -173,9 +173,9 @@ void main() {
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[],
               requestOptions: RequestOptions(path: '')));
-      final Iterable<PlayerTeam> playerRatingList =
+      final Iterable<PlayerTeam> playerTeamList =
           await chgkRating.getPlayerTeamLastSeason(mockPlayer.idPlayer);
-      expect(playerRatingList, <PlayerTeam>[]);
+      expect(playerTeamList, <PlayerTeam>[]);
     });
 
     test('getPlayerTeamLastSeason success', () async {
@@ -186,9 +186,41 @@ void main() {
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[mockPlayerTeam.toMap()],
               requestOptions: RequestOptions(path: '')));
-      final Iterable<PlayerTeam> playerRatingList =
+      final Iterable<PlayerTeam> playerTeamList =
           await chgkRating.getPlayerTeamLastSeason(mockPlayer.idPlayer);
-      expect(playerRatingList, <PlayerTeam>[mockPlayerTeam]);
+      expect(playerTeamList, <PlayerTeam>[mockPlayerTeam]);
+    });
+
+    test('getPlayerTournamentLastSeason fail', () async {
+      try {
+        await chgkRating.getPlayerTournamentLastSeason(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getPlayerTournamentLastSeason empty', () async {
+      when(mockDio.get(
+              '/players.$extensionJson/${mockPlayer.idPlayer}/tournaments/last'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
+      final PlayerTournamentResponse? playerTournamentResponse =
+          await chgkRating.getPlayerTournamentLastSeason(mockPlayer.idPlayer);
+      expect(playerTournamentResponse, null);
+    });
+
+    test('getPlayerTournamentLastSeason success', () async {
+      const PlayerTournamentResponse mockPlayerTournamentResponse =
+          PlayerTournamentResponse();
+      when(mockDio.get(
+              '/players.$extensionJson/${mockPlayer.idPlayer}/tournaments/last'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: mockPlayerTournamentResponse.toMap(),
+              requestOptions: RequestOptions(path: '')));
+      final PlayerTournamentResponse? playerTournamentResponse =
+          await chgkRating.getPlayerTournamentLastSeason(mockPlayer.idPlayer);
+      expect(playerTournamentResponse, mockPlayerTournamentResponse);
     });
   });
 }

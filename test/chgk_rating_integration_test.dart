@@ -62,7 +62,7 @@ void main() {
     });
 
     test('getPlayerTournamentLastSeason', () async {
-      final PlayerTournamentResponse playerTournamentResponse =
+      final PlayerTournamentResponse? playerTournamentResponse =
           await chgkRating.getPlayerTournamentLastSeason('$playerId');
       print('PlayerTournamentResponse $playerTournamentResponse');
     });

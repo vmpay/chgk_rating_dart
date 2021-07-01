@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// {
@@ -19,8 +21,9 @@ import 'dart:convert';
 /// ]
 /// }
 /// ```
+@immutable
 class PlayerTournamentResponse {
-  PlayerTournamentResponse({
+  const PlayerTournamentResponse({
     this.idPlayer,
     this.idSeason,
     this.tournaments,
@@ -45,7 +48,7 @@ class PlayerTournamentResponse {
         tournaments: json['tournaments'] == null
             ? null
             : List<PlayerTournament>.from(
-                json['tournaments'].map((x) => PlayerTournament.fromMap(x))),
+            json['tournaments'].map((x) => PlayerTournament.fromMap(x))),
       );
 
   /// Encodes [PlayerTournamentResponse] object to json map
@@ -59,6 +62,19 @@ class PlayerTournamentResponse {
   String toString() {
     return 'PlayerTournamentResponse{idPlayer: $idPlayer, idSeason: $idSeason, tournaments: $tournaments}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlayerTournamentResponse &&
+          runtimeType == other.runtimeType &&
+          idPlayer == other.idPlayer &&
+          idSeason == other.idSeason &&
+          tournaments == other.tournaments;
+
+  @override
+  int get hashCode =>
+      idPlayer.hashCode ^ idSeason.hashCode ^ tournaments.hashCode;
 }
 
 /// Response example:
@@ -69,8 +85,9 @@ class PlayerTournamentResponse {
 /// "in_base_team": "0"
 /// }
 /// ```
+@immutable
 class PlayerTournament {
-  PlayerTournament({
+  const PlayerTournament({
     required this.idTournament,
     this.idTeam,
     this.inBaseTeam,
@@ -91,7 +108,7 @@ class PlayerTournament {
   factory PlayerTournament.fromMap(Map<String, dynamic> json) =>
       PlayerTournament(
         idTournament:
-            json['idtournament'] == null ? 'null' : json['idtournament'],
+        json['idtournament'] == null ? 'null' : json['idtournament'],
         idTeam: json['idteam'] == null ? null : json['idteam'],
         inBaseTeam: json['in_base_team'] == null ? null : json['in_base_team'],
       );
@@ -107,4 +124,17 @@ class PlayerTournament {
   String toString() {
     return 'PlayerTournament{idTournament: $idTournament, idTeam: $idTeam, inBaseTeam: $inBaseTeam}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlayerTournament &&
+          runtimeType == other.runtimeType &&
+          idTournament == other.idTournament &&
+          idTeam == other.idTeam &&
+          inBaseTeam == other.inBaseTeam;
+
+  @override
+  int get hashCode =>
+      idTournament.hashCode ^ idTeam.hashCode ^ inBaseTeam.hashCode;
 }

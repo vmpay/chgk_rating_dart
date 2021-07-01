@@ -165,14 +165,19 @@ class ChgkRating {
   /// from server.
   ///
   /// Requires player identifier [playerId]. Returns player tournament object
-  /// [PlayerTournamentResponse] in case of success or empty list
-  /// if player not found.
+  /// [PlayerTournamentResponse] in case of success or Null if player not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<PlayerTournamentResponse> getPlayerTournamentLastSeason(
-          String playerId) async =>
-      PlayerTournamentResponse.fromMap(
-          (await _dio.get('/players.$extensionJson/$playerId/tournaments/last'))
-              .data);
+  Future<PlayerTournamentResponse?> getPlayerTournamentLastSeason(
+      String playerId) async {
+    final int id = playerId.parseIdOrThrow;
+    final Response<dynamic> response =
+        await _dio.get('/players.$extensionJson/$id/tournaments/last');
+    if (response.data is Iterable) {
+      return null;
+    } else {
+      return PlayerTournamentResponse.fromMap(response.data);
+    }
+  }
 
   /// Requests player tournaments [PlayerTournament] list from server.
   ///
