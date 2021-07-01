@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// {
@@ -10,8 +12,9 @@ import 'dart:convert';
 /// "added_since": "2017-04-21"
 /// }
 /// ```
+@immutable
 class PlayerTeam {
-  PlayerTeam({
+  const PlayerTeam({
     required this.idPlayer,
     required this.idTeam,
     this.idSeason,
@@ -34,20 +37,20 @@ class PlayerTeam {
 
   /// Decodes [PlayerTeam] object from json map
   factory PlayerTeam.fromMap(Map<String, dynamic> json) => PlayerTeam(
-        idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
-        idTeam: json['idteam'] == null ? 'null' : json['idteam'],
-        idSeason: json['idseason'] == null ? null : json['idseason'],
-        isCaptain: json['is_captain'] == null ? null : json['is_captain'],
-        addedSince: json['added_since'] == null
-            ? null
-            : DateTime.parse(json['added_since']),
-      );
+    idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
+    idTeam: json['idteam'] == null ? 'null' : json['idteam'],
+    idSeason: json['idseason'] == null ? null : json['idseason'],
+    isCaptain: json['is_captain'] == null ? null : json['is_captain'],
+    addedSince: json['added_since'] == null
+        ? null
+        : DateTime.parse(json['added_since']),
+  );
 
   /// Encodes [PlayerTeam] object to json map
   Map<String, dynamic> toMap() => {
-        'idplayer': idPlayer == null ? 'null' : idPlayer,
-        'idteam': idTeam == null ? 'null' : idTeam,
-        'idseason': idSeason == null ? null : idSeason,
+    'idplayer': idPlayer == null ? 'null' : idPlayer,
+    'idteam': idTeam == null ? 'null' : idTeam,
+    'idseason': idSeason == null ? null : idSeason,
         'is_captain': isCaptain == null ? null : isCaptain,
         'added_since': addedSince == null
             ? null
@@ -58,4 +61,23 @@ class PlayerTeam {
   String toString() {
     return 'PlayerTeam{idPlayer: $idPlayer, idTeam: $idTeam, idSeason: $idSeason, isCaptain: $isCaptain, addedSince: $addedSince}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlayerTeam &&
+          runtimeType == other.runtimeType &&
+          idPlayer == other.idPlayer &&
+          idTeam == other.idTeam &&
+          idSeason == other.idSeason &&
+          isCaptain == other.isCaptain &&
+          addedSince == other.addedSince;
+
+  @override
+  int get hashCode =>
+      idPlayer.hashCode ^
+      idTeam.hashCode ^
+      idSeason.hashCode ^
+      isCaptain.hashCode ^
+      addedSince.hashCode;
 }

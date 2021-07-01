@@ -16,6 +16,7 @@ void main() {
       patronymic: 'patronymic',
       comment: 'comment',
       dbChgkInfoTag: 'dbChgkInfoTag');
+  const int teamId = 58380;
 
   final MockDio mockDio = MockDio();
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
@@ -110,21 +111,52 @@ void main() {
     test('getPlayerRatingList empty', () async {
       when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/rating'))
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
-              data: [], requestOptions: RequestOptions(path: '')));
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
       final Iterable<PlayerRating> playerRatingList =
           await chgkRating.getPlayerRatingList(mockPlayer.idPlayer);
-      expect(playerRatingList, []);
+      expect(playerRatingList, <PlayerRating>[]);
     });
 
     test('getPlayerRatingList success', () async {
       const PlayerRating mockPlayerRating = PlayerRating();
       when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/rating'))
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
-              data: [mockPlayerRating.toMap()],
+              data: <Map<String, dynamic>>[mockPlayerRating.toMap()],
               requestOptions: RequestOptions(path: '')));
       final Iterable<PlayerRating> playerRatingList =
           await chgkRating.getPlayerRatingList(mockPlayer.idPlayer);
-      expect(playerRatingList, [mockPlayerRating]);
+      expect(playerRatingList, <PlayerRating>[mockPlayerRating]);
+    });
+
+    test('getPlayerTeamList fail', () async {
+      try {
+        await chgkRating.getPlayerTeamList(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getPlayerTeamList empty', () async {
+      when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/teams'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<PlayerTeam> playerRatingList =
+          await chgkRating.getPlayerTeamList(mockPlayer.idPlayer);
+      expect(playerRatingList, <PlayerTeam>[]);
+    });
+
+    test('getPlayerTeamList success', () async {
+      final PlayerTeam mockPlayerTeam =
+          PlayerTeam(idPlayer: mockPlayer.idPlayer, idTeam: '$teamId');
+      when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/teams'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockPlayerTeam.toMap()],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<PlayerTeam> playerRatingList =
+          await chgkRating.getPlayerTeamList(mockPlayer.idPlayer);
+      expect(playerRatingList, <PlayerTeam>[mockPlayerTeam]);
     });
   });
 }
