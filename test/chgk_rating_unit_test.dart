@@ -1,6 +1,5 @@
-import 'package:chgk_rating/src/chgk_rating.dart';
+import 'package:chgk_rating/chgk_rating.dart';
 import 'package:chgk_rating/src/constants.dart';
-import 'package:chgk_rating/src/models/player.dart';
 import 'package:dio/dio.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -55,6 +54,19 @@ void main() {
       final Player? player =
           await chgkRating.getPlayerById(mockPlayer.idPlayer);
       expect(player, mockPlayer);
+    });
+
+    test('getPlayerBy search parameters success', () async {
+      const PlayerSearch mockPlayerSearch = PlayerSearch();
+      when(mockDio.get('/players.$extensionJson/search',
+          queryParameters: <String, dynamic>{
+            'surname': mockPlayer.surname
+          })).thenAnswer((_) async => Response<Map<String, dynamic>>(
+          data: mockPlayerSearch.toMap(),
+          requestOptions: RequestOptions(path: '')));
+      final PlayerSearch playerSearch =
+          await chgkRating.getPlayerBy(surname: mockPlayer.surname);
+      expect(playerSearch, mockPlayerSearch);
     });
   });
 }

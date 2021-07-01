@@ -31,7 +31,7 @@ void main() {
       print('Player $player');
     });
 
-    test('getPlayerBy', () async {
+    test('getPlayerBy search parameters', () async {
       final PlayerSearch playerSearchResponse = await chgkRating.getPlayerBy(
           name: 'Андрей', patronymic: 'Васильевич');
       print('PlayerSearchResponse $playerSearchResponse');

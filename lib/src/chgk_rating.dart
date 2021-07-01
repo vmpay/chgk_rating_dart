@@ -97,7 +97,8 @@ class ChgkRating {
     if (patronymic != null) {
       queryParameters.addAll(<String, dynamic>{'patronymic': patronymic});
     }
-    final Response response = await _dio.get('/players.$extensionJson/search',
+    final Response<dynamic> response = await _dio.get(
+        '/players.$extensionJson/search',
         queryParameters: queryParameters);
     return PlayerSearch.fromMap(response.data);
   }
