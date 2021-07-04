@@ -388,10 +388,22 @@ class ChgkRating {
   /// object [TournamentDetails] in case of success or Null
   /// if team tournament not found.
   /// Throws [DioError] in case of network connection problems.
-  Future<TournamentDetails?> getTournamentDetails(String tournamentId) async =>
-      ((await _dio.get('/tournaments/$tournamentId')).data as List<dynamic>)
+  Future<TournamentDetails?> getTournamentDetails(String tournamentId) async {
+    final int id = tournamentId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response =
+          await _dio.get('/tournaments.$extensionJson/$id');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentDetails.fromMap(e))
           .firstOrNull;
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return null;
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Searches for tournament [Tournament] on server.
   ///
@@ -424,10 +436,21 @@ class ChgkRating {
   /// empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentTeamResults>> getTournamentResults(
-          String tournamentId) async =>
-      ((await _dio.get('/tournaments.$extensionJson/$tournamentId/list')).data
-              as List<dynamic>)
+      String tournamentId) async {
+    final int id = tournamentId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response =
+          await _dio.get('/tournaments.$extensionJson/$id/list');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentTeamResults.fromMap(e));
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return <TournamentTeamResults>[];
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Requests tournament team players [TournamentTeamPlayer] from server.
   ///
@@ -436,11 +459,22 @@ class ChgkRating {
   /// in case of success or empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentTeamPlayer>> getTournamentTeamPlayersByTeam(
-          String tournamentId, String teamId) async =>
-      ((await _dio.get(
-                  '/tournaments.$extensionJson/$tournamentId/recaps/$teamId'))
-              .data as List<dynamic>)
+      String tournamentId, String teamId) async {
+    final int idTournament = tournamentId.parseIdOrThrow;
+    final int idTeam = teamId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response = await _dio
+          .get('/tournaments.$extensionJson/$idTournament/recaps/$idTeam');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentTeamPlayer.fromMap(e));
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return <TournamentTeamPlayer>[];
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Requests tournament teams [TournamentTeam] from server.
   ///
@@ -449,10 +483,21 @@ class ChgkRating {
   /// if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentTeam>> getTournamentTeamPlayers(
-          String tournamentId) async =>
-      ((await _dio.get('/tournaments.$extensionJson/$tournamentId/recaps')).data
-              as List<dynamic>)
+      String tournamentId) async {
+    final int id = tournamentId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response =
+          await _dio.get('/tournaments.$extensionJson/$id/recaps');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentTeam.fromMap(e));
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return <TournamentTeam>[];
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Requests tournament team result [TournamentResults] from server.
   ///
@@ -461,11 +506,22 @@ class ChgkRating {
   /// in case of success or empty list if tournament team result not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentResults>> getTournamentResultsByTeam(
-          String tournamentId, String teamId) async =>
-      ((await _dio.get(
-                  '/tournaments.$extensionJson/$tournamentId/results/$teamId'))
-              .data as List<dynamic>)
+      String tournamentId, String teamId) async {
+    final int idTournament = tournamentId.parseIdOrThrow;
+    final int idTeam = teamId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response = await _dio
+          .get('/tournaments.$extensionJson/$idTournament/results/$idTeam');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentResults.fromMap(e));
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return <TournamentResults>[];
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Requests tournament controversial questions [TournamentControversial] from server.
   ///
@@ -474,11 +530,21 @@ class ChgkRating {
   /// in case of success or empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentControversial>> getTournamentControversialQuestions(
-          String tournamentId) async =>
-      ((await _dio.get(
-                  '/tournaments.$extensionJson/$tournamentId/controversials'))
-              .data as List<dynamic>)
+      String tournamentId) async {
+    final int id = tournamentId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response =
+          await _dio.get('/tournaments.$extensionJson/$id/controversials');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentControversial.fromMap(e));
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return <TournamentControversial>[];
+      } else {
+        rethrow;
+      }
+    }
+  }
 
   /// Requests tournament appeal questions [TournamentAppeal] from server.
   ///
@@ -487,8 +553,19 @@ class ChgkRating {
   /// in case of success or empty list if tournament results not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<TournamentAppeal>> getTournamentAppealQuestions(
-          String tournamentId) async =>
-      ((await _dio.get('/tournaments.$extensionJson/$tournamentId/appeals'))
-              .data as List<dynamic>)
+      String tournamentId) async {
+    final int id = tournamentId.parseIdOrThrow;
+    try {
+      final Response<dynamic> response =
+          await _dio.get('/tournaments.$extensionJson/$id/appeals');
+      return (response.data as List<dynamic>)
           .map((dynamic e) => TournamentAppeal.fromMap(e));
+    } on DioError catch (e) {
+      if (e.message.isNotFoundError) {
+        return <TournamentAppeal>[];
+      } else {
+        rethrow;
+      }
+    }
+  }
 }

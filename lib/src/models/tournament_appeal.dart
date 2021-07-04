@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import 'tournament_controversial.dart';
 
 /// Response example:
@@ -27,8 +29,9 @@ import 'tournament_controversial.dart';
 /// }
 /// ]
 /// ```
+@immutable
 class TournamentAppeal {
-  TournamentAppeal({
+  const TournamentAppeal({
     this.type,
     this.questionNumber,
     this.issuedAt,
@@ -60,12 +63,12 @@ class TournamentAppeal {
       TournamentAppeal(
         type: json['type'] == null ? null : typeValues.map[json['type']],
         questionNumber:
-            json['question_number'] == null ? null : json['question_number'],
+        json['question_number'] == null ? null : json['question_number'],
         issuedAt: json['issued_at'] == null
             ? null
             : DateTime.parse(json['issued_at']),
         status:
-            json['status'] == null ? null : statusValues.map[json['status']],
+        json['status'] == null ? null : statusValues.map[json['status']],
         appeal: json['appeal'] == null ? null : json['appeal'],
         comment: json['comment'] == null ? null : json['comment'],
         resolvedAt: json['resolved_at'] == null
@@ -76,11 +79,11 @@ class TournamentAppeal {
 
   /// Encodes [TournamentAppeal] object to json map
   Map<String, dynamic> toMap() => {
-        'type': type == null ? null : typeValues.reverse[type],
-        'question_number': questionNumber == null ? null : questionNumber,
-        'issued_at': issuedAt == null ? null : issuedAt?.toIso8601String(),
-        'status': status == null ? null : statusValues.reverse[status],
-        'appeal': appeal == null ? null : appeal,
+    'type': type == null ? null : typeValues.reverse[type],
+    'question_number': questionNumber == null ? null : questionNumber,
+    'issued_at': issuedAt == null ? null : issuedAt?.toIso8601String(),
+    'status': status == null ? null : statusValues.reverse[status],
+    'appeal': appeal == null ? null : appeal,
         'comment': comment == null ? null : comment,
         'resolved_at':
             resolvedAt == null ? null : resolvedAt?.toIso8601String(),
@@ -91,6 +94,31 @@ class TournamentAppeal {
   String toString() {
     return 'TournamentAppeal{type: $type, questionNumber: $questionNumber, issuedAt: $issuedAt, status: $status, appeal: $appeal, comment: $comment, resolvedAt: $resolvedAt, answer: $answer}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentAppeal &&
+          runtimeType == other.runtimeType &&
+          type == other.type &&
+          questionNumber == other.questionNumber &&
+          issuedAt == other.issuedAt &&
+          status == other.status &&
+          appeal == other.appeal &&
+          comment == other.comment &&
+          resolvedAt == other.resolvedAt &&
+          answer == other.answer;
+
+  @override
+  int get hashCode =>
+      type.hashCode ^
+      questionNumber.hashCode ^
+      issuedAt.hashCode ^
+      status.hashCode ^
+      appeal.hashCode ^
+      comment.hashCode ^
+      resolvedAt.hashCode ^
+      answer.hashCode;
 }
 
 /// [A] - approved, [R] - rejected

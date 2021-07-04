@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// [
@@ -29,8 +31,9 @@ import 'dart:convert';
 /// }
 /// ]
 /// ```
+@immutable
 class TournamentResults {
-  TournamentResults({
+  const TournamentResults({
     this.tour,
     this.mask,
   });
@@ -64,4 +67,15 @@ class TournamentResults {
   String toString() {
     return 'TournamentResults{tour: $tour, mask: $mask}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentResults &&
+          runtimeType == other.runtimeType &&
+          tour == other.tour &&
+          mask == other.mask;
+
+  @override
+  int get hashCode => tour.hashCode ^ mask.hashCode;
 }
