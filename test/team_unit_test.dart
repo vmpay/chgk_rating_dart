@@ -66,12 +66,19 @@ void main() {
     test('success', () async {
       const TeamSearch mockTeamSearch = TeamSearch();
       when(mockDio.get('/teams.$extensionJson/search',
-              queryParameters: <String, dynamic>{'name': mockTeam.name}))
-          .thenAnswer((_) async => Response<Map<String, dynamic>>(
-              data: mockTeamSearch.toMap(),
-              requestOptions: RequestOptions(path: '')));
-      final TeamSearch teamSearch =
-          await chgkRating.getTeamBy(name: mockTeam.name);
+          queryParameters: <String, dynamic>{
+            'name': mockTeam.name,
+            'town': mockTeam.town,
+            'region_name': mockTeam.regionName,
+            'country_name': mockTeam.countryName
+          })).thenAnswer((_) async => Response<Map<String, dynamic>>(
+          data: mockTeamSearch.toMap(),
+          requestOptions: RequestOptions(path: '')));
+      final TeamSearch teamSearch = await chgkRating.getTeamBy(
+          name: mockTeam.name,
+          town: mockTeam.town,
+          regionName: mockTeam.regionName,
+          countryName: mockTeam.countryName);
       expect(teamSearch, mockTeamSearch);
     });
   });
@@ -129,9 +136,7 @@ void main() {
 
     test('empty', () async {
       when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/rating'))
-          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
-              data: <Map<String, dynamic>>[],
-              requestOptions: RequestOptions(path: '')));
+          .thenThrow(notFoundError);
       final Iterable<TeamRating> teamRatingList =
           await chgkRating.getTeamRatingList(mockTeam.idTeam);
       expect(teamRatingList, <TeamRating>[]);
