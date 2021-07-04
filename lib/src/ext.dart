@@ -10,4 +10,6 @@ extension MyString on String {
     }
     return id;
   }
+
+  bool get isNotFoundError => contains('Http status error [404]');
 }

@@ -76,7 +76,7 @@ void main() {
 
   group('Team test group', () {
     test('getTeamById', () async {
-      final Team? team = await chgkRating.getTeamById('$teamId');
+      final Team? team = await chgkRating.getTeamById('-1');
       print('Team $team');
     });
 
@@ -85,9 +85,21 @@ void main() {
       print('TeamSearch $teamSearch');
     });
 
-    test('getTeamRatingById', () async {
+    test('getTeamRatingById success', () async {
       final TeamRating? teamRating =
           await chgkRating.getTeamRatingById('$teamId', releaseId);
+      print('TeamRating $teamRating');
+    });
+
+    test('getTeamRatingById not found', () async {
+      final TeamRating? teamRating =
+          await chgkRating.getTeamRatingById('-1', releaseId);
+      print('TeamRating $teamRating');
+    });
+
+    test('getTeamRatingById empty', () async {
+      final TeamRating? teamRating =
+          await chgkRating.getTeamRatingById('$teamId', -1);
       print('TeamRating $teamRating');
     });
 
@@ -103,9 +115,15 @@ void main() {
       print('TeamPlayers $teamPlayers');
     });
 
-    test('getTeamPlayersList', () async {
+    test('getTeamPlayersList success', () async {
       final Iterable<TeamPlayers> teamPlayersList =
           await chgkRating.getTeamPlayersList('$teamId');
+      print('TeamPlayersList $teamPlayersList');
+    });
+
+    test('getTeamPlayersList empty', () async {
+      final Iterable<TeamPlayers> teamPlayersList =
+          await chgkRating.getTeamPlayersList('-1');
       print('TeamPlayersList $teamPlayersList');
     });
 

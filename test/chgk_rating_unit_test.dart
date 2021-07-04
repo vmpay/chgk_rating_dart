@@ -16,7 +16,16 @@ void main() {
       patronymic: 'patronymic',
       comment: 'comment',
       dbChgkInfoTag: 'dbChgkInfoTag');
-  const int teamId = 58380;
+  const Team mockTeam = Team(
+      idTeam: '58380',
+      name: 'name',
+      town: 'town',
+      regionName: 'regionName',
+      countryName: 'countryName',
+      tournamentsThisSeason: 'tournamentsThisSeason',
+      tournamentsTotal: 'tournamentsTotal',
+      comment: 'comment');
+  const int releaseId = 123;
 
   final MockDio mockDio = MockDio();
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
@@ -33,7 +42,8 @@ void main() {
     test('getPlayerById empty', () async {
       when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}'))
           .thenAnswer((_) async => Response<List<dynamic>>(
-              data: [], requestOptions: RequestOptions(path: '')));
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
       final Player? player =
           await chgkRating.getPlayerById(mockPlayer.idPlayer);
       expect(player, null);
@@ -50,7 +60,7 @@ void main() {
     test('getPlayerById success', () async {
       when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}'))
           .thenAnswer((_) async => Response<List<dynamic>>(
-              data: [mockPlayer.toMap()],
+          data: <Map<String, dynamic>>[mockPlayer.toMap()],
               requestOptions: RequestOptions(path: '')));
       final Player? player =
           await chgkRating.getPlayerById(mockPlayer.idPlayer);
@@ -149,7 +159,7 @@ void main() {
 
     test('getPlayerTeamList success', () async {
       final PlayerTeam mockPlayerTeam =
-          PlayerTeam(idPlayer: mockPlayer.idPlayer, idTeam: '$teamId');
+          PlayerTeam(idPlayer: mockPlayer.idPlayer, idTeam: mockTeam.idTeam);
       when(mockDio.get('/players.$extensionJson/${mockPlayer.idPlayer}/teams'))
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[mockPlayerTeam.toMap()],
@@ -180,7 +190,7 @@ void main() {
 
     test('getPlayerTeamLastSeason success', () async {
       final PlayerTeam mockPlayerTeam =
-          PlayerTeam(idPlayer: mockPlayer.idPlayer, idTeam: '$teamId');
+          PlayerTeam(idPlayer: mockPlayer.idPlayer, idTeam: mockTeam.idTeam);
       when(mockDio
               .get('/players.$extensionJson/${mockPlayer.idPlayer}/teams/last'))
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
@@ -256,6 +266,247 @@ void main() {
           await chgkRating.getPlayerTournamentList(mockPlayer.idPlayer);
       expect(playerTournamentResponse,
           <PlayerTournamentResponse>[mockPlayerTournamentResponse]);
+    });
+  });
+
+  group('Team', () {
+    test('getTeamById empty', () async {
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}')).thenThrow(
+          DioError(
+              requestOptions: RequestOptions(path: ''),
+              error: 'Http status error [404]'));
+      final Team? team = await chgkRating.getTeamById(mockTeam.idTeam);
+      expect(team, null);
+    });
+
+    test('getTeamById fail', () async {
+      try {
+        await chgkRating.getTeamById(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamById fail response', () async {
+      try {
+        when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}'))
+            .thenThrow(DioError(requestOptions: RequestOptions(path: '')));
+        await chgkRating.getTeamById(mockTeam.idTeam);
+      } on DioError catch (e) {
+        assert(e is DioError);
+      }
+    });
+
+    test('getTeamById success', () async {
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}')).thenAnswer(
+          (_) async => Response<List<dynamic>>(
+              data: [mockTeam.toMap()],
+              requestOptions: RequestOptions(path: '')));
+      final Team? team = await chgkRating.getTeamById(mockTeam.idTeam);
+      expect(team, mockTeam);
+    });
+
+    test('getTeamBy search parameters success', () async {
+      const TeamSearch mockTeamSearch = TeamSearch();
+      when(mockDio.get('/teams.$extensionJson/search',
+              queryParameters: <String, dynamic>{'name': mockTeam.name}))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: mockTeamSearch.toMap(),
+              requestOptions: RequestOptions(path: '')));
+      final TeamSearch teamSearch =
+          await chgkRating.getTeamBy(name: mockTeam.name);
+      expect(teamSearch, mockTeamSearch);
+    });
+
+    test('getTeamRatingLatest fail input teamId', () async {
+      try {
+        await chgkRating.getTeamRatingById(' ', releaseId);
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamRatingLatest not found', () async {
+      when(mockDio.get(
+              '/teams.$extensionJson/${mockTeam.idTeam}/rating/$releaseId'))
+          .thenThrow(DioError(
+              requestOptions: RequestOptions(path: ''),
+              error: 'Http status error [404]'));
+      final TeamRating? teamRating =
+          await chgkRating.getTeamRatingById(mockTeam.idTeam, releaseId);
+      expect(teamRating, null);
+    });
+
+    test('getTeamRatingLatest empty', () async {
+      when(mockDio.get(
+              '/teams.$extensionJson/${mockTeam.idTeam}/rating/$releaseId'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
+      final TeamRating? teamRating =
+          await chgkRating.getTeamRatingById(mockTeam.idTeam, releaseId);
+      expect(teamRating, null);
+    });
+
+    test('getTeamRatingLatest success', () async {
+      const TeamRating mockTeamRating = TeamRating();
+      when(mockDio.get(
+              '/teams.$extensionJson/${mockTeam.idTeam}/rating/$releaseId'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: mockTeamRating.toMap(),
+              requestOptions: RequestOptions(path: '')));
+      final TeamRating? teamRating =
+          await chgkRating.getTeamRatingById(mockTeam.idTeam, releaseId);
+      expect(teamRating, mockTeamRating);
+    });
+
+    test('getTeamRatingList fail', () async {
+      try {
+        await chgkRating.getTeamRatingList(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamRatingList empty', () async {
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/rating'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<TeamRating> teamRatingList =
+          await chgkRating.getTeamRatingList(mockTeam.idTeam);
+      expect(teamRatingList, <TeamRating>[]);
+    });
+
+    test('getTeamRatingList success', () async {
+      const TeamRating mockTeamRating = TeamRating();
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/rating'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTeamRating.toMap()],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<TeamRating> teamRatingList =
+          await chgkRating.getTeamRatingList(mockTeam.idTeam);
+      expect(teamRatingList, <TeamRating>[mockTeamRating]);
+    });
+
+    test('getTeamPlayersList fail', () async {
+      try {
+        await chgkRating.getTeamPlayersList(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamPlayersList empty', () async {
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/recaps'))
+          .thenThrow(DioError(
+              requestOptions: RequestOptions(path: ''),
+              error: 'Http status error [404]'));
+      final Iterable<TeamPlayers> playerTeamList =
+          await chgkRating.getTeamPlayersList(mockTeam.idTeam);
+      expect(playerTeamList, <PlayerTeam>[]);
+    });
+
+    test('getTeamPlayersList success', () async {
+      const TeamPlayers mockTeamPlayers = TeamPlayers();
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/recaps'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: <String, dynamic>{'123': mockTeamPlayers.toMap()},
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<TeamPlayers> teamPlayersList =
+          await chgkRating.getTeamPlayersList(mockTeam.idTeam);
+      expect(teamPlayersList, <TeamPlayers>[mockTeamPlayers]);
+    });
+
+    test('getTeamPlayersLastSeason fail', () async {
+      try {
+        await chgkRating.getTeamPlayersLastSeason(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamPlayersLastSeason empty', () async {
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/recaps/last'))
+          .thenThrow(DioError(
+              requestOptions: RequestOptions(path: ''),
+              error: 'Http status error [404]'));
+      final TeamPlayers? teamPlayers =
+          await chgkRating.getTeamPlayersLastSeason(mockTeam.idTeam);
+      expect(teamPlayers, null);
+    });
+
+    test('getTeamPlayersLastSeason success', () async {
+      const TeamPlayers mockTeamPlayers = TeamPlayers();
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/recaps/last'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: mockTeamPlayers.toMap(),
+              requestOptions: RequestOptions(path: '')));
+      final TeamPlayers? teamPlayers =
+          await chgkRating.getTeamPlayersLastSeason(mockTeam.idTeam);
+      expect(teamPlayers, mockTeamPlayers);
+    });
+
+    test('getTeamTournamentLast fail', () async {
+      try {
+        await chgkRating.getTeamTournamentLast(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamTournamentLast empty', () async {
+      when(mockDio
+              .get('/teams.$extensionJson/${mockTeam.idTeam}/tournaments/last'))
+          .thenThrow(DioError(
+              requestOptions: RequestOptions(path: ''),
+              error: 'Http status error [404]'));
+      final TeamTournament? teamTournament =
+          await chgkRating.getTeamTournamentLast(mockTeam.idTeam);
+      expect(teamTournament, null);
+    });
+
+    test('getTeamTournamentLast success', () async {
+      const TeamTournament mockTeamTournament = TeamTournament();
+      when(mockDio
+              .get('/teams.$extensionJson/${mockTeam.idTeam}/tournaments/last'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: mockTeamTournament.toMap(),
+              requestOptions: RequestOptions(path: '')));
+      final TeamTournament? teamTournament =
+          await chgkRating.getTeamTournamentLast(mockTeam.idTeam);
+      expect(teamTournament, mockTeamTournament);
+    });
+
+    test('getTeamTournamentList fail', () async {
+      try {
+        await chgkRating.getTeamTournamentList(' ');
+      } on FormatException catch (e) {
+        assert(e is FormatException);
+      }
+    });
+
+    test('getTeamTournamentList empty', () async {
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/tournaments'))
+          .thenThrow(DioError(
+              requestOptions: RequestOptions(path: ''),
+              error: 'Http status error [404]'));
+      final Iterable<TeamTournament> teamTournamentsList =
+          await chgkRating.getTeamTournamentList(mockTeam.idTeam);
+      expect(teamTournamentsList, <TeamTournament>[]);
+    });
+
+    test('getTeamTournamentList success', () async {
+      const TeamTournament mockTeamTournament = TeamTournament();
+      when(mockDio.get('/teams.$extensionJson/${mockTeam.idTeam}/tournaments'))
+          .thenAnswer((_) async => Response<Map<String, dynamic>>(
+              data: <String, dynamic>{'123': mockTeamTournament.toMap()},
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<TeamTournament> teamTournamentList =
+          await chgkRating.getTeamTournamentList(mockTeam.idTeam);
+      print('mock $mockTeamTournament');
+      print('real ${teamTournamentList.first}');
+      expect(teamTournamentList, <TeamTournament>[mockTeamTournament]);
     });
   });
 }
