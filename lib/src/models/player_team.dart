@@ -48,9 +48,9 @@ class PlayerTeam {
 
   /// Encodes [PlayerTeam] object to json map
   Map<String, dynamic> toMap() => {
-    'idplayer': idPlayer == null ? 'null' : idPlayer,
-    'idteam': idTeam == null ? 'null' : idTeam,
-    'idseason': idSeason == null ? null : idSeason,
+        'idplayer': idPlayer,
+        'idteam': idTeam,
+        'idseason': idSeason == null ? null : idSeason,
         'is_captain': isCaptain == null ? null : isCaptain,
         'added_since': addedSince == null
             ? null

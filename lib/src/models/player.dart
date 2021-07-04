@@ -39,7 +39,7 @@ class Player {
 
   /// Decodes [Player] object from json map
   factory Player.fromMap(Map<String, dynamic> json) => Player(
-        idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
+        idPlayer: json['idplayer'] == null ? '-1' : json['idplayer'],
         surname: json['surname'] == null ? null : json['surname'],
         name: json['name'] == null ? null : json['name'],
         patronymic: json['patronymic'] == null ? null : json['patronymic'],
@@ -51,7 +51,7 @@ class Player {
   /// Encodes [Player] object to json map
   Map<String, dynamic> toMap() =>
       {
-        'idplayer': idPlayer == null ? 'null' : idPlayer,
+        'idplayer': idPlayer,
         'surname': surname == null ? null : surname,
         'name': name == null ? null : name,
         'patronymic': patronymic == null ? null : patronymic,

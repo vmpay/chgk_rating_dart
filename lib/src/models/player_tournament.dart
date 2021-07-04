@@ -115,7 +115,7 @@ class PlayerTournament {
 
   /// Encodes [PlayerTournament] object to json map
   Map<String, dynamic> toMap() => {
-        'idtournament': idTournament == null ? 'null' : idTournament,
+        'idtournament': idTournament,
         'idteam': idTeam == null ? null : idTeam,
         'in_base_team': inBaseTeam == null ? null : inBaseTeam,
       };
