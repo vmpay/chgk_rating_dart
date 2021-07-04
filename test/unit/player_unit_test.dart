@@ -16,8 +16,8 @@ void main() {
       patronymic: 'patronymic',
       comment: 'comment',
       dbChgkInfoTag: 'dbChgkInfoTag');
-
   final MockDio mockDio = MockDio();
+
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
 
   group('getPlayerById', () {

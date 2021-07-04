@@ -22,8 +22,8 @@ void main() {
   final DioError notFoundError = DioError(
       requestOptions: RequestOptions(path: ''),
       error: 'Http status error [404]');
-
   final MockDio mockDio = MockDio();
+
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
 
   group('getTeamById', () {

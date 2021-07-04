@@ -13,7 +13,6 @@ void main() {
       TournamentDetails(idTournament: '5021');
   const Tournament mockTournament = Tournament(
       idTournament: '5021', name: 'name', typeName: 'Обычный', archive: '1');
-
   const Team mockTeam = Team(
       idTeam: '58380',
       name: 'name',
@@ -23,12 +22,11 @@ void main() {
       tournamentsThisSeason: 'tournamentsThisSeason',
       tournamentsTotal: 'tournamentsTotal',
       comment: 'comment');
-  const int releaseId = 123;
   final DioError notFoundError = DioError(
       requestOptions: RequestOptions(path: ''),
       error: 'Http status error [404]');
-
   final MockDio mockDio = MockDio();
+
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
 
   group('getTournamentDetails', () {
