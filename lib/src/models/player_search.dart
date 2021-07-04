@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 import 'player.dart';
 
 /// Response example:
@@ -23,8 +25,9 @@ import 'player.dart';
 /// "current_items": "1-1000"
 /// }
 /// ```
+@immutable
 class PlayerSearch {
-  PlayerSearch({
+  const PlayerSearch({
     this.items,
     this.totalItems,
     this.currentItems,
@@ -43,13 +46,13 @@ class PlayerSearch {
 
   /// Decodes [PlayerSearch] object from json map
   factory PlayerSearch.fromMap(Map<String, dynamic> json) => PlayerSearch(
-        items: json['items'] == null
-            ? null
-            : List<Player>.from(json['items'].map((x) => Player.fromMap(x))),
-        totalItems: json['total_items'] == null ? null : json['total_items'],
-        currentItems:
-            json['current_items'] == null ? null : json['current_items'],
-      );
+    items: json['items'] == null
+        ? null
+        : List<Player>.from(json['items'].map((x) => Player.fromMap(x))),
+    totalItems: json['total_items'] == null ? null : json['total_items'],
+    currentItems:
+    json['current_items'] == null ? null : json['current_items'],
+  );
 
   /// Encodes [PlayerSearch] object to json map
   Map<String, dynamic> toMap() => {
@@ -62,4 +65,17 @@ class PlayerSearch {
   String toString() {
     return 'PlayerSearchResponse{items: $items, totalItems: $totalItems, currentItems: $currentItems}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is PlayerSearch &&
+          runtimeType == other.runtimeType &&
+          items == other.items &&
+          totalItems == other.totalItems &&
+          currentItems == other.currentItems;
+
+  @override
+  int get hashCode =>
+      items.hashCode ^ totalItems.hashCode ^ currentItems.hashCode;
 }

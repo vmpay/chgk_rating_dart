@@ -27,12 +27,12 @@ Future<void> main() async {
         playerTeamList.isNotEmpty ? playerTeamList.first.idTeam : '58380';
 
     /// Fetch player's tournaments for the last season
-    final PlayerTournamentResponse playerTournamentResponse =
+    final PlayerTournamentResponse? playerTournamentResponse =
         await chgkRating.getPlayerTournamentLastSeason(playerId);
     print('PlayerTournamentResponse data: $playerTournamentResponse');
     final String tournamentId =
-        playerTournamentResponse.tournaments?.isNotEmpty == true
-            ? playerTournamentResponse.tournaments!.first.idTournament
+        playerTournamentResponse?.tournaments?.isNotEmpty == true
+            ? playerTournamentResponse!.tournaments!.first.idTournament
             : '5021';
 
     /// Fetch team data using [teamId]

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// {
@@ -28,9 +30,10 @@ import 'dart:convert';
 /// "db_tags": ["tag"]
 /// }
 /// ```
+@immutable
 class TournamentDetails {
-  TournamentDetails({
-    this.idTournament,
+  const TournamentDetails({
+    required this.idTournament,
     this.name,
     this.town,
     this.longName,
@@ -55,7 +58,7 @@ class TournamentDetails {
     this.dbTags,
   });
 
-  final String? idTournament;
+  final String idTournament;
   final String? name;
   final String? town;
   final String? longName;
@@ -89,8 +92,7 @@ class TournamentDetails {
   /// Decodes [TournamentDetails] object from json map
   factory TournamentDetails.fromMap(Map<String, dynamic> json) =>
       TournamentDetails(
-        idTournament:
-            json['idtournament'] == null ? null : json['idtournament'],
+        idTournament: json['idtournament'] == null ? -1 : json['idtournament'],
         name: json['name'] == null ? null : json['name'],
         town: json['town'] == null ? null : json['town'],
         longName: json['long_name'] == null ? null : json['long_name'],
@@ -106,7 +108,7 @@ class TournamentDetails {
             ? null
             : json['tour_ques_per_tour'],
         questionsTotal:
-            json['questions_total'] == null ? null : json['questions_total'],
+        json['questions_total'] == null ? null : json['questions_total'],
         typeName: json['type_name'] == null ? null : json['type_name'],
         mainPaymentValue: json['main_payment_value'] == null
             ? null
@@ -141,8 +143,9 @@ class TournamentDetails {
       );
 
   /// Encodes [TournamentDetails] object to json map
-  Map<String, dynamic> toMap() => {
-        'idtournament': idTournament == null ? null : idTournament,
+  Map<String, dynamic> toMap() =>
+      {
+        'idtournament': idTournament,
         'name': name == null ? null : name,
         'town': town == null ? null : town,
         'long_name': longName == null ? null : longName,
@@ -154,18 +157,18 @@ class TournamentDetails {
         'questions_total': questionsTotal == null ? null : questionsTotal,
         'type_name': typeName == null ? null : typeName,
         'main_payment_value':
-            mainPaymentValue == null ? null : mainPaymentValue,
+        mainPaymentValue == null ? null : mainPaymentValue,
         'main_payment_currency':
-            mainPaymentCurrency == null ? null : mainPaymentCurrency,
+        mainPaymentCurrency == null ? null : mainPaymentCurrency,
         'discounted_payment_value':
-            discountedPaymentValue == null ? null : discountedPaymentValue,
+        discountedPaymentValue == null ? null : discountedPaymentValue,
         'discounted_payment_currency': discountedPaymentCurrency == null
             ? null
             : discountedPaymentCurrency,
         'discounted_payment_reason':
-            discountedPaymentReason == null ? null : discountedPaymentReason,
+        discountedPaymentReason == null ? null : discountedPaymentReason,
         'tournament_in_rating':
-            tournamentInRating == null ? null : tournamentInRating,
+        tournamentInRating == null ? null : tournamentInRating,
         'date_requests_allowed_to': dateRequestsAllowedTo == null
             ? null
             : dateRequestsAllowedTo?.toIso8601String(),
@@ -181,4 +184,59 @@ class TournamentDetails {
   String toString() {
     return 'TournamentDetails{idTournament: $idTournament, name: $name, town: $town, longName: $longName, dateStart: $dateStart, dateEnd: $dateEnd, tourCount: $tourCount, tourQuestions: $tourQuestions, tourQuesPerTour: $tourQuesPerTour, questionsTotal: $questionsTotal, typeName: $typeName, mainPaymentValue: $mainPaymentValue, mainPaymentCurrency: $mainPaymentCurrency, discountedPaymentValue: $discountedPaymentValue, discountedPaymentCurrency: $discountedPaymentCurrency, discountedPaymentReason: $discountedPaymentReason, tournamentInRating: $tournamentInRating, dateRequestsAllowedTo: $dateRequestsAllowedTo, comment: $comment, siteUrl: $siteUrl, archive: $archive, dateArchivedAt: $dateArchivedAt, dbTags: $dbTags}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentDetails &&
+          runtimeType == other.runtimeType &&
+          idTournament == other.idTournament &&
+          name == other.name &&
+          town == other.town &&
+          longName == other.longName &&
+          dateStart == other.dateStart &&
+          dateEnd == other.dateEnd &&
+          tourCount == other.tourCount &&
+          tourQuestions == other.tourQuestions &&
+          tourQuesPerTour == other.tourQuesPerTour &&
+          questionsTotal == other.questionsTotal &&
+          typeName == other.typeName &&
+          mainPaymentValue == other.mainPaymentValue &&
+          mainPaymentCurrency == other.mainPaymentCurrency &&
+          discountedPaymentValue == other.discountedPaymentValue &&
+          discountedPaymentCurrency == other.discountedPaymentCurrency &&
+          discountedPaymentReason == other.discountedPaymentReason &&
+          tournamentInRating == other.tournamentInRating &&
+          dateRequestsAllowedTo == other.dateRequestsAllowedTo &&
+          comment == other.comment &&
+          siteUrl == other.siteUrl &&
+          archive == other.archive &&
+          dateArchivedAt == other.dateArchivedAt &&
+          dbTags == other.dbTags;
+
+  @override
+  int get hashCode =>
+      idTournament.hashCode ^
+      name.hashCode ^
+      town.hashCode ^
+      longName.hashCode ^
+      dateStart.hashCode ^
+      dateEnd.hashCode ^
+      tourCount.hashCode ^
+      tourQuestions.hashCode ^
+      tourQuesPerTour.hashCode ^
+      questionsTotal.hashCode ^
+      typeName.hashCode ^
+      mainPaymentValue.hashCode ^
+      mainPaymentCurrency.hashCode ^
+      discountedPaymentValue.hashCode ^
+      discountedPaymentCurrency.hashCode ^
+      discountedPaymentReason.hashCode ^
+      tournamentInRating.hashCode ^
+      dateRequestsAllowedTo.hashCode ^
+      comment.hashCode ^
+      siteUrl.hashCode ^
+      archive.hashCode ^
+      dateArchivedAt.hashCode ^
+      dbTags.hashCode;
 }

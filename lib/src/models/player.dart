@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// {
@@ -11,8 +13,9 @@ import 'dart:convert';
 /// "db_chgk_info_tag": "msavchenkov"
 /// }
 /// ```
+@immutable
 class Player {
-  Player({
+  const Player({
     required this.idPlayer,
     this.surname,
     this.name,
@@ -36,7 +39,7 @@ class Player {
 
   /// Decodes [Player] object from json map
   factory Player.fromMap(Map<String, dynamic> json) => Player(
-        idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
+        idPlayer: json['idplayer'] == null ? '-1' : json['idplayer'],
         surname: json['surname'] == null ? null : json['surname'],
         name: json['name'] == null ? null : json['name'],
         patronymic: json['patronymic'] == null ? null : json['patronymic'],
@@ -46,8 +49,9 @@ class Player {
       );
 
   /// Encodes [Player] object to json map
-  Map<String, dynamic> toMap() => {
-        'idplayer': idPlayer == null ? 'null' : idPlayer,
+  Map<String, dynamic> toMap() =>
+      {
+        'idplayer': idPlayer,
         'surname': surname == null ? null : surname,
         'name': name == null ? null : name,
         'patronymic': patronymic == null ? null : patronymic,
@@ -59,4 +63,25 @@ class Player {
   String toString() {
     return 'Player{idPlayer: $idPlayer, surname: $surname, name: $name, patronymic: $patronymic, comment: $comment, dbChgkInfoTag: $dbChgkInfoTag}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Player &&
+          runtimeType == other.runtimeType &&
+          idPlayer == other.idPlayer &&
+          surname == other.surname &&
+          name == other.name &&
+          patronymic == other.patronymic &&
+          comment == other.comment &&
+          dbChgkInfoTag == other.dbChgkInfoTag;
+
+  @override
+  int get hashCode =>
+      idPlayer.hashCode ^
+      surname.hashCode ^
+      name.hashCode ^
+      patronymic.hashCode ^
+      comment.hashCode ^
+      dbChgkInfoTag.hashCode;
 }

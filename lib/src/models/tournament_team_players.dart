@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:meta/meta.dart';
+
 /// Response example:
 /// ```json
 /// {
@@ -44,8 +46,9 @@ import 'dart:convert';
 /// ]
 /// }
 /// ```
+@immutable
 class TournamentTeam {
-  TournamentTeam({
+  const TournamentTeam({
     this.idTeam,
     this.recaps,
   });
@@ -62,12 +65,12 @@ class TournamentTeam {
 
   /// Decodes [TournamentTeam] object from json map
   factory TournamentTeam.fromMap(Map<String, dynamic> json) => TournamentTeam(
-        idTeam: json['idteam'] == null ? null : json['idteam'],
-        recaps: json['recaps'] == null
-            ? null
-            : List<TournamentTeamPlayer>.from(
-                json['recaps'].map((x) => TournamentTeamPlayer.fromMap(x))),
-      );
+    idTeam: json['idteam'] == null ? null : json['idteam'],
+    recaps: json['recaps'] == null
+        ? null
+        : List<TournamentTeamPlayer>.from(
+        json['recaps'].map((x) => TournamentTeamPlayer.fromMap(x))),
+  );
 
   /// Encodes [TournamentTeam] object to json map
   Map<String, dynamic> toMap() => {
@@ -79,6 +82,17 @@ class TournamentTeam {
   String toString() {
     return 'TournamentTeamPlayers{idTeam: $idTeam, recaps: $recaps}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentTeam &&
+          runtimeType == other.runtimeType &&
+          idTeam == other.idTeam &&
+          recaps == other.recaps;
+
+  @override
+  int get hashCode => idTeam.hashCode ^ recaps.hashCode;
 }
 
 /// Response example:
@@ -90,8 +104,9 @@ class TournamentTeam {
 /// "is_foreign": "0"
 /// }
 /// ```
+@immutable
 class TournamentTeamPlayer {
-  TournamentTeamPlayer({
+  const TournamentTeamPlayer({
     this.idPlayer,
     this.isCaptain,
     this.isBase,
@@ -131,4 +146,21 @@ class TournamentTeamPlayer {
   String toString() {
     return 'TournamentTeamPlayer{idPlayer: $idPlayer, isCaptain: $isCaptain, isBase: $isBase, isForeign: $isForeign}';
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentTeamPlayer &&
+          runtimeType == other.runtimeType &&
+          idPlayer == other.idPlayer &&
+          isCaptain == other.isCaptain &&
+          isBase == other.isBase &&
+          isForeign == other.isForeign;
+
+  @override
+  int get hashCode =>
+      idPlayer.hashCode ^
+      isCaptain.hashCode ^
+      isBase.hashCode ^
+      isForeign.hashCode;
 }
