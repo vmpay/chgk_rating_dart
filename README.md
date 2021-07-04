@@ -8,6 +8,8 @@ Dart wrapper client for the competitive What? Where? When? rating [WebAPIRating]
 
 ## Getting Started
 
+### Add dependency
+
 Add to your pubspec.yaml the latest version of the library
 
 ```yaml
@@ -16,3 +18,22 @@ dependencies:
 ```
 
 <!-- TOTO pass the example -->
+### Fetch player's data example
+
+Create instance of ChgkRating class
+
+```dart
+ChgkRating chgkRating = ChgkRating();
+``` 
+
+Search for the player by name and surname
+```dart
+PlayerSearch playerSearch = await chgkRating.getPlayerBy(name: 'player_name', surname: 'player_surname');
+```
+
+## Copyright & License 
+This project follows Apache 2.0 [license](https://github.com/vmpay/chgk_rating_dart/blob/master/LICENSE)
+
+## Features and bugs 
+Please file feature requests and bugs at the [issue tracker](https://github.com/vmpay/chgk_rating_dart/issues).
+

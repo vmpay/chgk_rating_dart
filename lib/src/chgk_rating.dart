@@ -22,8 +22,6 @@ import 'models/tournament_team_players.dart';
 import 'models/tournament_team_results.dart';
 
 // TODO paging
-// TODO edge cases false/null/empty responses
-// TODO error classification
 // TODO cities, countries, regions impl
 
 /// Dart wrapper client for the competitive
