@@ -17,7 +17,6 @@ dependencies:
   chgk_rating: ^<latest_version>
 ```
 
-<!-- TOTO pass the example -->
 ### Fetch player's data example
 
 Create instance of ChgkRating class
