@@ -1,3 +1,8 @@
+## 0.0.5
+
+* meta dependency downgraded
+* readme awesome badge added
+
 ## 0.0.4
 
 * Corner cases covered.

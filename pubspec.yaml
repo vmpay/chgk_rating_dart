@@ -1,6 +1,6 @@
 name: chgk_rating
 description: Dart wrapper client for the competitive What? Where? When? rating WebAPIRating https://rating.chgk.info/api-doc
-version: 0.0.4
+version: 0.0.5
 homepage: https://github.com/vmpay/chgk_rating_dart
 
 environment:
@@ -9,7 +9,7 @@ environment:
 dependencies:
   dio: ^4.0.0
   mockito: ^5.0.10
-  meta: ^1.6.0
+  meta: ^1.3.0
 
 dev_dependencies:
   test: ^1.16.8
