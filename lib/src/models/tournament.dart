@@ -43,7 +43,7 @@ class Tournament {
 
   /// Decodes [Tournament] object from json map
   factory Tournament.fromMap(Map<String, dynamic> json) => Tournament(
-    idTournament:
+        idTournament:
             json['idtournament'] == null ? '-1' : json['idtournament'],
         name: json['name'] == null ? null : json['name'],
         dateStart: json['date_start'] == null
@@ -56,11 +56,10 @@ class Tournament {
         dateArchivedAt: json['date_archived_at'] == null
             ? null
             : DateTime.parse(json['date_archived_at']),
-  );
+      );
 
   /// Encodes [Tournament] object to json map
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'idtournament': idTournament,
         'name': name == null ? null : name,
         'date_start': dateStart == null ? null : dateStart?.toIso8601String(),

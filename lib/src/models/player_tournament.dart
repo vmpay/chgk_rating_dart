@@ -48,7 +48,7 @@ class PlayerTournamentResponse {
         tournaments: json['tournaments'] == null
             ? null
             : List<PlayerTournament>.from(
-            json['tournaments'].map((x) => PlayerTournament.fromMap(x))),
+                json['tournaments'].map((x) => PlayerTournament.fromMap(x))),
       );
 
   /// Encodes [PlayerTournamentResponse] object to json map
@@ -108,7 +108,7 @@ class PlayerTournament {
   factory PlayerTournament.fromMap(Map<String, dynamic> json) =>
       PlayerTournament(
         idTournament:
-        json['idtournament'] == null ? 'null' : json['idtournament'],
+            json['idtournament'] == null ? 'null' : json['idtournament'],
         idTeam: json['idteam'] == null ? null : json['idteam'],
         inBaseTeam: json['in_base_team'] == null ? null : json['in_base_team'],
       );

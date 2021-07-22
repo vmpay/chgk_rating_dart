@@ -49,8 +49,7 @@ class Player {
       );
 
   /// Encodes [Player] object to json map
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'idplayer': idPlayer,
         'surname': surname == null ? null : surname,
         'name': name == null ? null : name,

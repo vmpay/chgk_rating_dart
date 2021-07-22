@@ -37,14 +37,14 @@ class PlayerTeam {
 
   /// Decodes [PlayerTeam] object from json map
   factory PlayerTeam.fromMap(Map<String, dynamic> json) => PlayerTeam(
-    idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
-    idTeam: json['idteam'] == null ? 'null' : json['idteam'],
-    idSeason: json['idseason'] == null ? null : json['idseason'],
-    isCaptain: json['is_captain'] == null ? null : json['is_captain'],
-    addedSince: json['added_since'] == null
-        ? null
-        : DateTime.parse(json['added_since']),
-  );
+        idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
+        idTeam: json['idteam'] == null ? 'null' : json['idteam'],
+        idSeason: json['idseason'] == null ? null : json['idseason'],
+        isCaptain: json['is_captain'] == null ? null : json['is_captain'],
+        addedSince: json['added_since'] == null
+            ? null
+            : DateTime.parse(json['added_since']),
+      );
 
   /// Encodes [PlayerTeam] object to json map
   Map<String, dynamic> toMap() => {

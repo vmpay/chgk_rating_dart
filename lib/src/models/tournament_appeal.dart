@@ -63,12 +63,12 @@ class TournamentAppeal {
       TournamentAppeal(
         type: json['type'] == null ? null : typeValues.map[json['type']],
         questionNumber:
-        json['question_number'] == null ? null : json['question_number'],
+            json['question_number'] == null ? null : json['question_number'],
         issuedAt: json['issued_at'] == null
             ? null
             : DateTime.parse(json['issued_at']),
         status:
-        json['status'] == null ? null : statusValues.map[json['status']],
+            json['status'] == null ? null : statusValues.map[json['status']],
         appeal: json['appeal'] == null ? null : json['appeal'],
         comment: json['comment'] == null ? null : json['comment'],
         resolvedAt: json['resolved_at'] == null
@@ -79,11 +79,11 @@ class TournamentAppeal {
 
   /// Encodes [TournamentAppeal] object to json map
   Map<String, dynamic> toMap() => {
-    'type': type == null ? null : typeValues.reverse[type],
-    'question_number': questionNumber == null ? null : questionNumber,
-    'issued_at': issuedAt == null ? null : issuedAt?.toIso8601String(),
-    'status': status == null ? null : statusValues.reverse[status],
-    'appeal': appeal == null ? null : appeal,
+        'type': type == null ? null : typeValues.reverse[type],
+        'question_number': questionNumber == null ? null : questionNumber,
+        'issued_at': issuedAt == null ? null : issuedAt?.toIso8601String(),
+        'status': status == null ? null : statusValues.reverse[status],
+        'appeal': appeal == null ? null : appeal,
         'comment': comment == null ? null : comment,
         'resolved_at':
             resolvedAt == null ? null : resolvedAt?.toIso8601String(),

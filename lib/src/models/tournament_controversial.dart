@@ -56,13 +56,13 @@ class TournamentControversial {
   factory TournamentControversial.fromMap(Map<String, dynamic> json) =>
       TournamentControversial(
         questionNumber:
-        json['question_number'] == null ? null : json['question_number'],
+            json['question_number'] == null ? null : json['question_number'],
         answer: json['answer'] == null ? null : json['answer'],
         issuedAt: json['issued_at'] == null
             ? null
             : DateTime.parse(json['issued_at']),
         status:
-        json['status'] == null ? null : statusValues.map[json['status']],
+            json['status'] == null ? null : statusValues.map[json['status']],
         comment: json['comment'] == null ? null : json['comment'],
         resolvedAt: json['resolved_at'] == null
             ? null
@@ -74,11 +74,11 @@ class TournamentControversial {
 
   /// Encodes [TournamentControversial] object to json map
   Map<String, dynamic> toMap() => {
-    'question_number': questionNumber == null ? null : questionNumber,
-    'answer': answer == null ? null : answer,
-    'issued_at': issuedAt == null ? null : issuedAt?.toIso8601String(),
-    'status': status == null ? null : statusValues.reverse[status],
-    'comment': comment == null ? null : comment,
+        'question_number': questionNumber == null ? null : questionNumber,
+        'answer': answer == null ? null : answer,
+        'issued_at': issuedAt == null ? null : issuedAt?.toIso8601String(),
+        'status': status == null ? null : statusValues.reverse[status],
+        'comment': comment == null ? null : comment,
         'resolved_at':
             resolvedAt == null ? null : resolvedAt?.toIso8601String(),
         'appeal_jury_comment':

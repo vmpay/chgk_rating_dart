@@ -43,23 +43,23 @@ class TeamRating {
 
   /// Decodes [TeamRating] object from json map
   factory TeamRating.fromMap(Map<String, dynamic> json) => TeamRating(
-    idTeam: json['idteam'] == null ? null : json['idteam'],
-    idRelease: json['idrelease'] == null ? null : json['idrelease'],
-    rating: json['rating'] == null ? null : json['rating'],
-    ratingPosition:
-    json['rating_position'] == null ? null : json['rating_position'],
-    date: json['date'] == null ? null : DateTime.parse(json['date']),
-    techRating: json['tech_rating'] == null ? null : json['tech_rating'],
-    formula: json['formula'] == null ? null : json['formula'],
-  );
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        idRelease: json['idrelease'] == null ? null : json['idrelease'],
+        rating: json['rating'] == null ? null : json['rating'],
+        ratingPosition:
+            json['rating_position'] == null ? null : json['rating_position'],
+        date: json['date'] == null ? null : DateTime.parse(json['date']),
+        techRating: json['tech_rating'] == null ? null : json['tech_rating'],
+        formula: json['formula'] == null ? null : json['formula'],
+      );
 
   /// Encodes [TeamRating] object to json map
   Map<String, dynamic> toMap() => {
-    'idteam': idTeam == null ? null : idTeam,
-    'idrelease': idRelease == null ? null : idRelease,
-    'rating': rating == null ? null : rating,
-    'rating_position': ratingPosition == null ? null : ratingPosition,
-    'date': date == null
+        'idteam': idTeam == null ? null : idTeam,
+        'idrelease': idRelease == null ? null : idRelease,
+        'rating': rating == null ? null : rating,
+        'rating_position': ratingPosition == null ? null : ratingPosition,
+        'date': date == null
             ? null
             : "${date?.year.toString().padLeft(4, '0')}-${date?.month.toString().padLeft(2, '0')}-${date?.day.toString().padLeft(2, '0')}",
         'tech_rating': techRating == null ? null : techRating,

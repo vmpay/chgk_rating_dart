@@ -41,29 +41,29 @@ class PlayerRating {
 
   /// Decodes [PlayerRating] object from json map
   factory PlayerRating.fromMap(Map<String, dynamic> json) => PlayerRating(
-    idPlayer: json['idplayer'] == null ? null : json['idplayer'],
-    idRelease: json['idrelease'] == null ? null : json['idrelease'],
-    rating: json['rating'] == null ? null : json['rating'],
-    ratingPosition:
-    json['rating_position'] == null ? null : json['rating_position'],
-    date: json['date'] == null ? null : DateTime.parse(json['date']),
-    tournamentsInYear: json['tournaments_in_year'] == null
-        ? null
-        : json['tournaments_in_year'],
-    tournamentCountTotal: json['tournament_count_total'] == null
-        ? null
-        : json['tournament_count_total'],
-  );
+        idPlayer: json['idplayer'] == null ? null : json['idplayer'],
+        idRelease: json['idrelease'] == null ? null : json['idrelease'],
+        rating: json['rating'] == null ? null : json['rating'],
+        ratingPosition:
+            json['rating_position'] == null ? null : json['rating_position'],
+        date: json['date'] == null ? null : DateTime.parse(json['date']),
+        tournamentsInYear: json['tournaments_in_year'] == null
+            ? null
+            : json['tournaments_in_year'],
+        tournamentCountTotal: json['tournament_count_total'] == null
+            ? null
+            : json['tournament_count_total'],
+      );
 
   /// Encodes [PlayerRating] object to json map
   Map<String, dynamic> toMap() => {
-    'idplayer': idPlayer == null ? null : idPlayer,
-    'idrelease': idRelease == null ? null : idRelease,
-    'rating': rating == null ? null : rating,
-    'rating_position': ratingPosition == null ? null : ratingPosition,
-    'date': date == null
-        ? null
-        : "${date?.year.toString().padLeft(4, '0')}-${date?.month.toString().padLeft(2, '0')}-${date?.day.toString().padLeft(2, '0')}",
+        'idplayer': idPlayer == null ? null : idPlayer,
+        'idrelease': idRelease == null ? null : idRelease,
+        'rating': rating == null ? null : rating,
+        'rating_position': ratingPosition == null ? null : ratingPosition,
+        'date': date == null
+            ? null
+            : "${date?.year.toString().padLeft(4, '0')}-${date?.month.toString().padLeft(2, '0')}-${date?.day.toString().padLeft(2, '0')}",
         'tournaments_in_year':
             tournamentsInYear == null ? null : tournamentsInYear,
         'tournament_count_total':

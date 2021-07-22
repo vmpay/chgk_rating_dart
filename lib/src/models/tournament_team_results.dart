@@ -70,14 +70,14 @@ class TournamentTeamResults {
         baseName: json['base_name'] == null ? null : json['base_name'],
         position: json['position'] == null ? null : json['position'],
         questionsTotal:
-        json['questions_total'] == null ? null : json['questions_total'],
+            json['questions_total'] == null ? null : json['questions_total'],
         mask: json['mask'] == null ? null : json['mask'],
         techRatingRt:
-        json['tech_rating_rt'] == null ? null : json['tech_rating_rt'],
+            json['tech_rating_rt'] == null ? null : json['tech_rating_rt'],
         techRatingRg:
-        json['tech_rating_rg'] == null ? null : json['tech_rating_rg'],
+            json['tech_rating_rg'] == null ? null : json['tech_rating_rg'],
         techRatingRb:
-        json['tech_rating_rb'] == null ? null : json['tech_rating_rb'],
+            json['tech_rating_rb'] == null ? null : json['tech_rating_rb'],
         ratingR: json['rating_r'] == null ? null : json['rating_r'],
         predictedPosition: json['predicted_position'] == null
             ? null
@@ -91,18 +91,18 @@ class TournamentTeamResults {
 
   /// Encodes [TournamentTeamResults] object to json map
   Map<String, dynamic> toMap() => {
-    'idteam': idTeam == null ? null : idTeam,
-    'current_name': currentName == null ? null : currentName,
-    'base_name': baseName == null ? null : baseName,
-    'position': position == null ? null : position,
-    'questions_total': questionsTotal == null ? null : questionsTotal,
-    'mask': mask == null ? null : mask,
-    'tech_rating_rt': techRatingRt == null ? null : techRatingRt,
-    'tech_rating_rg': techRatingRg == null ? null : techRatingRg,
-    'tech_rating_rb': techRatingRb == null ? null : techRatingRb,
-    'rating_r': ratingR == null ? null : ratingR,
-    'predicted_position':
-    predictedPosition == null ? null : predictedPosition,
+        'idteam': idTeam == null ? null : idTeam,
+        'current_name': currentName == null ? null : currentName,
+        'base_name': baseName == null ? null : baseName,
+        'position': position == null ? null : position,
+        'questions_total': questionsTotal == null ? null : questionsTotal,
+        'mask': mask == null ? null : mask,
+        'tech_rating_rt': techRatingRt == null ? null : techRatingRt,
+        'tech_rating_rg': techRatingRg == null ? null : techRatingRg,
+        'tech_rating_rb': techRatingRb == null ? null : techRatingRb,
+        'rating_r': ratingR == null ? null : ratingR,
+        'predicted_position':
+            predictedPosition == null ? null : predictedPosition,
         'bonus_b': bonusB == null ? null : bonusB,
         'diff_bonus': diffBonus == null ? null : diffBonus,
         'included_in_rating':

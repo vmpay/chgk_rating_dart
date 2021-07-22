@@ -108,7 +108,7 @@ class TournamentDetails {
             ? null
             : json['tour_ques_per_tour'],
         questionsTotal:
-        json['questions_total'] == null ? null : json['questions_total'],
+            json['questions_total'] == null ? null : json['questions_total'],
         typeName: json['type_name'] == null ? null : json['type_name'],
         mainPaymentValue: json['main_payment_value'] == null
             ? null
@@ -143,8 +143,7 @@ class TournamentDetails {
       );
 
   /// Encodes [TournamentDetails] object to json map
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'idtournament': idTournament,
         'name': name == null ? null : name,
         'town': town == null ? null : town,
@@ -157,18 +156,18 @@ class TournamentDetails {
         'questions_total': questionsTotal == null ? null : questionsTotal,
         'type_name': typeName == null ? null : typeName,
         'main_payment_value':
-        mainPaymentValue == null ? null : mainPaymentValue,
+            mainPaymentValue == null ? null : mainPaymentValue,
         'main_payment_currency':
-        mainPaymentCurrency == null ? null : mainPaymentCurrency,
+            mainPaymentCurrency == null ? null : mainPaymentCurrency,
         'discounted_payment_value':
-        discountedPaymentValue == null ? null : discountedPaymentValue,
+            discountedPaymentValue == null ? null : discountedPaymentValue,
         'discounted_payment_currency': discountedPaymentCurrency == null
             ? null
             : discountedPaymentCurrency,
         'discounted_payment_reason':
-        discountedPaymentReason == null ? null : discountedPaymentReason,
+            discountedPaymentReason == null ? null : discountedPaymentReason,
         'tournament_in_rating':
-        tournamentInRating == null ? null : tournamentInRating,
+            tournamentInRating == null ? null : tournamentInRating,
         'date_requests_allowed_to': dateRequestsAllowedTo == null
             ? null
             : dateRequestsAllowedTo?.toIso8601String(),

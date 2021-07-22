@@ -65,12 +65,12 @@ class TournamentTeam {
 
   /// Decodes [TournamentTeam] object from json map
   factory TournamentTeam.fromMap(Map<String, dynamic> json) => TournamentTeam(
-    idTeam: json['idteam'] == null ? null : json['idteam'],
-    recaps: json['recaps'] == null
-        ? null
-        : List<TournamentTeamPlayer>.from(
-        json['recaps'].map((x) => TournamentTeamPlayer.fromMap(x))),
-  );
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        recaps: json['recaps'] == null
+            ? null
+            : List<TournamentTeamPlayer>.from(
+                json['recaps'].map((x) => TournamentTeamPlayer.fromMap(x))),
+      );
 
   /// Encodes [TournamentTeam] object to json map
   Map<String, dynamic> toMap() => {

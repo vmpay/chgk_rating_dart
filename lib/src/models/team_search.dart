@@ -43,13 +43,13 @@ class TeamSearch {
 
   /// Decodes [TeamSearch] object from json map
   factory TeamSearch.fromMap(Map<String, dynamic> json) => TeamSearch(
-    items: json['items'] == null
-        ? null
-        : List<Team>.from(json['items'].map((x) => Team.fromMap(x))),
-    totalItems: json['total_items'] == null ? null : json['total_items'],
-    currentItems:
-    json['current_items'] == null ? null : json['current_items'],
-  );
+        items: json['items'] == null
+            ? null
+            : List<Team>.from(json['items'].map((x) => Team.fromMap(x))),
+        totalItems: json['total_items'] == null ? null : json['total_items'],
+        currentItems:
+            json['current_items'] == null ? null : json['current_items'],
+      );
 
   /// Encodes [TeamSearch] object to json map
   Map<String, dynamic> toMap() => {

@@ -56,10 +56,10 @@ class TournamentSearch {
         items: json['items'] == null
             ? null
             : List<Tournament>.from(
-            json['items'].map((x) => Tournament.fromMap(x))),
+                json['items'].map((x) => Tournament.fromMap(x))),
         totalItems: json['total_items'] == null ? null : json['total_items'],
         currentItems:
-        json['current_items'] == null ? null : json['current_items'],
+            json['current_items'] == null ? null : json['current_items'],
       );
 
   /// Encodes [TournamentSearch] object to json map

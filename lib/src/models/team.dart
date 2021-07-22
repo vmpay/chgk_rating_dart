@@ -45,7 +45,7 @@ class Team {
 
   /// Decodes [Team] object from json map
   factory Team.fromMap(Map<String, dynamic> json) => Team(
-    idTeam: json['idteam'] == null ? '-1' : json['idteam'],
+        idTeam: json['idteam'] == null ? '-1' : json['idteam'],
         name: json['name'] == null ? null : json['name'],
         town: json['town'] == null ? null : json['town'],
         regionName: json['region_name'] == null ? null : json['region_name'],
@@ -57,11 +57,10 @@ class Team {
             ? null
             : json['tournaments_total'],
         comment: json['comment'] == null ? null : json['comment'],
-  );
+      );
 
   /// Encodes [Team] object to json map
-  Map<String, dynamic> toMap() =>
-      {
+  Map<String, dynamic> toMap() => {
         'idteam': idTeam,
         'name': name == null ? null : name,
         'town': town == null ? null : town,

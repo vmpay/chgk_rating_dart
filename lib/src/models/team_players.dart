@@ -40,14 +40,14 @@ class TeamPlayers {
 
   /// Decodes [TeamPlayers] object from json map
   factory TeamPlayers.fromMap(Map<String, dynamic> json) => TeamPlayers(
-    idTeam: json['idteam'] == null ? null : json['idteam'],
-    idSeason: json['idseason'] == null ? null : json['idseason'],
-    players: json['players'] == null
-        ? null
-        : List<String>.from(json['players'].map((x) => x)),
-    // TODO false means null
-    captain: json['captain'] == null ? null : json['captain'].toString(),
-  );
+        idTeam: json['idteam'] == null ? null : json['idteam'],
+        idSeason: json['idseason'] == null ? null : json['idseason'],
+        players: json['players'] == null
+            ? null
+            : List<String>.from(json['players'].map((x) => x)),
+        // TODO false means null
+        captain: json['captain'] == null ? null : json['captain'].toString(),
+      );
 
   /// Encodes [TeamPlayers] object to json map
   Map<String, dynamic> toMap() => {

@@ -46,13 +46,13 @@ class PlayerSearch {
 
   /// Decodes [PlayerSearch] object from json map
   factory PlayerSearch.fromMap(Map<String, dynamic> json) => PlayerSearch(
-    items: json['items'] == null
-        ? null
-        : List<Player>.from(json['items'].map((x) => Player.fromMap(x))),
-    totalItems: json['total_items'] == null ? null : json['total_items'],
-    currentItems:
-    json['current_items'] == null ? null : json['current_items'],
-  );
+        items: json['items'] == null
+            ? null
+            : List<Player>.from(json['items'].map((x) => Player.fromMap(x))),
+        totalItems: json['total_items'] == null ? null : json['total_items'],
+        currentItems:
+            json['current_items'] == null ? null : json['current_items'],
+      );
 
   /// Encodes [PlayerSearch] object to json map
   Map<String, dynamic> toMap() => {
