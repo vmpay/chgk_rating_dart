@@ -1,86 +1,77 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 /// Response example:
 /// ```json
 /// {
-/// "idplayer": "27822",
-/// "surname": "Савченков",
-/// "name": "Михаил",
-/// "patronymic": "Владимирович",
-/// "comment": "Комментарий",
-/// "db_chgk_info_tag": "msavchenkov"
+///     "id": 27822,
+///     "name": "Михаил",
+///     "patronymic": "Владимирович",
+///     "surname": "Савченков"
 /// }
 /// ```
-@immutable
 class Player {
-  const Player({
-    required this.idPlayer,
-    this.surname,
-    this.name,
-    this.patronymic,
-    this.comment,
-    this.dbChgkInfoTag,
+  Player({
+    required this.id,
+    required this.name,
+    required this.patronymic,
+    required this.surname,
   });
 
-  final String idPlayer;
-  final String? surname;
-  final String? name;
+  final int id;
+  final String name;
   final String? patronymic;
-  final String? comment;
-  final String? dbChgkInfoTag;
+  final String surname;
 
-  /// Decodes [Player] object from json string
-  factory Player.fromJson(String str) => Player.fromMap(json.decode(str));
-
-  /// Encodes [Player] object to json String
-  String toJson() => json.encode(toMap());
-
-  /// Decodes [Player] object from json map
-  factory Player.fromMap(Map<String, dynamic> json) => Player(
-        idPlayer: json['idplayer'] == null ? '-1' : json['idplayer'],
-        surname: json['surname'] == null ? null : json['surname'],
-        name: json['name'] == null ? null : json['name'],
-        patronymic: json['patronymic'] == null ? null : json['patronymic'],
-        comment: json['comment'] == null ? null : json['comment'],
-        dbChgkInfoTag:
-            json['db_chgk_info_tag'] == null ? null : json['db_chgk_info_tag'],
+  Player copyWith({
+    required int id,
+    required String name,
+    required String? patronymic,
+    required String surname,
+  }) =>
+      Player(
+        id: id,
+        name: name,
+        patronymic: patronymic,
+        surname: surname,
       );
 
-  /// Encodes [Player] object to json map
-  Map<String, dynamic> toMap() => {
-        'idplayer': idPlayer,
-        'surname': surname == null ? null : surname,
-        'name': name == null ? null : name,
-        'patronymic': patronymic == null ? null : patronymic,
-        'comment': comment == null ? null : comment,
-        'db_chgk_info_tag': dbChgkInfoTag == null ? null : dbChgkInfoTag,
+  factory Player.fromRawJson(String str) => Player.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Player.fromJson(Map<String, dynamic> json) => Player(
+        id: json["id"],
+        name: json["name"],
+        patronymic: json["patronymic"],
+        surname: json["surname"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "patronymic": patronymic,
+        "surname": surname,
       };
 
-  @override
-  String toString() {
-    return 'Player{idPlayer: $idPlayer, surname: $surname, name: $name, patronymic: $patronymic, comment: $comment, dbChgkInfoTag: $dbChgkInfoTag}';
-  }
+  static Iterable<Player> decodeList(List<dynamic> list) =>
+      list.map((dynamic e) => Player.fromRawJson(e));
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Player &&
           runtimeType == other.runtimeType &&
-          idPlayer == other.idPlayer &&
-          surname == other.surname &&
+          id == other.id &&
           name == other.name &&
           patronymic == other.patronymic &&
-          comment == other.comment &&
-          dbChgkInfoTag == other.dbChgkInfoTag;
+          surname == other.surname;
 
   @override
   int get hashCode =>
-      idPlayer.hashCode ^
-      surname.hashCode ^
-      name.hashCode ^
-      patronymic.hashCode ^
-      comment.hashCode ^
-      dbChgkInfoTag.hashCode;
+      id.hashCode ^ name.hashCode ^ patronymic.hashCode ^ surname.hashCode;
+
+  @override
+  String toString() {
+    return 'Player{id: $id, name: $name, patronymic: $patronymic, surname: $surname}';
+  }
 }

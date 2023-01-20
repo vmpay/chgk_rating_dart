@@ -1,21 +1,23 @@
 import 'package:chgk_rating/chgk_rating.dart';
+import 'package:chgk_rating/src/models/tournament_appeals.dart';
+import 'package:chgk_rating/src/models/tournament_requests.dart';
+import 'package:chgk_rating/src/models/tournament_results.dart';
 import 'package:test/test.dart';
 
 void main() {
-  const String notFoundId = '-1';
-  const String teamId = '58380';
-  const String tournamentId = '5021';
+  const int notFoundId = -1;
+  const int tournamentId = 5021;
   final ChgkRating chgkRating = ChgkRating();
 
   group('getTournamentDetails', () {
     test('success', () async {
-      final TournamentDetails? tournamentDetails =
+      final Tournament? tournamentDetails =
           await chgkRating.getTournamentDetails(tournamentId);
       assert(tournamentDetails != null);
     });
 
     test('empty', () async {
-      final TournamentDetails? tournamentDetails =
+      final Tournament? tournamentDetails =
           await chgkRating.getTournamentDetails(notFoundId);
       assert(tournamentDetails == null);
     });
@@ -23,119 +25,51 @@ void main() {
 
   group('getTournamentBy search parameters', () {
     test('success', () async {
-      final TournamentSearch tournamentSearch =
+      final Iterable<Tournament> tournamentSearch =
           await chgkRating.getTournamentBy(name: 'Синхрон-lite. Выпуск XXII');
-      assert(tournamentSearch.items?.isNotEmpty == true);
+      assert(tournamentSearch.isNotEmpty == true);
     });
   });
 
   group('getTournamentResults', () {
     test('success', () async {
-      final Iterable<TournamentTeamResults> tournamentResult =
+      final Iterable<TournamentResults> tournamentResult =
           await chgkRating.getTournamentResults(tournamentId);
       assert(tournamentResult.isNotEmpty);
     });
 
     test('empty', () async {
-      final Iterable<TournamentTeamResults> tournamentResult =
+      final Iterable<TournamentResults> tournamentResult =
           await chgkRating.getTournamentResults(notFoundId);
       assert(tournamentResult.isEmpty);
     });
   });
 
-  group('getTournamentResults', () {
+  group('getTournamentAppeals', () {
     test('success', () async {
-      final Iterable<TournamentTeamPlayer> tournamentTeamPlayers =
-          await chgkRating.getTournamentTeamPlayersByTeam(tournamentId, teamId);
-      assert(tournamentTeamPlayers.isNotEmpty);
-    });
-
-    test('edge empty', () async {
-      final Iterable<TournamentTeamPlayer> tournamentTeamPlayers =
-          await chgkRating.getTournamentTeamPlayersByTeam(
-              notFoundId, notFoundId);
-      assert(tournamentTeamPlayers.isEmpty);
-    });
-
-    test('corner tournament empty', () async {
-      final Iterable<TournamentTeamPlayer> tournamentTeamPlayers =
-          await chgkRating.getTournamentTeamPlayersByTeam(notFoundId, teamId);
-      assert(tournamentTeamPlayers.isEmpty);
-    });
-
-    test('corner team empty', () async {
-      final Iterable<TournamentTeamPlayer> tournamentTeamPlayers =
-          await chgkRating.getTournamentTeamPlayersByTeam(
-              tournamentId, notFoundId);
-      assert(tournamentTeamPlayers.isEmpty);
-    });
-  });
-
-  group('getTournamentResults', () {
-    test('success', () async {
-      final Iterable<TournamentTeam> tournamentTeam =
-          await chgkRating.getTournamentTeamPlayers(tournamentId);
-      assert(tournamentTeam.isNotEmpty);
+      final Iterable<TournamentAppeals> tournamentAppeals =
+          await chgkRating.getTournamentAppeals(tournamentId);
+      assert(tournamentAppeals.isNotEmpty);
     });
 
     test('empty', () async {
-      final Iterable<TournamentTeam> tournamentTeam =
-          await chgkRating.getTournamentTeamPlayers(notFoundId);
-      assert(tournamentTeam.isEmpty);
+      final Iterable<TournamentAppeals> tournamentAppeals =
+          await chgkRating.getTournamentAppeals(notFoundId);
+      assert(tournamentAppeals.isEmpty);
     });
   });
 
-  group('getTournamentResultsByTeam', () {
+  group('getTournamentRequests', () {
     test('success', () async {
-      final Iterable<TournamentResults> tournamentResults =
-          await chgkRating.getTournamentResultsByTeam(tournamentId, teamId);
-      assert(tournamentResults.isNotEmpty);
-    });
-
-    test('edge empty', () async {
-      final Iterable<TournamentResults> tournamentResults =
-          await chgkRating.getTournamentResultsByTeam(notFoundId, notFoundId);
-      assert(tournamentResults.isEmpty);
-    });
-
-    test('corner tournament empty', () async {
-      final Iterable<TournamentResults> tournamentResults =
-          await chgkRating.getTournamentResultsByTeam(notFoundId, teamId);
-      assert(tournamentResults.isEmpty);
-    });
-
-    test('corner team empty', () async {
-      final Iterable<TournamentResults> tournamentResults =
-          await chgkRating.getTournamentResultsByTeam(tournamentId, notFoundId);
-      assert(tournamentResults.isEmpty);
-    });
-  });
-
-  group('getTournamentControversialQuestions', () {
-    test('success', () async {
-      final Iterable<TournamentControversial> tournamentControversial =
-          await chgkRating.getTournamentControversialQuestions(tournamentId);
-      assert(tournamentControversial.isNotEmpty);
+      final Iterable<TournamentRequests> tournamentRequests =
+          await chgkRating.getTournamentRequests(tournamentId);
+      assert(tournamentRequests.isNotEmpty);
     });
 
     test('empty', () async {
-      final Iterable<TournamentControversial> tournamentControversial =
-          await chgkRating.getTournamentControversialQuestions(notFoundId);
-      assert(tournamentControversial.isEmpty);
-    });
-  });
-
-  group('getTournamentAppealQuestions', () {
-    test('success', () async {
-      final Iterable<TournamentAppeal> tournamentAppeal =
-          await chgkRating.getTournamentAppealQuestions(tournamentId);
-      assert(tournamentAppeal.isNotEmpty);
-    });
-
-    test('empty', () async {
-      final Iterable<TournamentAppeal> tournamentAppeal =
-          await chgkRating.getTournamentAppealQuestions(notFoundId);
-      assert(tournamentAppeal.isEmpty);
+      final Iterable<TournamentRequests> tournamentRequests =
+          await chgkRating.getTournamentRequests(notFoundId);
+      assert(tournamentRequests.isEmpty);
     });
   });
 }

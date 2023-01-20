@@ -9,6 +9,7 @@ environment:
 dependencies:
   dio: ^4.0.0
   mockito: ^5.0.10
+  # remove meta
   meta: ^1.3.0
 
 dev_dependencies:

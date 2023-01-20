@@ -1,104 +1,197 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 /// Response example:
 /// ```json
 /// {
-/// "idteam": "58380",
-/// "name": "Олег с мышами",
-/// "town": "Варшава",
-/// "region_name": "Мазовецкое воеводство",
-/// "country_name": "Польша",
-/// "tournaments_this_season": "0",
-/// "tournaments_total": "125",
-/// "comment": "Комментарий"
+///    "id": 26777,
+///    "name": "Утечка мозгов",
+///    "town": {
+///        "id": 197,
+///        "name": "Минск",
+///        "region": {
+///            "id": 84,
+///            "name": "Минск",
+///            "country": {
+///                "id": 5,
+///                "name": "Беларусь"
+///            }
+///        },
+///        "country": {
+///            "id": 5,
+///            "name": "Беларусь"
+///        }
+///    }
 /// }
 /// ```
-@immutable
 class Team {
-  const Team({
-    required this.idTeam,
-    this.name,
-    this.town,
-    this.regionName,
-    this.countryName,
-    this.tournamentsThisSeason,
-    this.tournamentsTotal,
-    this.comment,
+  Team({
+    required this.id,
+    required this.name,
+    required this.town,
   });
 
-  final String idTeam;
-  final String? name;
-  final String? town;
-  final String? regionName;
-  final String? countryName;
-  final String? tournamentsThisSeason;
-  final String? tournamentsTotal;
-  final String? comment;
+  final int id;
+  final String name;
+  final Town? town;
 
-  /// Decodes [Team] object from json string
-  factory Team.fromJson(String str) => Team.fromMap(json.decode(str));
-
-  /// Encodes [Team] object to json string
-  String toJson() => json.encode(toMap());
-
-  /// Decodes [Team] object from json map
-  factory Team.fromMap(Map<String, dynamic> json) => Team(
-        idTeam: json['idteam'] == null ? '-1' : json['idteam'],
-        name: json['name'] == null ? null : json['name'],
-        town: json['town'] == null ? null : json['town'],
-        regionName: json['region_name'] == null ? null : json['region_name'],
-        countryName: json['country_name'] == null ? null : json['country_name'],
-        tournamentsThisSeason: json['tournaments_this_season'] == null
-            ? null
-            : json['tournaments_this_season'],
-        tournamentsTotal: json['tournaments_total'] == null
-            ? null
-            : json['tournaments_total'],
-        comment: json['comment'] == null ? null : json['comment'],
+  Team copyWith({
+    required int id,
+    required String name,
+    required Town? town,
+  }) =>
+      Team(
+        id: id,
+        name: name,
+        town: town,
       );
 
-  /// Encodes [Team] object to json map
-  Map<String, dynamic> toMap() => {
-        'idteam': idTeam,
-        'name': name == null ? null : name,
-        'town': town == null ? null : town,
-        'region_name': regionName == null ? null : regionName,
-        'country_name': countryName == null ? null : countryName,
-        'tournaments_this_season':
-            tournamentsThisSeason == null ? null : tournamentsThisSeason,
-        'tournaments_total': tournamentsTotal == null ? null : tournamentsTotal,
-        'comment': comment == null ? null : comment,
+  factory Team.fromRawJson(String str) => Team.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Team.fromJson(Map<String, dynamic> json) => Team(
+        id: json["id"],
+        name: json["name"],
+        town: json["town"] != null ? Town.fromJson(json["town"]) : null,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "town": town?.toJson(),
       };
 
-  @override
-  String toString() {
-    return 'Team{idTeam: $idTeam, name: $name, town: $town, regionName: $regionName, countryName: $countryName, tournamentsThisSeason: $tournamentsThisSeason, tournamentsTotal: $tournamentsTotal, comment: $comment}';
-  }
+  static Iterable<Team> decodeList(List<dynamic> list) =>
+      list.map((dynamic e) => Team.fromRawJson(e));
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Team &&
           runtimeType == other.runtimeType &&
-          idTeam == other.idTeam &&
+          id == other.id &&
           name == other.name &&
-          town == other.town &&
-          regionName == other.regionName &&
-          countryName == other.countryName &&
-          tournamentsThisSeason == other.tournamentsThisSeason &&
-          tournamentsTotal == other.tournamentsTotal &&
-          comment == other.comment;
+          town == other.town;
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode ^ town.hashCode;
+
+  @override
+  String toString() {
+    return 'Team{id: $id, name: $name, town: $town}';
+  }
+}
+
+class Town {
+  Town({
+    required this.id,
+    required this.name,
+    required this.region,
+    required this.country,
+  });
+
+  final int id;
+  final String name;
+  final Town? region;
+  final Country? country;
+
+  Town copyWith({
+    required int id,
+    required String name,
+    required Town? region,
+    required Country? country,
+  }) =>
+      Town(
+        id: id,
+        name: name,
+        region: region ?? this.region,
+        country: country ?? this.country,
+      );
+
+  factory Town.fromRawJson(String str) => Town.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Town.fromJson(Map<String, dynamic> json) => Town(
+        id: json["id"],
+        name: json["name"],
+        region: json["region"] == null ? null : Town.fromJson(json["region"]),
+        country:
+            json["country"] != null ? Country.fromJson(json["country"]) : null,
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "region": region?.toJson(),
+        "country": country?.toJson(),
+      };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Town &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          region == other.region &&
+          country == other.country;
 
   @override
   int get hashCode =>
-      idTeam.hashCode ^
-      name.hashCode ^
-      town.hashCode ^
-      regionName.hashCode ^
-      countryName.hashCode ^
-      tournamentsThisSeason.hashCode ^
-      tournamentsTotal.hashCode ^
-      comment.hashCode;
+      id.hashCode ^ name.hashCode ^ region.hashCode ^ country.hashCode;
+
+  @override
+  String toString() {
+    return 'Town{id: $id, name: $name, region: $region, country: $country}';
+  }
+}
+
+class Country {
+  Country({
+    required this.id,
+    required this.name,
+  });
+
+  final int id;
+  final String? name;
+
+  Country copyWith({
+    required int id,
+    required String? name,
+  }) =>
+      Country(
+        id: id,
+        name: name ?? this.name,
+      );
+
+  factory Country.fromRawJson(String str) => Country.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory Country.fromJson(Map<String, dynamic> json) => Country(
+        id: json["id"],
+        name: json["name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+      };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Country &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name;
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode;
+
+  @override
+  String toString() {
+    return 'Country{id: $id, name: $name}';
+  }
 }

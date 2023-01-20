@@ -1,140 +1,73 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 /// Response example:
 /// ```json
-/// {
-/// "idplayer": 147205,
-/// "idseason": 54,
-/// "tournaments": [
-///     {
-///         "idtournament": "6035",
-///         "idteam": "58380",
-///         "in_base_team": "0"
-///     },
-///     {
-///         "idtournament": "7110",
-///         "idteam": "58380",
-///         "in_base_team": "0"
-///     }
-/// ]
-/// }
+///[
+///    {
+///        "idplayer": 2027,
+///        "idteam": 26777,
+///        "idtournament": 219
+///    },
+///    {
+///        "idplayer": 2027,
+///        "idteam": 26777,
+///        "idtournament": 314
+///    }
+///]
 /// ```
-@immutable
-class PlayerTournamentResponse {
-  const PlayerTournamentResponse({
-    this.idPlayer,
-    this.idSeason,
-    this.tournaments,
+class PlayerTournament {
+  PlayerTournament({
+    required this.idPlayer,
+    required this.idTeam,
+    required this.idTournament,
   });
 
   final int? idPlayer;
-  final String? idSeason;
-  final List<PlayerTournament>? tournaments;
+  final int idTeam;
+  final int idTournament;
 
-  /// Decodes [PlayerTournamentResponse] object from json string
-  factory PlayerTournamentResponse.fromJson(String str) =>
-      PlayerTournamentResponse.fromMap(json.decode(str));
-
-  /// Encodes [PlayerTournamentResponse] object to json string
-  String toJson() => json.encode(toMap());
-
-  /// Decodes [PlayerTournamentResponse] object from json map
-  factory PlayerTournamentResponse.fromMap(Map<String, dynamic> json) =>
-      PlayerTournamentResponse(
-        idPlayer: json['idplayer'] == null ? null : json['idplayer'],
-        idSeason: json['idseason'] == null ? null : json['idseason'].toString(),
-        tournaments: json['tournaments'] == null
-            ? null
-            : List<PlayerTournament>.from(
-                json['tournaments'].map((x) => PlayerTournament.fromMap(x))),
-      );
-
-  /// Encodes [PlayerTournamentResponse] object to json map
-  Map<String, dynamic> toMap() => {
-        'idplayer': idPlayer == null ? null : idPlayer,
-        'idseason': idSeason == null ? null : idSeason,
-        'tournaments': tournaments == null ? null : tournaments,
-      };
-
-  @override
-  String toString() {
-    return 'PlayerTournamentResponse{idPlayer: $idPlayer, idSeason: $idSeason, tournaments: $tournaments}';
-  }
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PlayerTournamentResponse &&
-          runtimeType == other.runtimeType &&
-          idPlayer == other.idPlayer &&
-          idSeason == other.idSeason &&
-          tournaments == other.tournaments;
-
-  @override
-  int get hashCode =>
-      idPlayer.hashCode ^ idSeason.hashCode ^ tournaments.hashCode;
-}
-
-/// Response example:
-/// ```json
-/// {
-/// "idtournament": "6035",
-/// "idteam": "58380",
-/// "in_base_team": "0"
-/// }
-/// ```
-@immutable
-class PlayerTournament {
-  const PlayerTournament({
-    required this.idTournament,
-    this.idTeam,
-    this.inBaseTeam,
-  });
-
-  final String idTournament;
-  final String? idTeam;
-  final String? inBaseTeam;
-
-  /// Decodes [PlayerTournament] object from json string
-  factory PlayerTournament.fromJson(String str) =>
-      PlayerTournament.fromMap(json.decode(str));
-
-  /// Encodes [PlayerTournament] object to json string
-  String toJson() => json.encode(toMap());
-
-  /// Decodes [PlayerTournament] object from json map
-  factory PlayerTournament.fromMap(Map<String, dynamic> json) =>
+  PlayerTournament copyWith({
+    required int? idPlayer,
+    required int idTeam,
+    required int idTournament,
+  }) =>
       PlayerTournament(
-        idTournament:
-            json['idtournament'] == null ? 'null' : json['idtournament'],
-        idTeam: json['idteam'] == null ? null : json['idteam'],
-        inBaseTeam: json['in_base_team'] == null ? null : json['in_base_team'],
+        idPlayer: idPlayer,
+        idTeam: idTeam,
+        idTournament: idTournament,
       );
 
-  /// Encodes [PlayerTournament] object to json map
-  Map<String, dynamic> toMap() => {
-        'idtournament': idTournament,
-        'idteam': idTeam == null ? null : idTeam,
-        'in_base_team': inBaseTeam == null ? null : inBaseTeam,
+  factory PlayerTournament.fromRawJson(String str) =>
+      PlayerTournament.fromJson(json.decode(str));
+
+  String toRawJson() => json.encode(toJson());
+
+  factory PlayerTournament.fromJson(Map<String, dynamic> json) =>
+      PlayerTournament(
+        idPlayer: json["idplayer"],
+        idTeam: json["idteam"],
+        idTournament: json["idtournament"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "idplayer": idPlayer,
+        "idteam": idTeam,
+        "idtournament": idTournament,
       };
 
-  @override
-  String toString() {
-    return 'PlayerTournament{idTournament: $idTournament, idTeam: $idTeam, inBaseTeam: $inBaseTeam}';
-  }
+  static Iterable<PlayerTournament> decodeList(List<dynamic> list) =>
+      list.map((e) => PlayerTournament.fromRawJson(e));
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is PlayerTournament &&
           runtimeType == other.runtimeType &&
-          idTournament == other.idTournament &&
+          idPlayer == other.idPlayer &&
           idTeam == other.idTeam &&
-          inBaseTeam == other.inBaseTeam;
+          idTournament == other.idTournament;
 
   @override
   int get hashCode =>
-      idTournament.hashCode ^ idTeam.hashCode ^ inBaseTeam.hashCode;
+      idPlayer.hashCode ^ idTeam.hashCode ^ idTournament.hashCode;
 }
