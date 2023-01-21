@@ -84,8 +84,7 @@ class TournamentRequests {
         tournamentId: json["tournamentId"],
       );
 
-  Map<String, dynamic> toJson() =>
-      {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "status": statusValues.reverse[status],
         "venue": venue?.toJson(),
@@ -101,7 +100,7 @@ class TournamentRequests {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-          other is TournamentRequests &&
+      other is TournamentRequests &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           status == other.status &&

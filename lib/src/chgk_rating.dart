@@ -12,8 +12,6 @@ import 'models/tournament_appeals.dart';
 import 'models/tournament_requests.dart';
 import 'models/tournament_results.dart';
 
-// TODO paging
-
 /// Dart wrapper client for the competitive
 /// What? Where? When? rating [WebAPIRating](https://api.rating.chgk.net/)
 ///
