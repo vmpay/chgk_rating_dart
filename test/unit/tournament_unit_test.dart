@@ -215,9 +215,11 @@ void main() {
               address: 'address',
               urls: ['urls']),
           representative: mockPlayer,
+          narrator: mockPlayer,
           narrators: [mockPlayer],
           approximateTeamsCount: 8,
           issuedAt: dateTime,
+          dateStart: dateTime,
           tournamentId: mockTournamentDetails.id);
       final Iterable<TournamentRequests> mockTournamentRequests = [
         mockTournamentRequest

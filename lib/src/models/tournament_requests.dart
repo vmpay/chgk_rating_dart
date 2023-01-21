@@ -13,9 +13,11 @@ class TournamentRequests {
     required this.status,
     required this.venue,
     required this.representative,
+    required this.narrator,
     required this.narrators,
     required this.approximateTeamsCount,
     required this.issuedAt,
+    required this.dateStart,
     required this.tournamentId,
   });
 
@@ -23,9 +25,11 @@ class TournamentRequests {
   final QuestionStatus status;
   final Venue? venue;
   final Player? representative;
+  final Player? narrator;
   final List<Player> narrators;
   final int? approximateTeamsCount;
   final DateTime? issuedAt;
+  final DateTime? dateStart;
   final int tournamentId;
 
   TournamentRequests copyWith({
@@ -33,9 +37,11 @@ class TournamentRequests {
     required QuestionStatus status,
     required Venue? venue,
     required Player? representative,
+    required Player? narrator,
     required List<Player> narrators,
     required int? approximateTeamsCount,
     required DateTime? issuedAt,
+    required DateTime? dateStart,
     required int tournamentId,
   }) =>
       TournamentRequests(
@@ -43,10 +49,12 @@ class TournamentRequests {
         status: status,
         venue: venue ?? this.venue,
         representative: representative ?? this.representative,
+        narrator: narrator ?? this.narrator,
         narrators: narrators,
         approximateTeamsCount:
             approximateTeamsCount ?? this.approximateTeamsCount,
         issuedAt: issuedAt ?? this.issuedAt,
+        dateStart: dateStart ?? this.dateStart,
         tournamentId: tournamentId,
       );
 
@@ -63,37 +71,47 @@ class TournamentRequests {
         representative: json["representative"] != null
             ? Player.fromJson(json["representative"])
             : null,
+        narrator:
+            json["narrator"] != null ? Player.fromJson(json["narrator"]) : null,
         narrators:
             List<Player>.from(json["narrators"].map((x) => Player.fromJson(x))),
         approximateTeamsCount: json["approximateTeamsCount"],
         issuedAt:
             json["issuedAt"] != null ? DateTime.parse(json["issuedAt"]) : null,
+        dateStart: json["dateStart"] != null
+            ? DateTime.parse(json["dateStart"])
+            : null,
         tournamentId: json["tournamentId"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() =>
+      {
         "id": id,
         "status": statusValues.reverse[status],
         "venue": venue?.toJson(),
         "representative": representative?.toJson(),
+        "narrator": narrator?.toJson(),
         "narrators": List<dynamic>.from(narrators.map((x) => x.toJson())),
         "approximateTeamsCount": approximateTeamsCount,
         "issuedAt": issuedAt?.toIso8601String(),
+        "dateStart": dateStart?.toIso8601String(),
         "tournamentId": tournamentId,
       };
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TournamentRequests &&
+          other is TournamentRequests &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           status == other.status &&
           venue == other.venue &&
           representative == other.representative &&
+          narrator == other.narrator &&
           const DeepCollectionEquality().equals(narrators, other.narrators) &&
           approximateTeamsCount == other.approximateTeamsCount &&
           issuedAt == other.issuedAt &&
+          dateStart == other.dateStart &&
           tournamentId == other.tournamentId;
 
   @override
@@ -102,14 +120,16 @@ class TournamentRequests {
       status.hashCode ^
       venue.hashCode ^
       representative.hashCode ^
+      narrator.hashCode ^
       narrators.hashCode ^
       approximateTeamsCount.hashCode ^
       issuedAt.hashCode ^
+      dateStart.hashCode ^
       tournamentId.hashCode;
 
   @override
   String toString() {
-    return 'TournamentRequests{id: $id, status: $status, venue: $venue, representative: $representative, narrators: $narrators, approximateTeamsCount: $approximateTeamsCount, issuedAt: $issuedAt, tournamentId: $tournamentId}';
+    return 'TournamentRequests{id: $id, status: $status, venue: $venue, representative: $representative, narrator: $narrator, narrators: $narrators, approximateTeamsCount: $approximateTeamsCount, issuedAt: $issuedAt, dateStart: $dateStart, tournamentId: $tournamentId}';
   }
 }
 
