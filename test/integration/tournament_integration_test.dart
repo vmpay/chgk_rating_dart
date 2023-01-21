@@ -1,4 +1,5 @@
 import 'package:chgk_rating/chgk_rating.dart';
+import 'package:chgk_rating/src/models/error_response.dart';
 import 'package:chgk_rating/src/models/tournament_appeals.dart';
 import 'package:chgk_rating/src/models/tournament_requests.dart';
 import 'package:chgk_rating/src/models/tournament_results.dart';
@@ -7,6 +8,10 @@ import 'package:test/test.dart';
 void main() {
   const int notFoundId = -1;
   const int tournamentId = 5021;
+  final ErrorResponse errorResponse = ErrorResponse(
+      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      title: 'An error occurred',
+      detail: 'Not Found');
   final ChgkRating chgkRating = ChgkRating();
 
   group('getTournamentDetails', () {
@@ -17,9 +22,8 @@ void main() {
     });
 
     test('empty', () async {
-      final Tournament? tournamentDetails =
-          await chgkRating.getTournamentDetails(notFoundId);
-      assert(tournamentDetails == null);
+      expect(() => chgkRating.getTournamentDetails(notFoundId),
+          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
@@ -39,9 +43,8 @@ void main() {
     });
 
     test('empty', () async {
-      final Iterable<TournamentResults> tournamentResult =
-          await chgkRating.getTournamentResults(notFoundId);
-      assert(tournamentResult.isEmpty);
+      expect(() => chgkRating.getTournamentResults(notFoundId),
+          throwsA(predicate((e) => e is ErrorResponse)));
     });
   });
 

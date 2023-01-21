@@ -39,4 +39,21 @@ class ErrorResponse {
         "title": title,
         "detail": detail,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ErrorResponse &&
+          runtimeType == other.runtimeType &&
+          type == other.type &&
+          title == other.title &&
+          detail == other.detail;
+
+  @override
+  int get hashCode => type.hashCode ^ title.hashCode ^ detail.hashCode;
+
+  @override
+  String toString() {
+    return 'ErrorResponse{type: $type, title: $title, detail: $detail}';
+  }
 }

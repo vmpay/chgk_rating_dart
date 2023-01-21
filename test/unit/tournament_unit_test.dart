@@ -1,11 +1,14 @@
 import 'package:chgk_rating/chgk_rating.dart';
+import 'package:chgk_rating/src/models/error_response.dart';
+import 'package:chgk_rating/src/models/tournament_appeals.dart';
+import 'package:chgk_rating/src/models/tournament_requests.dart';
 import 'package:chgk_rating/src/models/tournament_results.dart';
 import 'package:dio/dio.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'chgk_rating_unit_test.mocks.dart';
+import 'tournament_unit_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {
@@ -49,6 +52,8 @@ void main() {
   final DioError notFoundError = DioError(
       requestOptions: RequestOptions(path: ''),
       response: Response<dynamic>(
+        data:
+            '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
         statusCode: 404,
         requestOptions: RequestOptions(path: ''),
       ));
@@ -102,6 +107,10 @@ void main() {
             rating: 2154,
             player: mockPlayer)
       ]);
+  final ErrorResponse errorResponse = ErrorResponse(
+      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      title: 'An error occurred',
+      detail: 'Not Found');
 
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
 
@@ -119,9 +128,8 @@ void main() {
     test('empty', () async {
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}'))
           .thenThrow(notFoundError);
-      final Tournament? tournamentDetails =
-          await chgkRating.getTournamentDetails(mockTournamentDetails.id);
-      expect(tournamentDetails, null);
+      expect(() => chgkRating.getTournamentDetails(mockTournamentDetails.id),
+          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
@@ -159,206 +167,68 @@ void main() {
     test('empty', () async {
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/results'))
           .thenThrow(notFoundError);
-      final Iterable<TournamentResults> tournamentDetails =
-          await chgkRating.getTournamentResults(mockTournamentDetails.id);
-      expect(tournamentDetails, <TournamentResults>[]);
+      expect(() => chgkRating.getTournamentResults(mockTournamentDetails.id),
+          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
-  // group('getTournamentTeamPlayersByTeam', () {
-  //   test('success', () async {
-  //     const TournamentTeamPlayer mockTournamentTeamPlayer =
-  //         TournamentTeamPlayer();
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/recaps/${mockTeam.idTeam}'))
-  //         .thenAnswer((_) async => Response<List<dynamic>>(
-  //             data: <Map<String, dynamic>>[mockTournamentTeamPlayer.toMap()],
-  //             requestOptions: RequestOptions(path: '')));
-  //     final Iterable<TournamentTeamPlayer> tournamentTeamPlayer =
-  //         await chgkRating.getTournamentTeamPlayersByTeam(
-  //             mockTournament.idTournament, mockTeam.idTeam);
-  //     expect(tournamentTeamPlayer,
-  //         <TournamentTeamPlayer>[mockTournamentTeamPlayer]);
-  //   });
-  //
-  //   test('empty', () async {
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/recaps/${mockTeam.idTeam}'))
-  //         .thenThrow(notFoundError);
-  //     final Iterable<TournamentTeamPlayer> tournamentTeamPlayer =
-  //         await chgkRating.getTournamentTeamPlayersByTeam(
-  //             mockTournament.idTournament, mockTeam.idTeam);
-  //     expect(tournamentTeamPlayer, <TournamentTeamResults>[]);
-  //   });
-  //
-  //   test('edge fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentTeamPlayersByTeam(' ', ' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  //
-  //   test('corner tournament fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentTeamPlayersByTeam(
-  //           mockTournament.idTournament, ' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  //
-  //   test('corner team fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentTeamPlayersByTeam(' ', mockTeam.idTeam);
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  // });
-  //
-  // group('getTournamentTeamPlayers', () {
-  //   test('success', () async {
-  //     const TournamentTeam mockTournamentTeam = TournamentTeam();
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/recaps'))
-  //         .thenAnswer((_) async => Response<List<dynamic>>(
-  //             data: <Map<String, dynamic>>[mockTournamentTeam.toMap()],
-  //             requestOptions: RequestOptions(path: '')));
-  //     final Iterable<TournamentTeam> tournamentTeam = await chgkRating
-  //         .getTournamentTeamPlayers(mockTournament.idTournament);
-  //     expect(tournamentTeam, <TournamentTeam>[mockTournamentTeam]);
-  //   });
-  //
-  //   test('empty', () async {
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/recaps'))
-  //         .thenThrow(notFoundError);
-  //     final Iterable<TournamentTeam> tournamentTeam = await chgkRating
-  //         .getTournamentTeamPlayers(mockTournament.idTournament);
-  //     expect(tournamentTeam, <TournamentTeam>[]);
-  //   });
-  //
-  //   test('fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentTeamPlayers(' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  // });
-  //
-  // group('getTournamentResultsByTeam', () {
-  //   test('success', () async {
-  //     const TournamentResults mockTournamentResults = TournamentResults();
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/results/${mockTeam.idTeam}'))
-  //         .thenAnswer((_) async => Response<List<dynamic>>(
-  //             data: <Map<String, dynamic>>[mockTournamentResults.toMap()],
-  //             requestOptions: RequestOptions(path: '')));
-  //     final Iterable<TournamentResults> tournamentResults =
-  //         await chgkRating.getTournamentResultsByTeam(
-  //             mockTournament.idTournament, mockTeam.idTeam);
-  //     expect(tournamentResults, <TournamentResults>[mockTournamentResults]);
-  //   });
-  //
-  //   test('empty', () async {
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/results/${mockTeam.idTeam}'))
-  //         .thenThrow(notFoundError);
-  //     final Iterable<TournamentResults> tournamentResults =
-  //         await chgkRating.getTournamentResultsByTeam(
-  //             mockTournament.idTournament, mockTeam.idTeam);
-  //     expect(tournamentResults, <TournamentResults>[]);
-  //   });
-  //
-  //   test('edge fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentResultsByTeam(' ', ' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  //
-  //   test('corner tournament fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentResultsByTeam(
-  //           mockTournament.idTournament, ' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  //
-  //   test('corner team fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentResultsByTeam(' ', mockTeam.idTeam);
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  // });
-  //
-  // group('getTournamentControversialQuestions', () {
-  //   test('success', () async {
-  //     const TournamentControversial mockTournamentControversial =
-  //         TournamentControversial();
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/controversials'))
-  //         .thenAnswer((_) async => Response<List<dynamic>>(
-  //             data: <Map<String, dynamic>>[mockTournamentControversial.toMap()],
-  //             requestOptions: RequestOptions(path: '')));
-  //     final Iterable<TournamentControversial> controversials = await chgkRating
-  //         .getTournamentControversialQuestions(mockTournament.idTournament);
-  //     expect(controversials,
-  //         <TournamentControversial>[mockTournamentControversial]);
-  //   });
-  //
-  //   test('empty', () async {
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/controversials'))
-  //         .thenThrow(notFoundError);
-  //     final Iterable<TournamentControversial> controversials = await chgkRating
-  //         .getTournamentControversialQuestions(mockTournament.idTournament);
-  //     expect(controversials, <TournamentControversial>[]);
-  //   });
-  //
-  //   test('fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentControversialQuestions(' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  // });
-  //
-  // group('getTournamentAppealQuestions', () {
-  //   test('success', () async {
-  //     const TournamentAppeal mockTournamentAppeal = TournamentAppeal();
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/appeals'))
-  //         .thenAnswer((_) async => Response<List<dynamic>>(
-  //             data: <Map<String, dynamic>>[mockTournamentAppeal.toMap()],
-  //             requestOptions: RequestOptions(path: '')));
-  //     final Iterable<TournamentAppeal> appeal = await chgkRating
-  //         .getTournamentAppealQuestions(mockTournament.idTournament);
-  //     expect(appeal, <TournamentAppeal>[mockTournamentAppeal]);
-  //   });
-  //
-  //   test('empty', () async {
-  //     when(mockDio.get(
-  //             '/tournaments.$extensionJson/${mockTournament.idTournament}/appeals'))
-  //         .thenThrow(notFoundError);
-  //     final Iterable<TournamentAppeal> appeal = await chgkRating
-  //         .getTournamentAppealQuestions(mockTournament.idTournament);
-  //     expect(appeal, <TournamentAppeal>[]);
-  //   });
-  //
-  //   test('fail', () async {
-  //     try {
-  //       await chgkRating.getTournamentAppealQuestions(' ');
-  //     } on FormatException catch (e) {
-  //       assert(e is FormatException);
-  //     }
-  //   });
-  // });
+  group('getTournament Appeal Questions', () {
+    test('success', () async {
+      final TournamentAppeals mockTournamentAppeal = TournamentAppeals(
+          id: 5811,
+          idTournament: mockTournamentDetails.id,
+          type: AppealType.A,
+          issuedAt: null,
+          status: QuestionStatus.D,
+          appeal: null,
+          comment: null,
+          overriddenBy: null,
+          questionNumber: 29,
+          answer: null);
+      final Iterable<TournamentAppeals> mockTournamentAppeals = [
+        mockTournamentAppeal
+      ];
+      when(mockDio.get('/tournaments/${mockTournamentDetails.id}/appeals'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTournamentAppeal.toJson()],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<TournamentAppeals> tournamentAppeals =
+          await chgkRating.getTournamentAppeals(mockTournamentDetails.id);
+      expect(tournamentAppeals, mockTournamentAppeals);
+    });
+  });
+
+  group('getTournament Requests', () {
+    test('success', () async {
+      final TournamentRequests mockTournamentRequest = TournamentRequests(
+          id: 32231,
+          status: QuestionStatus.A,
+          venue: Venue(
+              id: 3218,
+              name: 'name',
+              town: Town(
+                  id: 197,
+                  name: 'name',
+                  region: null,
+                  country: Country(id: 1, name: 'name')),
+              type: Type(id: 3, name: 'Синхрон'),
+              address: 'address',
+              urls: ['urls']),
+          representative: mockPlayer,
+          narrators: [mockPlayer],
+          approximateTeamsCount: 8,
+          issuedAt: dateTime,
+          tournamentId: mockTournamentDetails.id);
+      final Iterable<TournamentRequests> mockTournamentRequests = [
+        mockTournamentRequest
+      ];
+      when(mockDio.get('/tournaments/${mockTournamentDetails.id}/requests'))
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTournamentRequest.toJson()],
+              requestOptions: RequestOptions(path: '')));
+      final Iterable<TournamentRequests> tournamentRequests =
+          await chgkRating.getTournamentRequests(mockTournamentDetails.id);
+      expect(tournamentRequests, mockTournamentRequests);
+    });
+  });
 }

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
 import 'constants.dart';
+import 'models/error_response.dart';
 import 'models/player.dart';
 import 'models/player_team.dart';
 import 'models/player_tournament.dart';
@@ -14,7 +15,7 @@ import 'models/tournament_results.dart';
 // TODO paging
 
 /// Dart wrapper client for the competitive
-/// What? Where? When? rating [WebAPIRating](https://rating.chgk.info/api-doc)
+/// What? Where? When? rating [WebAPIRating](https://api.rating.chgk.net/)
 ///
 /// In order to start using this wrapper create an instance of this class
 /// ```dart
@@ -57,17 +58,18 @@ class ChgkRating {
   /// Requests [Player] object from server.
   ///
   /// Requires player identifier [playerId]. Returns player object [Player]
-  /// in case of success or Null if player not found.
-  /// Throws [DioError] in case of network connection problems.
+  /// in case of success
+  /// Throws [DioError] in case of network connection problems or
+  /// [ErrorResponse] in case of parsable error
   Future<Player?> getPlayerById(int playerId) async {
     try {
       final Response<String> response = await _dio.get('/players/$playerId');
       return Player.fromRawJson(response.data!);
     } on DioError catch (e) {
-      if (e.response?.statusCode == 404) {
-        return null;
-      } else {
-        rethrow;
+      try {
+        throw ErrorResponse.fromRawJson(e.response?.data);
+      } on TypeError catch (_) {
+        throw e;
       }
     }
   }
@@ -120,16 +122,17 @@ class ChgkRating {
   ///
   /// Requires team identifier [teamId]. Returns team object [Team]
   /// in case of success or Null if team not found.
-  /// Throws [DioError] in case of network connection problems.
+  /// Throws [DioError] in case of network connection problems or
+  /// [ErrorResponse] in case of parsable error
   Future<Team?> getTeamById(int teamId) async {
     try {
       final Response<String> response = await _dio.get('/teams/$teamId');
       return Team.fromRawJson(response.data!);
     } on DioError catch (e) {
-      if (e.response?.statusCode == 404) {
-        return null;
-      } else {
-        rethrow;
+      try {
+        throw ErrorResponse.fromRawJson(e.response?.data);
+      } on TypeError catch (_) {
+        throw e;
       }
     }
   }
@@ -177,17 +180,18 @@ class ChgkRating {
   /// Requires tournament identifier [tournamentId]. Returns tournament details
   /// object [Tournament] in case of success or Null
   /// if team tournament not found.
-  /// Throws [DioError] in case of network connection problems.
+  /// Throws [DioError] in case of network connection problems or
+  /// [ErrorResponse] in case of parsable error
   Future<Tournament?> getTournamentDetails(int tournamentId) async {
     try {
       final Response<String> response =
           await _dio.get('/tournaments/$tournamentId');
       return Tournament.fromRawJson(response.data!);
     } on DioError catch (e) {
-      if (e.response?.statusCode == 404) {
-        return null;
-      } else {
-        rethrow;
+      try {
+        throw ErrorResponse.fromRawJson(e.response?.data);
+      } on TypeError catch (_) {
+        throw e;
       }
     }
   }
@@ -217,7 +221,8 @@ class ChgkRating {
   /// Requires tournament identifier [tournamentId]. Returns tournament team
   /// results object [TournamentResults] list in case of success or
   /// empty list if tournament results not found.
-  /// Throws [DioError] in case of network connection problems.
+  /// Throws [DioError] in case of network connection problems or
+  /// [ErrorResponse] in case of parsable error
   Future<Iterable<TournamentResults>> getTournamentResults(
       int tournamentId) async {
     try {
@@ -225,10 +230,10 @@ class ChgkRating {
           await _dio.get('/tournaments/$tournamentId/results');
       return TournamentResults.decodeList(response.data!);
     } on DioError catch (e) {
-      if (e.response?.statusCode == 404) {
-        return <TournamentResults>[];
-      } else {
-        rethrow;
+      try {
+        throw ErrorResponse.fromRawJson(e.response?.data);
+      } on TypeError catch (_) {
+        throw e;
       }
     }
   }

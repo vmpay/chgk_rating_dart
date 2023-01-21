@@ -1,10 +1,11 @@
 import 'package:chgk_rating/chgk_rating.dart';
+import 'package:chgk_rating/src/models/error_response.dart';
 import 'package:dio/dio.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'chgk_rating_unit_test.mocks.dart';
+import 'team_unit_test.mocks.dart';
 
 @GenerateMocks([Dio])
 void main() {
@@ -23,9 +24,15 @@ void main() {
   final DioError notFoundError = DioError(
       requestOptions: RequestOptions(path: ''),
       response: Response<dynamic>(
+        data:
+            '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
         statusCode: 404,
         requestOptions: RequestOptions(path: ''),
       ));
+  final ErrorResponse errorResponse = ErrorResponse(
+      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      title: 'An error occurred',
+      detail: 'Not Found');
   final MockDio mockDio = MockDio();
 
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
@@ -33,8 +40,8 @@ void main() {
   group('getTeamById', () {
     test('empty', () async {
       when(mockDio.get('/teams/${mockTeam.id}')).thenThrow(notFoundError);
-      final Team? team = await chgkRating.getTeamById(mockTeam.id);
-      expect(team, null);
+      expect(() => chgkRating.getTeamById(mockTeam.id),
+          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
     });
 
     test('fail response', () async {

@@ -84,6 +84,40 @@ class TournamentAppeals {
         "questionNumber": questionNumber,
         "answer": answer,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentAppeals &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          idTournament == other.idTournament &&
+          type == other.type &&
+          issuedAt == other.issuedAt &&
+          status == other.status &&
+          appeal == other.appeal &&
+          comment == other.comment &&
+          overriddenBy == other.overriddenBy &&
+          questionNumber == other.questionNumber &&
+          answer == other.answer;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      idTournament.hashCode ^
+      type.hashCode ^
+      issuedAt.hashCode ^
+      status.hashCode ^
+      appeal.hashCode ^
+      comment.hashCode ^
+      overriddenBy.hashCode ^
+      questionNumber.hashCode ^
+      answer.hashCode;
+
+  @override
+  String toString() {
+    return 'TournamentAppeals{id: $id, idTournament: $idTournament, type: $type, issuedAt: $issuedAt, status: $status, appeal: $appeal, comment: $comment, overriddenBy: $overriddenBy, questionNumber: $questionNumber, answer: $answer}';
+  }
 }
 
 enum AppealType { A, R, N }

@@ -1,5 +1,5 @@
 /// Dart wrapper client for the competitive
-/// What? Where? When? rating [WebAPIRating](https://rating.chgk.info/api-doc)
+/// What? Where? When? rating [WebAPIRating](https://api.rating.chgk.net/)
 library chgk_rating;
 
 export 'src/chgk_rating.dart';

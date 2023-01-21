@@ -1,9 +1,14 @@
 import 'package:chgk_rating/chgk_rating.dart';
+import 'package:chgk_rating/src/models/error_response.dart';
 import 'package:test/test.dart';
 
 void main() {
   const int notFoundId = -1;
   const int teamId = 58380;
+  final ErrorResponse errorResponse = ErrorResponse(
+      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      title: 'An error occurred',
+      detail: 'Not Found');
   final ChgkRating chgkRating = ChgkRating();
 
   group('getTeamById', () {
@@ -13,8 +18,8 @@ void main() {
     });
 
     test('empty', () async {
-      final Team? team = await chgkRating.getTeamById(notFoundId);
-      assert(team == null);
+      expect(() => chgkRating.getTeamById(notFoundId),
+          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 

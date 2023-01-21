@@ -1,12 +1,14 @@
 import 'package:chgk_rating/chgk_rating.dart';
-import 'package:chgk_rating/src/models/player.dart';
-import 'package:chgk_rating/src/models/player_team.dart';
-import 'package:chgk_rating/src/models/player_tournament.dart';
+import 'package:chgk_rating/src/models/error_response.dart';
 import 'package:test/test.dart';
 
 void main() {
   const int notFoundId = -1;
   const int playerId = 17579;
+  final ErrorResponse errorResponse = ErrorResponse(
+      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      title: 'An error occurred',
+      detail: 'Not Found');
   final ChgkRating chgkRating = ChgkRating();
 
   group('getPlayerById', () {
@@ -16,8 +18,8 @@ void main() {
     });
 
     test('empty', () async {
-      final Player? player = await chgkRating.getPlayerById(notFoundId);
-      assert(player == null);
+      expect(() => chgkRating.getPlayerById(notFoundId),
+          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 

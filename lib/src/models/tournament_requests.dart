@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
+
 import 'player.dart';
 import 'team.dart';
 import 'tournament.dart';
@@ -79,6 +81,36 @@ class TournamentRequests {
         "issuedAt": issuedAt?.toIso8601String(),
         "tournamentId": tournamentId,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TournamentRequests &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          status == other.status &&
+          venue == other.venue &&
+          representative == other.representative &&
+          const DeepCollectionEquality().equals(narrators, other.narrators) &&
+          approximateTeamsCount == other.approximateTeamsCount &&
+          issuedAt == other.issuedAt &&
+          tournamentId == other.tournamentId;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      status.hashCode ^
+      venue.hashCode ^
+      representative.hashCode ^
+      narrators.hashCode ^
+      approximateTeamsCount.hashCode ^
+      issuedAt.hashCode ^
+      tournamentId.hashCode;
+
+  @override
+  String toString() {
+    return 'TournamentRequests{id: $id, status: $status, venue: $venue, representative: $representative, narrators: $narrators, approximateTeamsCount: $approximateTeamsCount, issuedAt: $issuedAt, tournamentId: $tournamentId}';
+  }
 }
 
 class Venue {
@@ -136,4 +168,30 @@ class Venue {
         "address": address,
         "urls": List<dynamic>.from(urls.map((x) => x)),
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Venue &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          town == other.town &&
+          type == other.type &&
+          address == other.address &&
+          const DeepCollectionEquality().equals(urls, other.urls);
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      name.hashCode ^
+      town.hashCode ^
+      type.hashCode ^
+      address.hashCode ^
+      urls.hashCode;
+
+  @override
+  String toString() {
+    return 'Venue{id: $id, name: $name, town: $town, type: $type, address: $address, urls: $urls}';
+  }
 }
