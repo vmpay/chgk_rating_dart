@@ -5,42 +5,36 @@ Future<void> main() async {
   final ChgkRating chgkRating = ChgkRating();
 
   /// Search for the player by [name] and [surname]
-  final PlayerSearch playerSearch =
+  final Iterable<Player> playerSearch =
       await chgkRating.getPlayerBy(name: 'Денис', surname: 'Куценко');
   print('PlayerSearch data: $playerSearch');
 
-  if (playerSearch.items?.isNotEmpty == true) {
-    final Player player = playerSearch.items!.first;
+  if (playerSearch.isNotEmpty) {
+    final Player player = playerSearch.first;
     print('Player data: $player');
-    final String playerId = player.idPlayer;
-
-    /// Fetch the latest player's rating
-    final PlayerRating? playerRating =
-        await chgkRating.getPlayerRatingLatest(playerId);
-    print('PlayerRating data: $playerRating');
+    final int playerId = player.id;
 
     /// Fetch player's teams
     final Iterable<PlayerTeam> playerTeamList =
         await chgkRating.getPlayerTeamList(playerId);
     print('PlayerTeam list data: $playerTeamList');
-    final String teamId =
-        playerTeamList.isNotEmpty ? playerTeamList.first.idTeam : '58380';
+    final int teamId =
+        playerTeamList.isNotEmpty ? playerTeamList.first.idTeam : 58380;
 
     /// Fetch player's tournaments for the last season
-    final PlayerTournamentResponse? playerTournamentResponse =
-        await chgkRating.getPlayerTournamentLastSeason(playerId);
+    final Iterable<PlayerTournament> playerTournamentResponse =
+        await chgkRating.getPlayerTournamentList(playerId);
     print('PlayerTournamentResponse data: $playerTournamentResponse');
-    final String tournamentId =
-        playerTournamentResponse?.tournaments?.isNotEmpty == true
-            ? playerTournamentResponse!.tournaments!.first.idTournament
-            : '5021';
+    final int tournamentId = playerTournamentResponse.isNotEmpty
+        ? playerTournamentResponse.first.idTournament
+        : 5021;
 
     /// Fetch team data using [teamId]
     final Team? team = await chgkRating.getTeamById(teamId);
     print('Team data: $team');
 
     /// Fetch tournament details by [tournamentId]
-    final TournamentDetails? tournamentDetails =
+    final Tournament? tournamentDetails =
         await chgkRating.getTournamentDetails(tournamentId);
     print('TournamentDetails $tournamentDetails');
   }

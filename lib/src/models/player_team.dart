@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:meta/meta.dart';
-
 /// Response example:
 /// ```json
 /// {
@@ -12,55 +10,69 @@ import 'package:meta/meta.dart';
 /// "added_since": "2017-04-21"
 /// }
 /// ```
-@immutable
 class PlayerTeam {
-  const PlayerTeam({
+  PlayerTeam({
     required this.idPlayer,
+    required this.idSeason,
     required this.idTeam,
-    this.idSeason,
-    this.isCaptain,
-    this.addedSince,
+    required this.dateAdded,
+    required this.dateRemoved,
+    required this.playerNumber,
   });
 
-  final String idPlayer;
-  final String idTeam;
-  final String? idSeason;
-  final String? isCaptain;
-  final DateTime? addedSince;
+  final int idPlayer;
+  final int idSeason;
+  final int idTeam;
+  final DateTime? dateAdded;
+  final DateTime? dateRemoved;
+  final int playerNumber;
 
-  /// Decodes [PlayerTeam] object from json string
-  factory PlayerTeam.fromJson(String str) =>
-      PlayerTeam.fromMap(json.decode(str));
+  PlayerTeam copyWith({
+    required int idPlayer,
+    required int idSeason,
+    required int idTeam,
+    required DateTime? dateAdded,
+    required DateTime? dateRemoved,
+    required int playerNumber,
+  }) =>
+      PlayerTeam(
+        idPlayer: idPlayer,
+        idSeason: idSeason,
+        idTeam: idTeam,
+        dateAdded: dateAdded ?? this.dateAdded,
+        dateRemoved: dateRemoved ?? this.dateRemoved,
+        playerNumber: playerNumber,
+      );
 
-  /// Encodes [PlayerTeam] object to json string
-  String toJson() => json.encode(toMap());
+  factory PlayerTeam.fromRawJson(String str) =>
+      PlayerTeam.fromJson(json.decode(str));
 
-  /// Decodes [PlayerTeam] object from json map
-  factory PlayerTeam.fromMap(Map<String, dynamic> json) => PlayerTeam(
-    idPlayer: json['idplayer'] == null ? 'null' : json['idplayer'],
-    idTeam: json['idteam'] == null ? 'null' : json['idteam'],
-    idSeason: json['idseason'] == null ? null : json['idseason'],
-    isCaptain: json['is_captain'] == null ? null : json['is_captain'],
-    addedSince: json['added_since'] == null
-        ? null
-        : DateTime.parse(json['added_since']),
-  );
+  String toRawJson() => json.encode(toJson());
 
-  /// Encodes [PlayerTeam] object to json map
-  Map<String, dynamic> toMap() => {
-        'idplayer': idPlayer,
-        'idteam': idTeam,
-        'idseason': idSeason == null ? null : idSeason,
-        'is_captain': isCaptain == null ? null : isCaptain,
-        'added_since': addedSince == null
-            ? null
-            : "${addedSince?.year.toString().padLeft(4, '0')}-${addedSince?.month.toString().padLeft(2, '0')}-${addedSince?.day.toString().padLeft(2, '0')}",
+  factory PlayerTeam.fromJson(Map<String, dynamic> json) => PlayerTeam(
+        idPlayer: json["idplayer"],
+        idSeason: json["idseason"],
+        idTeam: json["idteam"],
+        dateAdded: json["dateAdded"] != null
+            ? DateTime.parse(json["dateAdded"])
+            : null,
+        dateRemoved: json["dateRemoved"] != null
+            ? DateTime.parse(json["dateRemoved"])
+            : null,
+        playerNumber: json["playerNumber"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "idplayer": idPlayer,
+        "idseason": idSeason,
+        "idteam": idTeam,
+        "dateAdded": dateAdded?.toIso8601String(),
+        "dateRemoved": dateRemoved?.toIso8601String(),
+        "playerNumber": playerNumber,
       };
 
-  @override
-  String toString() {
-    return 'PlayerTeam{idPlayer: $idPlayer, idTeam: $idTeam, idSeason: $idSeason, isCaptain: $isCaptain, addedSince: $addedSince}';
-  }
+  static Iterable<PlayerTeam> decodeList(List<dynamic> list) =>
+      list.map((dynamic e) => PlayerTeam.fromRawJson(e));
 
   @override
   bool operator ==(Object other) =>
@@ -68,16 +80,18 @@ class PlayerTeam {
       other is PlayerTeam &&
           runtimeType == other.runtimeType &&
           idPlayer == other.idPlayer &&
-          idTeam == other.idTeam &&
           idSeason == other.idSeason &&
-          isCaptain == other.isCaptain &&
-          addedSince == other.addedSince;
+          idTeam == other.idTeam &&
+          dateAdded == other.dateAdded &&
+          dateRemoved == other.dateRemoved &&
+          playerNumber == other.playerNumber;
 
   @override
   int get hashCode =>
       idPlayer.hashCode ^
-      idTeam.hashCode ^
       idSeason.hashCode ^
-      isCaptain.hashCode ^
-      addedSince.hashCode;
+      idTeam.hashCode ^
+      dateAdded.hashCode ^
+      dateRemoved.hashCode ^
+      playerNumber.hashCode;
 }
