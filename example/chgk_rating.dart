@@ -30,12 +30,17 @@ Future<void> main() async {
         : 5021;
 
     /// Fetch team data using [teamId]
-    final Team? team = await chgkRating.getTeamById(teamId);
+    final Team team = await chgkRating.getTeamById(teamId);
     print('Team data: $team');
 
     /// Fetch tournament details by [tournamentId]
-    final Tournament? tournamentDetails =
+    final Tournament tournamentDetails =
         await chgkRating.getTournamentDetails(tournamentId);
     print('TournamentDetails $tournamentDetails');
+
+    /// Get user JWT token using email and password
+    final TokenResponse? tokenResponse =
+        await chgkRating.postToken('email@email.com', 'password');
+    print('TokenResponse $tokenResponse');
   }
 }
