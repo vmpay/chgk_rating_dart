@@ -7,6 +7,8 @@ import 'models/player.dart';
 import 'models/player_team.dart';
 import 'models/player_tournament.dart';
 import 'models/team.dart';
+import 'models/token_request.dart';
+import 'models/token_response.dart';
 import 'models/tournament.dart';
 import 'models/tournament_appeals.dart';
 import 'models/tournament_requests.dart';
@@ -41,7 +43,8 @@ class ChgkRating {
             requestBody: false,
             responseBody: true),
       )
-      ..options.headers['accept'] = 'application/json',
+      ..options.headers['accept'] = 'application/json'
+      ..options.headers['Content-Type'] = 'application/json',
   );
 
   factory ChgkRating() => _chgkRatingService;
@@ -59,7 +62,7 @@ class ChgkRating {
   /// in case of success
   /// Throws [DioError] in case of network connection problems or
   /// [ErrorResponse] in case of parsable error
-  Future<Player?> getPlayerById(int playerId) async {
+  Future<Player> getPlayerById(int playerId) async {
     try {
       final Response<String> response = await _dio.get('/players/$playerId');
       return Player.fromRawJson(response.data!);
@@ -122,7 +125,7 @@ class ChgkRating {
   /// in case of success or Null if team not found.
   /// Throws [DioError] in case of network connection problems or
   /// [ErrorResponse] in case of parsable error
-  Future<Team?> getTeamById(int teamId) async {
+  Future<Team> getTeamById(int teamId) async {
     try {
       final Response<String> response = await _dio.get('/teams/$teamId');
       return Team.fromRawJson(response.data!);
@@ -180,7 +183,7 @@ class ChgkRating {
   /// if team tournament not found.
   /// Throws [DioError] in case of network connection problems or
   /// [ErrorResponse] in case of parsable error
-  Future<Tournament?> getTournamentDetails(int tournamentId) async {
+  Future<Tournament> getTournamentDetails(int tournamentId) async {
     try {
       final Response<String> response =
           await _dio.get('/tournaments/$tournamentId');
@@ -262,5 +265,25 @@ class ChgkRating {
         await _dio.get('/tournaments/$tournamentId/requests');
     return List<TournamentRequests>.from(
         response.data!.map((dynamic e) => TournamentRequests.fromJson(e)));
+  }
+
+  /// Requests jwt token [TokenResponse] from server.
+  ///
+  /// Requires [email] and [password]. Returns player object [TokenResponse]
+  /// in case of success
+  /// Throws [DioError] in case of network connection problems or
+  /// null in case of Unauthorised server response
+  Future<TokenResponse?> postToken(String email, String password) async {
+    try {
+      final Response<String> response = await _dio.post('/authentication_token',
+          data: TokenRequest(email: email, password: password).toRawJson());
+      return TokenResponse.fromRawJson(response.data!);
+    } on DioError catch (e) {
+      if (e.response?.statusCode == 401) {
+        return null;
+      } else {
+        rethrow;
+      }
+    }
   }
 }

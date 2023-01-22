@@ -4,13 +4,11 @@ import 'package:chgk_rating/src/models/tournament_appeals.dart';
 import 'package:chgk_rating/src/models/tournament_requests.dart';
 import 'package:chgk_rating/src/models/tournament_results.dart';
 import 'package:dio/dio.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'tournament_unit_test.mocks.dart';
+import 'player_unit_test.mocks.dart';
 
-@GenerateMocks([Dio])
 void main() {
   final DateTime dateTime = DateTime.parse('2021-12-21T23:59:06+03:00');
   final Player mockPlayer = Player(

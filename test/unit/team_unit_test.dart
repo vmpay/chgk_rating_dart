@@ -1,13 +1,11 @@
 import 'package:chgk_rating/chgk_rating.dart';
 import 'package:chgk_rating/src/models/error_response.dart';
 import 'package:dio/dio.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'team_unit_test.mocks.dart';
+import 'player_unit_test.mocks.dart';
 
-@GenerateMocks([Dio])
 void main() {
   final Team mockTeam = Team(
       id: 26777,

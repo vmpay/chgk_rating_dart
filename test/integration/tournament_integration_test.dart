@@ -16,9 +16,9 @@ void main() {
 
   group('getTournamentDetails', () {
     test('success', () async {
-      final Tournament? tournamentDetails =
+      final Tournament tournamentDetails =
           await chgkRating.getTournamentDetails(tournamentId);
-      assert(tournamentDetails != null);
+      assert(tournamentDetails.id != notFoundId);
     });
 
     test('empty', () async {

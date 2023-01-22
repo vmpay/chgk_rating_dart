@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-// TODO parse errors
 class ErrorResponse {
   ErrorResponse({
     required this.type,

@@ -13,8 +13,8 @@ void main() {
 
   group('getPlayerById', () {
     test('success', () async {
-      final Player? player = await chgkRating.getPlayerById(playerId);
-      assert(player != null);
+      final Player player = await chgkRating.getPlayerById(playerId);
+      assert(player.id != notFoundId);
     });
 
     test('empty', () async {
