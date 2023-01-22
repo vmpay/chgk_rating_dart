@@ -5,7 +5,7 @@
 [![Pub](https://img.shields.io/pub/v/chgk_rating.svg)](https://pub.dartlang.org/packages/chgk_rating)
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 
-Dart wrapper client for the competitive What? Where? When? rating [WebAPIRating](https://rating.chgk.info/api-doc)
+Dart wrapper client for the competitive What? Where? When? rating [WebAPIRating](https://api.rating.chgk.net/)
 
 ## Getting Started
 
