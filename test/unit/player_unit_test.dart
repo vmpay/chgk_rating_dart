@@ -13,11 +13,11 @@ void main() {
       id: 17579, name: 'name', patronymic: 'patronymic', surname: 'surname');
   final MockDio mockDio = MockDio();
   final ErrorResponse errorResponse = ErrorResponse(
-      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      type: 'https://tools.ietf.org/html/rfc2616#section-10',
       title: 'An error occurred',
       detail: 'Not Found');
   const String errorData =
-      '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}';
+      '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}';
 
   final ChgkRating chgkRating = ChgkRating.init(mockDio);
 
@@ -30,17 +30,14 @@ void main() {
               requestOptions: RequestOptions(path: '')),
           requestOptions: RequestOptions(path: '')));
       expect(() => chgkRating.getPlayerById(mockPlayer.id),
-          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
+          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
     });
 
     test('fail', () async {
       when(mockDio.get('/players/${mockPlayer.id}'))
           .thenThrow(DioError(requestOptions: RequestOptions(path: '')));
-      try {
-        await chgkRating.getPlayerById(mockPlayer.id);
-      } on DioError catch (e) {
-        assert(e is DioError);
-      }
+      expect(() => chgkRating.getPlayerById(mockPlayer.id),
+          throwsA(predicate((Object? e) => e is DioError)));
     });
 
     test('success', () async {
@@ -48,7 +45,7 @@ void main() {
           Response<String>(
               data: mockPlayer.toRawJson(),
               requestOptions: RequestOptions(path: '')));
-      final Player? player = await chgkRating.getPlayerById(mockPlayer.id);
+      final Player player = await chgkRating.getPlayerById(mockPlayer.id);
       expect(player, mockPlayer);
     });
   });

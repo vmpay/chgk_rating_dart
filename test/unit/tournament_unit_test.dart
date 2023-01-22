@@ -51,7 +51,7 @@ void main() {
       requestOptions: RequestOptions(path: ''),
       response: Response<dynamic>(
         data:
-            '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
+            '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
         statusCode: 404,
         requestOptions: RequestOptions(path: ''),
       ));
@@ -62,7 +62,7 @@ void main() {
         name: 'name',
         town: Town(id: 197, name: 'name', region: null, country: null),
       ),
-      mask: "110101001101101111000000000101001000",
+      mask: '110101001101101111000000000101001000',
       current: Current(
           name: 'name',
           town: Town(id: 197, name: 'name', region: null, country: null)),
@@ -84,7 +84,7 @@ void main() {
           d2: 3,
           d: -83),
       position: 207,
-      controversials: [
+      controversials: <Controversial>[
         Controversial(
             id: 55357,
             questionNumber: 9,
@@ -95,10 +95,10 @@ void main() {
             resolvedAt: dateTime,
             appealJuryComment: 'jury comment')
       ],
-      flags: [
+      flags: <Flag>[
         Flag(id: 11, shortName: ShortName.BASE, longName: 'Long name')
       ],
-      teamMembers: [
+      teamMembers: <TeamMember>[
         TeamMember(
             flag: ShortName.CAPTAIN,
             usedRating: 2149,
@@ -106,7 +106,7 @@ void main() {
             player: mockPlayer)
       ]);
   final ErrorResponse errorResponse = ErrorResponse(
-      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      type: 'https://tools.ietf.org/html/rfc2616#section-10',
       title: 'An error occurred',
       detail: 'Not Found');
 
@@ -118,7 +118,7 @@ void main() {
           (_) async => Response<String>(
               data: mockTournamentDetails.toRawJson(),
               requestOptions: RequestOptions(path: '')));
-      final Tournament? tournament =
+      final Tournament tournament =
           await chgkRating.getTournamentDetails(mockTournamentDetails.id);
       expect(tournament, mockTournamentDetails);
     });
@@ -127,13 +127,13 @@ void main() {
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}'))
           .thenThrow(notFoundError);
       expect(() => chgkRating.getTournamentDetails(mockTournamentDetails.id),
-          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
+          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
   group('getTournamentBy search parameters', () {
     test('success', () async {
-      final Iterable<Tournament> mockTournamentSearch = [mockTournamentDetails];
+      final Iterable<Tournament> mockTournamentSearch = <Tournament>[mockTournamentDetails];
       when(mockDio.get('/tournaments', queryParameters: <String, dynamic>{
         'name': mockTournamentDetails.name,
         'type': mockTournamentDetails.type?.name
@@ -150,7 +150,7 @@ void main() {
 
   group('getTournamentResults', () {
     test('success', () async {
-      final Iterable<TournamentResults> tournamentTeamResults = [
+      final Iterable<TournamentResults> tournamentTeamResults = <TournamentResults>[
         mockTournamentResults
       ];
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/results'))
@@ -166,7 +166,7 @@ void main() {
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/results'))
           .thenThrow(notFoundError);
       expect(() => chgkRating.getTournamentResults(mockTournamentDetails.id),
-          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
+          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
@@ -183,7 +183,7 @@ void main() {
           overriddenBy: null,
           questionNumber: 29,
           answer: null);
-      final Iterable<TournamentAppeals> mockTournamentAppeals = [
+      final Iterable<TournamentAppeals> mockTournamentAppeals = <TournamentAppeals>[
         mockTournamentAppeal
       ];
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/appeals'))
@@ -211,15 +211,15 @@ void main() {
                   country: Country(id: 1, name: 'name')),
               type: Type(id: 3, name: 'Синхрон'),
               address: 'address',
-              urls: ['urls']),
+              urls: <String>['urls']),
           representative: mockPlayer,
           narrator: mockPlayer,
-          narrators: [mockPlayer],
+          narrators: <Player>[mockPlayer],
           approximateTeamsCount: 8,
           issuedAt: dateTime,
           dateStart: dateTime,
           tournamentId: mockTournamentDetails.id);
-      final Iterable<TournamentRequests> mockTournamentRequests = [
+      final Iterable<TournamentRequests> mockTournamentRequests = <TournamentRequests>[
         mockTournamentRequest
       ];
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/requests'))

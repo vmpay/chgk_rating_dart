@@ -23,7 +23,7 @@ void main() {
               requestOptions: RequestOptions(path: ''),
               response: Response<dynamic>(
                 data:
-                    '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
+                    '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
                 statusCode: 401,
                 requestOptions: RequestOptions(path: ''),
               )));
@@ -39,12 +39,12 @@ void main() {
               requestOptions: RequestOptions(path: ''),
               response: Response<dynamic>(
                 data:
-                    '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Bad Request"}',
+                    '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Bad Request"}',
                 statusCode: 400,
                 requestOptions: RequestOptions(path: ''),
               )));
       expect(() => chgkRating.postToken('email', 'password'),
-          throwsA(predicate((e) => e is DioError)));
+          throwsA(predicate((Object? e) => e is DioError)));
     });
 
     test('success', () async {

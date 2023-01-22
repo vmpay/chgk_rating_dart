@@ -1,3 +1,12 @@
+## 1.0.1
+
+* Dart analysis fixes
+* Example update: get token implementation
+* Version update 1.0.1
+* Dartdoc comments provided
+* README.md update
+* Authorise user feature implementation
+
 ## 1.0.0
 
 * pubspec.yaml update

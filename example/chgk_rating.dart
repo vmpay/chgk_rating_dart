@@ -1,4 +1,5 @@
 import 'package:chgk_rating/chgk_rating.dart';
+import 'package:chgk_rating/src/models/token_response.dart';
 
 /// This example shows how to fetch [Player] data with additional information
 Future<void> main() async {
