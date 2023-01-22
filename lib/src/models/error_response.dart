@@ -1,5 +1,13 @@
 import 'dart:convert';
 
+/// Error response example:
+/// ```json
+/// {
+///   "type": "https://tools.ietf.org/html/rfc2616#section-10",
+///   "title": "An error occurred",
+///   "detail": "Not Found"
+/// }
+/// ```
 class ErrorResponse {
   ErrorResponse({
     required this.type,

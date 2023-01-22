@@ -6,7 +6,7 @@ void main() {
   const int notFoundId = -1;
   const int playerId = 17579;
   final ErrorResponse errorResponse = ErrorResponse(
-      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      type: 'https://tools.ietf.org/html/rfc2616#section-10',
       title: 'An error occurred',
       detail: 'Not Found');
   final ChgkRating chgkRating = ChgkRating();
@@ -19,7 +19,7 @@ void main() {
 
     test('empty', () async {
       expect(() => chgkRating.getPlayerById(notFoundId),
-          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
+          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 

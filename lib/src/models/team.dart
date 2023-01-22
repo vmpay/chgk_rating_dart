@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-/// Response example:
+/// Team response example:
 /// ```json
 /// {
 ///    "id": 26777,
@@ -82,6 +82,25 @@ class Team {
   }
 }
 
+/// Town data model
+/// ```json
+/// {
+///   "id": 197,
+///   "name": "Минск",
+///   "region": {
+///     "id": 84,
+///     "name": "Минск",
+///     "country": {
+///       "id": 5,
+///       "name": "Беларусь"
+///     }
+///   },
+///   "country": {
+///     "id": 5,
+///     "name": "Беларусь"
+///   }
+/// }
+/// ```
 class Town {
   Town({
     required this.id,
@@ -147,6 +166,13 @@ class Town {
   }
 }
 
+/// Country data model
+/// ```json
+/// {
+///   "id": 5,
+///   "name": "Беларусь"
+/// }
+/// ```
 class Country {
   Country({
     required this.id,

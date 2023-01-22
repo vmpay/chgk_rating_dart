@@ -9,7 +9,7 @@ void main() {
   const int notFoundId = -1;
   const int tournamentId = 5021;
   final ErrorResponse errorResponse = ErrorResponse(
-      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      type: 'https://tools.ietf.org/html/rfc2616#section-10',
       title: 'An error occurred',
       detail: 'Not Found');
   final ChgkRating chgkRating = ChgkRating();
@@ -23,7 +23,7 @@ void main() {
 
     test('empty', () async {
       expect(() => chgkRating.getTournamentDetails(notFoundId),
-          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
+          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
@@ -44,7 +44,7 @@ void main() {
 
     test('empty', () async {
       expect(() => chgkRating.getTournamentResults(notFoundId),
-          throwsA(predicate((e) => e is ErrorResponse)));
+          throwsA(predicate((Object? e) => e is ErrorResponse)));
     });
   });
 

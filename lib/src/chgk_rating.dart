@@ -77,8 +77,8 @@ class ChgkRating {
 
   /// Searches for players [Player] on server.
   ///
-  /// Performs search by any of the optional parameters: [name], [surname],
-  /// [patronymic]. Returns [Player] list in case of success
+  /// Performs search by any of the optional parameters: [name], [surname].
+  /// Returns [Player] list in case of success
   /// or Null if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<Player>> getPlayerBy({String? name, String? surname}) async {
@@ -109,7 +109,7 @@ class ChgkRating {
   /// Requests player tournaments [PlayerTournament] list from server.
   ///
   /// Requires player identifier [playerId]. Returns player tournament objects
-  /// [PlayerTournamentResponse] list in case of success or empty list
+  /// [PlayerTournament] list in case of success or empty list
   /// if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<PlayerTournament>> getPlayerTournamentList(
@@ -199,8 +199,8 @@ class ChgkRating {
 
   /// Searches for tournament [Tournament] on server.
   ///
-  /// Performs search by any of the optional parameters: [name], [typeName],
-  /// [archive]. Returns player object [Tournament] list in case of success or
+  /// Performs search by any of the optional parameters: [name], [typeName].
+  /// Returns player object [Tournament] list in case of success or
   /// Null if player not found.
   /// Throws [DioError] in case of network connection problems.
   Future<Iterable<Tournament>> getTournamentBy(

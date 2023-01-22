@@ -23,12 +23,12 @@ void main() {
       requestOptions: RequestOptions(path: ''),
       response: Response<dynamic>(
         data:
-            '{"type":"https:\/\/tools.ietf.org\/html\/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
+            '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}',
         statusCode: 404,
         requestOptions: RequestOptions(path: ''),
       ));
   final ErrorResponse errorResponse = ErrorResponse(
-      type: 'https:\/\/tools.ietf.org\/html\/rfc2616#section-10',
+      type: 'https://tools.ietf.org/html/rfc2616#section-10',
       title: 'An error occurred',
       detail: 'Not Found');
   final MockDio mockDio = MockDio();
@@ -38,18 +38,17 @@ void main() {
   group('getTeamById', () {
     test('empty', () async {
       when(mockDio.get('/teams/${mockTeam.id}')).thenThrow(notFoundError);
-      expect(() => chgkRating.getTeamById(mockTeam.id),
-          throwsA(predicate((e) => e is ErrorResponse && e == errorResponse)));
+      expect(
+          () => chgkRating.getTeamById(mockTeam.id),
+          throwsA(predicate(
+              (Object? e) => e is ErrorResponse && e == errorResponse)));
     });
 
     test('fail response', () async {
-      try {
-        when(mockDio.get('/teams/${mockTeam.id}'))
-            .thenThrow(DioError(requestOptions: RequestOptions(path: '')));
-        await chgkRating.getTeamById(mockTeam.id);
-      } on DioError catch (e) {
-        assert(e is DioError);
-      }
+      when(mockDio.get('/teams/${mockTeam.id}'))
+          .thenThrow(DioError(requestOptions: RequestOptions(path: '')));
+      expect(() => chgkRating.getTeamById(mockTeam.id),
+          throwsA(predicate((Object? e) => e is DioError)));
     });
 
     test('success', () async {
@@ -57,7 +56,7 @@ void main() {
           Response<String>(
               data: mockTeam.toRawJson(),
               requestOptions: RequestOptions(path: '')));
-      final Team? team = await chgkRating.getTeamById(mockTeam.id);
+      final Team team = await chgkRating.getTeamById(mockTeam.id);
       expect(team, mockTeam);
     });
   });

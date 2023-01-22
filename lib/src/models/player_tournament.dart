@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-/// Response example:
+/// Player tournament response example:
 /// ```json
 ///[
 ///    {
