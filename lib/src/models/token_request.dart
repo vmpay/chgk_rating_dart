@@ -1,5 +1,12 @@
 import 'dart:convert';
 
+/// Token request body example:
+/// ```json
+/// {
+///     "email": "email@email.com"
+///     "password": "password"
+/// }
+/// ```
 class TokenRequest {
   TokenRequest({
     required this.email,

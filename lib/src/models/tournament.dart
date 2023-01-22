@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:chgk_rating/chgk_rating.dart';
 import 'package:collection/collection.dart';
 
-/// Response example:
+/// Tournament response example:
 /// ```json
 /// {
 ///     "id": 3779,
@@ -284,70 +284,24 @@ class Tournament {
   }
 }
 
-// class Editor {
-//   Editor({
-//     required this.id,
-//     required this.name,
-//     required this.patronymic,
-//     required this.surname,
-//   });
-//
-//   final int id;
-//   final String name;
-//   final String? patronymic;
-//   final String surname;
-//
-//   Editor copyWith({
-//     required int id,
-//     required String name,
-//     required String? patronymic,
-//     required String surname,
-//   }) =>
-//       Editor(
-//         id: id,
-//         name: name,
-//         patronymic: patronymic,
-//         surname: surname,
-//       );
-//
-//   factory Editor.fromRawJson(String str) => Editor.fromJson(json.decode(str));
-//
-//   String toRawJson() => json.encode(toJson());
-//
-//   factory Editor.fromJson(Map<String, dynamic> json) => Editor(
-//         id: json["id"],
-//         name: json["name"],
-//         patronymic: json["patronymic"],
-//         surname: json["surname"],
-//       );
-//
-//   Map<String, dynamic> toJson() => {
-//         "id": id,
-//         "name": name,
-//         "patronymic": patronymic,
-//         "surname": surname,
-//       };
-//
-//   @override
-//   bool operator ==(Object other) =>
-//       identical(this, other) ||
-//       other is Editor &&
-//           runtimeType == other.runtimeType &&
-//           id == other.id &&
-//           name == other.name &&
-//           patronymic == other.patronymic &&
-//           surname == other.surname;
-//
-//   @override
-//   int get hashCode =>
-//       id.hashCode ^ name.hashCode ^ patronymic.hashCode ^ surname.hashCode;
-//
-//   @override
-//   String toString() {
-//     return 'Editor{id: $id, name: $name, patronymic: $patronymic, surname: $surname}';
-//   }
-// }
-
+/// SynchData data model
+/// ```json
+/// {
+///   "dateRequestsAllowedTo": "2017-04-24T23:59:59+03:00",
+///   "resultFixesTo": "2017-05-08T23:59:59+03:00",
+///   "resultsRecapsTo": "2017-04-27T23:59:59+03:00",
+///   "allowAppealCancel": true,
+///   "allowNarratorErrorAppeal": false,
+///   "archive": true,
+///   "dateArchivedAt": "2017-05-12T23:59:59+03:00",
+///   "dateDownloadQuestionsFrom": "2017-04-20T00:00:00+03:00",
+///   "dateDownloadQuestionsTo": "2017-04-25T19:00:00+03:00",
+///   "hideQuestionsTo": "2017-04-25T23:59:59+03:00",
+///   "hideResultsTo": "2017-04-25T23:59:59+03:00",
+///   "allVerdictsDone": null,
+///   "instantControversial": false
+/// }
+/// ```
 class SynchData {
   SynchData({
     required this.dateRequestsAllowedTo,
@@ -507,6 +461,13 @@ class SynchData {
   }
 }
 
+/// Tournament type data model
+/// ```json
+/// {
+///   "id": 3,
+///   "name": "Синхрон"
+/// }
+/// ```
 class Type {
   Type({
     required this.id,

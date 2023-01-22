@@ -2,6 +2,22 @@ import 'dart:convert';
 
 import 'tournament_results.dart';
 
+/// Token response example:
+/// ```json
+/// [
+///   {
+///     "id": 5811,
+///     "idtournament": 3779,
+///     "type": "A",
+///     "issuedAt": "2017-04-26T14:19:22+03:00",
+///     "status": "D",
+///     "appeal": "appeal",
+///     "comment": "comment",
+///     "questionNumber": 29,
+///     "answer": "answer"
+///   }
+/// ]
+/// ```
 class TournamentAppeals {
   TournamentAppeals({
     required this.id,
@@ -120,8 +136,11 @@ class TournamentAppeals {
   }
 }
 
+/// Appeal type [A] - Accepted, [R] - Rejected, [N] - Narrator's mistake
 enum AppealType { A, R, N }
 
+/// [AppealType.A] - Accepted, [AppealType.R] - Rejected,
+/// [AppealType.N] - Narrator's mistake
 final EnumValues<AppealType> typeValues =
     EnumValues<AppealType>(<String, AppealType>{
   "A": AppealType.A, // Accepted

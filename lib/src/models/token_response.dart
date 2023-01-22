@@ -1,5 +1,11 @@
 import 'dart:convert';
 
+/// Token response example:
+/// ```json
+/// {
+///     "token": "jwtToken"
+/// }
+/// ```
 class TokenResponse {
   TokenResponse({
     required this.token,

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-/// Response example:
+/// Player response example:
 /// ```json
 /// {
 ///     "id": 27822,

@@ -5,7 +5,7 @@ import 'package:collection/collection.dart';
 import 'player.dart';
 import 'team.dart';
 
-/// Response example:
+/// Tournament results response example:
 /// ```json
 /// [
 ///    {
@@ -221,6 +221,19 @@ class TournamentResults {
   }
 }
 
+/// Controversial data model
+/// ```json
+/// {
+///   "id": 55355,
+///   "questionNumber": 13,
+///   "answer": "ловить рыбу",
+///   "issuedAt": "2017-04-22T13:11:11+03:00",
+///   "status": "A",
+///   "comment": "Данный ответ можно считать эквивалентным авторскому",
+///   "resolvedAt": null,
+///   "appealJuryComment": null
+/// }
+/// ```
 class Controversial {
   Controversial({
     required this.id,
@@ -324,6 +337,16 @@ class Controversial {
   }
 }
 
+/// Current data model
+/// ```json
+/// {
+///   "name": "Склеп с забавками",
+///   "town": {
+///     "id": 2088,
+///     "name": "Краков"
+///   }
+/// }
+/// ```
 class Current {
   Current({
     required this.name,
@@ -373,6 +396,14 @@ class Current {
   }
 }
 
+/// Flag data model
+/// ```json
+/// {
+///   "id": 11,
+///   "shortName": "Б",
+///   "longName": "Балтийский зачёт"
+/// }
+/// ```
 class Flag {
   Flag({
     required this.id,
@@ -429,11 +460,31 @@ class Flag {
   }
 }
 
+/// Short name player-team relation [CAPTAIN] - team captain,
+/// [LEGIONAIRE] - new team member, [BASE] - base team player
 enum ShortName { CAPTAIN, LEGIONAIRE, BASE }
 
+/// [ShortName.CAPTAIN] - team captain, [ShortName.LEGIONAIRE] - new team member,
+/// [ShortName.BASE] - base team player
 final EnumValues<ShortName> shortNameValues = EnumValues<ShortName>(
     {"К": ShortName.CAPTAIN, "Б": ShortName.BASE, "Л": ShortName.LEGIONAIRE});
 
+/// Rating data model
+/// ```json
+/// {
+///   "inRating": false,
+///   "b": 6,
+///   "predictedPosition": 826,
+///   "rt": 330,
+///   "rb": 390,
+///   "rg": 330,
+///   "r": 242,
+///   "bp": 77,
+///   "d1": -36,
+///   "d2": 0,
+///   "d": -18
+/// }
+/// ```
 class Rating {
   Rating({
     required this.inRating,
@@ -557,6 +608,17 @@ class Rating {
   }
 }
 
+/// Synch request data model
+/// ```json
+/// {
+///   "id": 32635,
+///   "venue": {
+///     "id": 3360,
+///     "name": "Краков"
+///   },
+///   "tournamentId": 3779
+/// }
+/// ```
 class SynchRequest {
   SynchRequest({
     required this.id,
@@ -614,6 +676,20 @@ class SynchRequest {
   }
 }
 
+/// Team member data model
+/// ```json
+/// {
+///   "flag": "Б",
+///   "usedRating": 1202,
+///   "rating": 1203,
+///   "player": {
+///     "id": 13051,
+///     "name": "Елена",
+///     "patronymic": "Юрьевна",
+///     "surname": "Калачиди"
+///   }
+/// }
+/// ```
 class TeamMember {
   TeamMember({
     required this.flag,
@@ -691,10 +767,11 @@ class EnumValues<T> {
   }
 }
 
-/// [A] - approved, [D] - declined, [N] - new
+/// Question status [A] - approved, [D] - declined, [N] - new
 enum QuestionStatus { A, D, N }
 
-/// [QuestionStatus.A] - approved, [QuestionStatus.D] - declined, [QuestionStatus.N] - new
+/// [QuestionStatus.A] - approved, [QuestionStatus.D] - declined,
+/// [QuestionStatus.N] - new
 final EnumValues<QuestionStatus> statusValues =
     EnumValues<QuestionStatus>(<String, QuestionStatus>{
   'A': QuestionStatus.A,

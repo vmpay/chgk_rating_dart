@@ -7,6 +7,63 @@ import 'team.dart';
 import 'tournament.dart';
 import 'tournament_results.dart';
 
+/// Token response example:
+/// ```json
+/// [
+///   {
+///     "id": 32231,
+///     "status": "A",
+///     "venue": {
+///       "id": 3051,
+///       "name": "Хельсинки",
+///       "town": {
+///         "id": 364,
+///         "name": "Хельсинки",
+///         "country": {
+///           "id": 27,
+///           "name": "Финляндия"
+///         }
+///       },
+///       "type": {
+///         "id": 1,
+///         "name": "Постоянная"
+///       },
+///       "urls": [
+///         "http://www.chgk.fi",
+///         "https://www.facebook.com/chgk.fi",
+///         "https://chgk-fi.livejournal.com/"
+///       ]
+///     },
+///     "representative": {
+///       "id": 5720,
+///       "name": "Иван",
+///       "patronymic": "Владимирович",
+///       "surname": "Власов",
+///       "dbChgkInfoTag": ""
+///     },
+///     "narrator": {
+///       "id": 19620,
+///       "name": "Наталия",
+///       "patronymic": "Владимировна",
+///       "surname": "Мальгина",
+///       "dbChgkInfoTag": ""
+///     },
+///     "approximateTeamsCount": 11,
+///     "issuedAt": "2017-03-26T20:36:33+03:00",
+///     "dateStart": "2017-04-22T18:00:00+03:00",
+///     "narrators": [
+///       {
+///         "id": 19620,
+///         "name": "Наталия",
+///         "patronymic": "Владимировна",
+///         "surname": "Мальгина",
+///         "dbChgkInfoTag": ""
+///       }
+///     ],
+///     "tournamentId": 3779
+///   },
+/// ]
+/// ```
 class TournamentRequests {
   TournamentRequests({
     required this.id,
@@ -132,6 +189,24 @@ class TournamentRequests {
   }
 }
 
+/// Venue data model
+/// ```json
+/// {
+///   "id": 3051,
+///   "name": "Хельсинки",
+///   "town": {
+///     "id": 364,
+///     "name": "Хельсинки",
+///     "country": {
+///       "id": 27,
+///       "name": "Финляндия"
+///     }
+///   },
+///   "type": {
+///     "id": 1,
+///     "name": "Постоянная"
+///   }
+/// }
 class Venue {
   Venue({
     required this.id,
