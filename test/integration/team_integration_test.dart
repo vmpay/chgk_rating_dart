@@ -18,8 +18,10 @@ void main() {
     });
 
     test('empty', () async {
-      expect(() => chgkRating.getTeamById(notFoundId),
-          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
+      expect(
+          () => chgkRating.getTeamById(notFoundId),
+          throwsA(predicate(
+              (Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 

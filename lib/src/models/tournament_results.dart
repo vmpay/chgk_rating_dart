@@ -160,11 +160,17 @@ class TournamentResults {
             : null,
         rating: json["rating"] != null ? Rating.fromJson(json["rating"]) : null,
         position: json["position"].toDouble(),
-        controversials: List<Controversial>.from(
-            json["controversials"].map((x) => Controversial.fromJson(x))),
-        flags: List<Flag>.from(json["flags"].map((x) => Flag.fromJson(x))),
-        teamMembers: List<TeamMember>.from(
-            json["teamMembers"].map((x) => TeamMember.fromJson(x))),
+        controversials: json["controversials"] != null
+            ? List<Controversial>.from(
+                json["controversials"].map((x) => Controversial.fromJson(x)))
+            : <Controversial>[],
+        flags: json["flags"] != null
+            ? List<Flag>.from(json["flags"].map((x) => Flag.fromJson(x)))
+            : <Flag>[],
+        teamMembers: json["teamMembers"] != null
+            ? List<TeamMember>.from(
+                json["teamMembers"].map((x) => TeamMember.fromJson(x)))
+            : <TeamMember>[],
       );
 
   Map<String, dynamic> toJson() => {
@@ -175,14 +181,15 @@ class TournamentResults {
         "synchRequest": synchRequest?.toJson(),
         "rating": rating?.toJson(),
         "position": position,
-        "controversials":
-            List<dynamic>.from(controversials.map((x) => x.toJson())),
-        "flags": List<dynamic>.from(flags.map((x) => x.toJson())),
-        "teamMembers": List<dynamic>.from(teamMembers.map((x) => x.toJson())),
+        "controversials": List<dynamic>.from(
+            controversials.map((Controversial x) => x.toJson())),
+        "flags": List<dynamic>.from(flags.map((Flag x) => x.toJson())),
+        "teamMembers":
+            List<dynamic>.from(teamMembers.map((TeamMember x) => x.toJson())),
       };
 
   static Iterable<TournamentResults> decodeList(List<dynamic> list) =>
-      list.map((dynamic e) => TournamentResults.fromRawJson(e));
+      list.map((dynamic e) => TournamentResults.fromJson(e));
 
   @override
   bool operator ==(Object other) {

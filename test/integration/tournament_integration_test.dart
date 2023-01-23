@@ -22,8 +22,10 @@ void main() {
     });
 
     test('empty', () async {
-      expect(() => chgkRating.getTournamentDetails(notFoundId),
-          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
+      expect(
+          () => chgkRating.getTournamentDetails(notFoundId),
+          throwsA(predicate(
+              (Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 

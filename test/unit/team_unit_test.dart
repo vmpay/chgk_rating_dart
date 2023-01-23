@@ -66,8 +66,8 @@ void main() {
       final Iterable<Team> mockTeamSearch = <Team>[mockTeam];
       when(mockDio.get('/teams',
               queryParameters: <String, dynamic>{'name': mockTeam.name}))
-          .thenAnswer((_) async => Response<List<String>>(
-              data: <String>[mockTeam.toRawJson()],
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTeam.toJson()],
               requestOptions: RequestOptions(path: '')));
       final Iterable<Team> teamSearch =
           await chgkRating.getTeamBy(name: mockTeam.name);
@@ -94,8 +94,8 @@ void main() {
           dateRemoved: null,
           playerNumber: 0);
       when(mockDio.get('/teams/${mockTeam.id}/seasons')).thenAnswer((_) async =>
-          Response<List<String>>(
-              data: <String>[mockTeamPlayers.toRawJson()],
+          Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTeamPlayers.toJson()],
               requestOptions: RequestOptions(path: '')));
       final Iterable<PlayerTeam> teamPlayersList =
           await chgkRating.getTeamPlayersList(mockTeam.id);
@@ -117,8 +117,8 @@ void main() {
       final PlayerTournament mockTeamTournament =
           PlayerTournament(idPlayer: 5, idTeam: 5, idTournament: 5);
       when(mockDio.get('/teams/${mockTeam.id}/tournaments')).thenAnswer(
-          (_) async => Response<List<String>>(
-              data: <String>[mockTeamTournament.toRawJson()],
+          (_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTeamTournament.toJson()],
               requestOptions: RequestOptions(path: '')));
       final Iterable<PlayerTournament> teamTournamentList =
           await chgkRating.getTeamTournamentList(mockTeam.id);

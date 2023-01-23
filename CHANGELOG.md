@@ -1,3 +1,8 @@
+## 1.0.2
+
+* Version update 1.0.2
+* Fix list mapping
+
 ## 1.0.1
 
 * Dart analysis fixes

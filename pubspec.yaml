@@ -1,6 +1,6 @@
 name: chgk_rating
 description: Dart wrapper client for the competitive What? Where? When? rating WebAPIRating https://api.rating.chgk.net/
-version: 1.0.1
+version: 1.0.2
 repository: https://github.com/vmpay/chgk_rating_dart
 issue_tracker: https://github.com/vmpay/chgk_rating_dart/issues
 

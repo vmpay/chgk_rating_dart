@@ -29,8 +29,10 @@ void main() {
               statusCode: 404,
               requestOptions: RequestOptions(path: '')),
           requestOptions: RequestOptions(path: '')));
-      expect(() => chgkRating.getPlayerById(mockPlayer.id),
-          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
+      expect(
+          () => chgkRating.getPlayerById(mockPlayer.id),
+          throwsA(predicate(
+              (Object? e) => e is ErrorResponse && e == errorResponse)));
     });
 
     test('fail', () async {
@@ -55,8 +57,8 @@ void main() {
       final Iterable<Player> mockPlayerSearch = <Player>[mockPlayer];
       when(mockDio.get('/players', queryParameters: <String, dynamic>{
         'surname': mockPlayer.surname
-      })).thenAnswer((_) async => Response<List<String>>(
-          data: <String>[mockPlayer.toRawJson()],
+      })).thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+          data: <Map<String, dynamic>>[mockPlayer.toJson()],
           requestOptions: RequestOptions(path: '')));
       final Iterable<Player> playerSearch =
           await chgkRating.getPlayerBy(surname: mockPlayer.surname);
@@ -83,8 +85,8 @@ void main() {
           dateRemoved: null,
           playerNumber: 0);
       when(mockDio.get('/players/${mockPlayer.id}/seasons')).thenAnswer(
-          (_) async => Response<List<String>>(
-              data: <String>[mockPlayerTeam.toRawJson()],
+          (_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockPlayerTeam.toJson()],
               requestOptions: RequestOptions(path: '')));
       final Iterable<PlayerTeam> playerTeamList =
           await chgkRating.getPlayerTeamList(mockPlayer.id);
@@ -108,9 +110,11 @@ void main() {
           idTeam: mockPlayer.id,
           idTournament: mockPlayer.id);
       when(mockDio.get('/players/${mockPlayer.id}/tournaments')).thenAnswer(
-          (_) async => Response<List<String>>(
-              data: <String>[mockPlayerTournamentResponse.toRawJson()],
-              requestOptions: RequestOptions(path: '')));
+          (_) async => Response<List<Map<String, dynamic>>>(
+                  data: <Map<String, dynamic>>[
+                    mockPlayerTournamentResponse.toJson()
+                  ],
+                  requestOptions: RequestOptions(path: '')));
       final Iterable<PlayerTournament> playerTournamentResponse =
           await chgkRating.getPlayerTournamentList(mockPlayer.id);
       expect(playerTournamentResponse,
