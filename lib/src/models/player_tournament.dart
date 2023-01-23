@@ -56,7 +56,7 @@ class PlayerTournament {
       };
 
   static Iterable<PlayerTournament> decodeList(List<dynamic> list) =>
-      list.map((e) => PlayerTournament.fromRawJson(e));
+      list.map((e) => PlayerTournament.fromJson(e));
 
   @override
   bool operator ==(Object other) =>

@@ -126,19 +126,23 @@ void main() {
     test('empty', () async {
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}'))
           .thenThrow(notFoundError);
-      expect(() => chgkRating.getTournamentDetails(mockTournamentDetails.id),
-          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
+      expect(
+          () => chgkRating.getTournamentDetails(mockTournamentDetails.id),
+          throwsA(predicate(
+              (Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
   group('getTournamentBy search parameters', () {
     test('success', () async {
-      final Iterable<Tournament> mockTournamentSearch = <Tournament>[mockTournamentDetails];
+      final Iterable<Tournament> mockTournamentSearch = <Tournament>[
+        mockTournamentDetails
+      ];
       when(mockDio.get('/tournaments', queryParameters: <String, dynamic>{
         'name': mockTournamentDetails.name,
         'type': mockTournamentDetails.type?.name
-      })).thenAnswer((_) async => Response<List<String>>(
-          data: <String>[mockTournamentDetails.toRawJson()],
+      })).thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+          data: <Map<String, dynamic>>[mockTournamentDetails.toJson()],
           requestOptions: RequestOptions(path: '')));
       final Iterable<Tournament> tournamentSearch =
           await chgkRating.getTournamentBy(
@@ -150,12 +154,11 @@ void main() {
 
   group('getTournamentResults', () {
     test('success', () async {
-      final Iterable<TournamentResults> tournamentTeamResults = <TournamentResults>[
-        mockTournamentResults
-      ];
+      final Iterable<TournamentResults> tournamentTeamResults =
+          <TournamentResults>[mockTournamentResults];
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/results'))
-          .thenAnswer((_) async => Response<List<dynamic>>(
-              data: <String>[mockTournamentResults.toRawJson()],
+          .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
+              data: <Map<String, dynamic>>[mockTournamentResults.toJson()],
               requestOptions: RequestOptions(path: '')));
       final Iterable<TournamentResults> tournamentTeamResultsList =
           await chgkRating.getTournamentResults(mockTournamentDetails.id);
@@ -165,8 +168,10 @@ void main() {
     test('empty', () async {
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/results'))
           .thenThrow(notFoundError);
-      expect(() => chgkRating.getTournamentResults(mockTournamentDetails.id),
-          throwsA(predicate((Object? e) => e is ErrorResponse && e == errorResponse)));
+      expect(
+          () => chgkRating.getTournamentResults(mockTournamentDetails.id),
+          throwsA(predicate(
+              (Object? e) => e is ErrorResponse && e == errorResponse)));
     });
   });
 
@@ -183,9 +188,8 @@ void main() {
           overriddenBy: null,
           questionNumber: 29,
           answer: null);
-      final Iterable<TournamentAppeals> mockTournamentAppeals = <TournamentAppeals>[
-        mockTournamentAppeal
-      ];
+      final Iterable<TournamentAppeals> mockTournamentAppeals =
+          <TournamentAppeals>[mockTournamentAppeal];
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/appeals'))
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[mockTournamentAppeal.toJson()],
@@ -219,9 +223,8 @@ void main() {
           issuedAt: dateTime,
           dateStart: dateTime,
           tournamentId: mockTournamentDetails.id);
-      final Iterable<TournamentRequests> mockTournamentRequests = <TournamentRequests>[
-        mockTournamentRequest
-      ];
+      final Iterable<TournamentRequests> mockTournamentRequests =
+          <TournamentRequests>[mockTournamentRequest];
       when(mockDio.get('/tournaments/${mockTournamentDetails.id}/requests'))
           .thenAnswer((_) async => Response<List<Map<String, dynamic>>>(
               data: <Map<String, dynamic>>[mockTournamentRequest.toJson()],

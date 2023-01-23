@@ -172,8 +172,10 @@ class Tournament {
         dateEnd: DateTime.parse(json["dateEnd"]),
         type: json["type"] != null ? Type.fromJson(json["type"]) : null,
         season: json["season"],
-        orgCommittee: List<Player>.from(
-            json["orgcommittee"].map((x) => Player.fromJson(x))),
+        orgCommittee: json["orgcommittee"] != null
+            ? List<Player>.from(
+                json["orgcommittee"].map((x) => Player.fromJson(x)))
+            : <Player>[],
         syncData: json["synchData"] != null
             ? SynchData.fromJson(json["synchData"])
             : null,
@@ -181,8 +183,9 @@ class Tournament {
         discountedPayment: json["discountedPayment"],
         discountedPaymentReason: json["discountedPaymentReason"],
         currency: json["currency"],
-        editors:
-            List<Player>.from(json["editors"].map((x) => Player.fromJson(x))),
+        editors: json["editors"] != null
+            ? List<Player>.from(json["editors"].map((x) => Player.fromJson(x)))
+            : <Player>[],
         difficultyForecast: json["difficultyForecast"],
         maiiAegis: json["maiiAegis"],
         maiiAegisUpdatedAt: json["maiiAegisUpdatedAt"] != null
@@ -225,7 +228,7 @@ class Tournament {
       };
 
   static Iterable<Tournament> decodeList(List<dynamic> list) =>
-      list.map((dynamic e) => Tournament.fromRawJson(e));
+      list.map((dynamic e) => Tournament.fromJson(e));
 
   @override
   bool operator ==(Object other) {

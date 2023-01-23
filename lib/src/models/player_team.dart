@@ -72,7 +72,7 @@ class PlayerTeam {
       };
 
   static Iterable<PlayerTeam> decodeList(List<dynamic> list) =>
-      list.map((dynamic e) => PlayerTeam.fromRawJson(e));
+      list.map((dynamic e) => PlayerTeam.fromJson(e));
 
   @override
   bool operator ==(Object other) =>

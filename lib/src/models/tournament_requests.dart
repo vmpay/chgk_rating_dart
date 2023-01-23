@@ -130,8 +130,10 @@ class TournamentRequests {
             : null,
         narrator:
             json["narrator"] != null ? Player.fromJson(json["narrator"]) : null,
-        narrators:
-            List<Player>.from(json["narrators"].map((x) => Player.fromJson(x))),
+        narrators: json["narrators"] != null
+            ? List<Player>.from(
+                json["narrators"].map((x) => Player.fromJson(x)))
+            : <Player>[],
         approximateTeamsCount: json["approximateTeamsCount"],
         issuedAt:
             json["issuedAt"] != null ? DateTime.parse(json["issuedAt"]) : null,
